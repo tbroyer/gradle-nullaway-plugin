@@ -15,7 +15,7 @@ import org.gradle.kotlin.dsl.withType
 import org.gradle.process.CommandLineArgumentProvider
 import org.gradle.util.GradleVersion
 
-private const val EXTENSION_NAME = "nullaway"
+internal const val EXTENSION_NAME = "nullaway"
 
 class NullAwayPlugin : Plugin<Project> {
     companion object {
@@ -27,9 +27,11 @@ class NullAwayPlugin : Plugin<Project> {
             throw UnsupportedOperationException("$PLUGIN_ID requires at least Gradle 5.2.1")
         }
 
+        val extension = extensions.create(EXTENSION_NAME, NullAwayExtension::class)
+
         pluginManager.withPlugin(ErrorPronePlugin.PLUGIN_ID) {
             tasks.withType<JavaCompile>().configureEach {
-                val nullawayOptions = (options.errorprone as ExtensionAware).extensions.create(EXTENSION_NAME, NullAwayOptions::class)
+                val nullawayOptions = (options.errorprone as ExtensionAware).extensions.create(EXTENSION_NAME, NullAwayOptions::class, extension)
                 options.errorprone.errorproneArgumentProviders.add(object : CommandLineArgumentProvider, Named {
                     override fun getName() = EXTENSION_NAME
 

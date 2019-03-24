@@ -9,7 +9,8 @@ import org.gradle.kotlin.dsl.listProperty
 import org.gradle.kotlin.dsl.property
 
 open class NullAwayOptions internal constructor(
-    objectFactory: ObjectFactory
+    objectFactory: ObjectFactory,
+    nullawayExtension: NullAwayExtension
 ) {
     companion object {
         const val NAME = "nullaway"
@@ -18,7 +19,7 @@ open class NullAwayOptions internal constructor(
     @get:Input
     val severity = objectFactory.property<CheckSeverity>().convention(CheckSeverity.DEFAULT)
     @get:Input
-    val annotatedPackages = objectFactory.listProperty<String>()
+    val annotatedPackages = objectFactory.listProperty<String>().convention(nullawayExtension.annotatedPackages)
     @get:Input
     @get:Optional
     val unannotatedSubPackages = objectFactory.listProperty<String>()

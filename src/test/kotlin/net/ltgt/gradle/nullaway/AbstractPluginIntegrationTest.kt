@@ -52,7 +52,10 @@ abstract class AbstractPluginIntegrationTest(
 
                 tasks.withType<JavaCompile>().configureEach {
                     options.compilerArgs.add("-Werror")
-                    options.errorprone.nullaway.annotatedPackages.add("test")
+                }
+
+                nullaway {
+                    annotatedPackages.add("test")
                 }
             """.trimIndent())
         }
@@ -121,8 +124,8 @@ abstract class AbstractPluginIntegrationTest(
         // given
         buildFile.appendText("""
 
-            tasks.withType<JavaCompile>().configureEach {
-                options.errorprone.nullaway.annotatedPackages.empty()
+            nullaway {
+                annotatedPackages.empty()
             }
         """.trimIndent())
         writeSuccessSource()
