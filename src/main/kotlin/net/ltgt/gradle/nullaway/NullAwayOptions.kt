@@ -29,6 +29,12 @@ open class NullAwayOptions internal constructor(
     @get:Input @get:Optional val treatGeneratedAsUnannotated = objectFactory.property<Boolean>()
     @get:Input @get:Optional val acknowledgeRestrictiveAnnotations = objectFactory.property<Boolean>()
     @get:Input @get:Optional val checkOptionalEmptiness = objectFactory.property<Boolean>()
+    @get:Input @get:Optional val isSuggestSuppressions = objectFactory.property<Boolean>()
+    @get:Input @get:Optional val isAssertsEnabled = objectFactory.property<Boolean>()
+    @get:Input @get:Optional val isExhaustiveOverride = objectFactory.property<Boolean>()
+    @get:Input @get:Optional val castToNonNullMethod = objectFactory.property<String>()
+    @get:Input @get:Optional val checkOptionalEmptinessCustomClasses = objectFactory.listProperty<String>()
+    @get:Input @get:Optional val autoFixSuppressionComment = objectFactory.property<String>()
 
     internal fun asArguments(): Iterable<String> = sequenceOf(
         "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
@@ -43,7 +49,13 @@ open class NullAwayOptions internal constructor(
         listOption("ExternalInitAnnotations", externalInitAnnotations),
         booleanOption("TreatGeneratedAsUnannotated", treatGeneratedAsUnannotated),
         booleanOption("AcknowledgeRestrictiveAnnotations", acknowledgeRestrictiveAnnotations),
-        booleanOption("CheckOptionalEmptiness", checkOptionalEmptiness)
+        booleanOption("CheckOptionalEmptiness", checkOptionalEmptiness),
+        booleanOption("SuggestSuppressions", isSuggestSuppressions),
+        booleanOption("AssertsEnabled", isAssertsEnabled),
+        booleanOption("ExhaustiveOverride", isExhaustiveOverride),
+        stringOption("CastToNonNullMethod", castToNonNullMethod),
+        listOption("CheckOptionalEmptinessCustomClasses", checkOptionalEmptinessCustomClasses),
+        stringOption("AutoFixSuppressionComment", autoFixSuppressionComment)
     )
         .filterNotNull()
         .asIterable()

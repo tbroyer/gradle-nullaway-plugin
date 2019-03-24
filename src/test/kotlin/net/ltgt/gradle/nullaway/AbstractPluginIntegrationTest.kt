@@ -199,6 +199,12 @@ abstract class AbstractPluginIntegrationTest(
                     treatGeneratedAsUnannotated.set(true)
                     acknowledgeRestrictiveAnnotations.set(true)
                     checkOptionalEmptiness.set(true)
+                    isSuggestSuppressions.set(true)
+                    isAssertsEnabled.set(true)
+                    isExhaustiveOverride.set(true)
+                    castToNonNullMethod.set("com.foo.Bar.castToNonNull")
+                    checkOptionalEmptinessCustomClasses.add("com.foo.Optional")
+                    autoFixSuppressionComment.set("Auto-fix\\u0020suppression")
                 }
             }
         """.trimIndent())
