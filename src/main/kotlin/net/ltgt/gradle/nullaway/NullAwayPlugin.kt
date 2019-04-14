@@ -1,5 +1,6 @@
 package net.ltgt.gradle.nullaway
 
+import net.ltgt.gradle.errorprone.CheckSeverity
 import net.ltgt.gradle.errorprone.ErrorProneOptions
 import net.ltgt.gradle.errorprone.ErrorPronePlugin
 import net.ltgt.gradle.errorprone.errorprone
@@ -8,6 +9,8 @@ import org.gradle.api.Named
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.api.tasks.Nested
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.getByName
@@ -34,6 +37,11 @@ class NullAwayPlugin : Plugin<Project> {
                 val nullawayOptions = (options.errorprone as ExtensionAware).extensions.create(EXTENSION_NAME, NullAwayOptions::class, extension)
                 options.errorprone.errorproneArgumentProviders.add(object : CommandLineArgumentProvider, Named {
                     override fun getName() = EXTENSION_NAME
+
+                    @Suppress("unused")
+                    @Nested @Optional fun getNullAwayOptions() = nullawayOptions.severity.flatMap { severity ->
+                        provider { nullawayOptions.takeUnless { severity == CheckSeverity.OFF } }
+                    }
 
                     override fun asArguments() = nullawayOptions.asArguments()
                 })

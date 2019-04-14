@@ -1,6 +1,7 @@
 package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.TruthJUnit.assume
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
@@ -215,5 +216,49 @@ abstract class AbstractPluginIntegrationTest(
 
         // then
         assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+    }
+
+    @Test
+    fun `plays nicely with up-to-date checks`() {
+        // given
+        buildFile.appendText("""
+
+            tasks.withType<JavaCompile>().configureEach {
+                options.errorprone.nullaway {
+                    if (project.hasProperty("disable-nullaway")) {
+                        severity.set(CheckSeverity.OFF)
+                    }
+                    autoFixSuppressionComment.set(project.property("autofix-comment") as String)
+                }
+            }
+        """.trimIndent())
+        writeSuccessSource()
+
+        // when
+        buildWithArgs(compileTaskName, "-Pautofix-comment=foo").also { result ->
+            // then
+            assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        }
+
+        // when
+        buildWithArgs(compileTaskName, "-Pautofix-comment=bar").also { result ->
+            // then
+            // (specifically, we don't want UP_TO_DATE)
+            assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        }
+
+        // when
+        buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=bar").also { result ->
+            // then
+            // (specifically, we don't want UP_TO_DATE)
+            assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        }
+
+        // when
+        buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=baz").also { result ->
+            // then
+            // Changing a property while the check is disabled has no impact on up-to-date checks
+            assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.UP_TO_DATE)
+        }
     }
 }
