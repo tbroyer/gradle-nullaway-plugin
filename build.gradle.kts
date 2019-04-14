@@ -7,7 +7,7 @@ plugins {
     `kotlin-dsl`
     `maven-publish`
     id("com.gradle.plugin-publish") version "0.10.1"
-    id("com.diffplug.gradle.spotless") version "3.20.0"
+    id("com.diffplug.gradle.spotless") version "3.23.0"
 }
 
 group = "net.ltgt.gradle"
@@ -35,7 +35,7 @@ gradle.taskGraph.whenReady {
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
 
-val errorpronePluginVersion = "0.7.1"
+val errorpronePluginVersion = "0.8"
 
 repositories {
     mavenCentral()
@@ -46,15 +46,15 @@ dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     testImplementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
 
-    testImplementation("com.google.truth:truth:0.43") {
+    testImplementation("com.google.truth:truth:0.44") {
         exclude(group = "junit", module = "junit")
     }
     testRuntimeOnly("junit:junit:4.12")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    additionalPluginClasspath("com.android.tools.build:gradle:3.3.2")
+    additionalPluginClasspath("com.android.tools.build:gradle:3.4.0")
 }
 
 tasks {
@@ -102,7 +102,7 @@ buildScan {
 }
 
 spotless {
-    val ktlintVersion = "0.31.0"
+    val ktlintVersion = "0.32.0"
     kotlin {
         ktlint(ktlintVersion)
     }
