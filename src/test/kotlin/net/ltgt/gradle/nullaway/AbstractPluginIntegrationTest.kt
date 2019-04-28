@@ -206,6 +206,7 @@ abstract class AbstractPluginIntegrationTest(
                     castToNonNullMethod.set("com.foo.Bar.castToNonNull")
                     checkOptionalEmptinessCustomClasses.add("com.foo.Optional")
                     autoFixSuppressionComment.set("Auto-fix\\u0020suppression")
+                    handleTestAssertionLibraries.set(true)
                 }
             }
         """.trimIndent())
