@@ -3,10 +3,7 @@ package net.ltgt.gradle.nullaway
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.TruthJUnit.assume
 import java.io.File
-import org.gradle.testkit.runner.BuildResult
-import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
-import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -15,15 +12,6 @@ abstract class AbstractPluginIntegrationTest(
     private val buildFileContent: String,
     private val compileTaskName: String
 ) {
-    companion object {
-        internal val testGradleVersion = System.getProperty("test.gradle-version", GradleVersion.current().version)
-
-        internal const val errorproneVersion = "2.3.3"
-        internal const val errorproneJavacVersion = "9+181-r4173-1"
-        internal const val nullawayVersion = "0.7.4"
-
-        internal const val FAILURE_SOURCE_COMPILATION_ERROR = "Failure.java:8: warning: [NullAway]"
-    }
 
     @TempDir
     lateinit var testProjectDir: File
@@ -64,68 +52,6 @@ abstract class AbstractPluginIntegrationTest(
         }
     }
 
-    protected fun writeSuccessSource() {
-        File(testProjectDir.resolve("src/main/java/test").apply { mkdirs() }, "Success.java").apply {
-            createNewFile()
-            writeText(
-                """
-                package test;
-
-                public class Success {
-                    static void log(@Nullable Object x) {
-                        if (x != null) {
-                            System.out.println(x.toString());
-                        }
-                    }
-                    static void foo() {
-                        log(null);
-                    }
-                }
-
-                @interface Nullable {}
-                """.trimIndent()
-            )
-        }
-    }
-
-    protected fun writeFailureSource() {
-        File(testProjectDir.resolve("src/main/java/test").apply { mkdirs() }, "Failure.java").apply {
-            createNewFile()
-            writeText(
-                """
-                package test;
-
-                public class Failure {
-                    static void log(Object x) {
-                        System.out.println(x.toString());
-                    }
-                    static void foo() {
-                        log(null);
-                    }
-                }
-                """.trimIndent()
-            )
-        }
-    }
-
-    protected fun buildWithArgs(vararg tasks: String): BuildResult {
-        return prepareBuild(*tasks)
-            .build()
-    }
-
-    protected fun buildWithArgsAndFail(vararg tasks: String): BuildResult {
-        return prepareBuild(*tasks)
-            .buildAndFail()
-    }
-
-    private fun prepareBuild(vararg tasks: String): GradleRunner {
-        return GradleRunner.create()
-            .withGradleVersion(testGradleVersion)
-            .withProjectDir(testProjectDir)
-            .withPluginClasspath()
-            .withArguments(*tasks)
-    }
-
     @Test
     fun `missing annotated packages option`() {
         // given
@@ -137,10 +63,10 @@ abstract class AbstractPluginIntegrationTest(
             }
             """.trimIndent()
         )
-        writeSuccessSource()
+        testProjectDir.writeSuccessSource()
 
         // when
-        val result = buildWithArgsAndFail(compileTaskName)
+        val result = testProjectDir.buildWithArgsAndFail(compileTaskName)
 
         // then
         assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.FAILED)
@@ -150,10 +76,10 @@ abstract class AbstractPluginIntegrationTest(
     @Test
     fun `compilation succeeds`() {
         // given
-        writeSuccessSource()
+        testProjectDir.writeSuccessSource()
 
         // when
-        val result = buildWithArgs(compileTaskName)
+        val result = testProjectDir.buildWithArgs(compileTaskName)
 
         // then
         assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
@@ -162,10 +88,10 @@ abstract class AbstractPluginIntegrationTest(
     @Test
     fun `compilation fails`() {
         // given
-        writeFailureSource()
+        testProjectDir.writeFailureSource()
 
         // when
-        val result = buildWithArgsAndFail(compileTaskName)
+        val result = testProjectDir.buildWithArgsAndFail(compileTaskName)
 
         // then
         assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.FAILED)
@@ -183,10 +109,10 @@ abstract class AbstractPluginIntegrationTest(
             }
             """.trimIndent()
         )
-        writeFailureSource()
+        testProjectDir.writeFailureSource()
 
         // when
-        val result = buildWithArgs(compileTaskName)
+        val result = testProjectDir.buildWithArgs(compileTaskName)
 
         // then
         assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
@@ -222,10 +148,10 @@ abstract class AbstractPluginIntegrationTest(
             }
             """.trimIndent()
         )
-        writeSuccessSource()
+        testProjectDir.writeSuccessSource()
 
         // when
-        val result = buildWithArgs(compileTaskName)
+        val result = testProjectDir.buildWithArgs(compileTaskName)
 
         // then
         assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
@@ -247,30 +173,30 @@ abstract class AbstractPluginIntegrationTest(
             }
             """.trimIndent()
         )
-        writeSuccessSource()
+        testProjectDir.writeSuccessSource()
 
         // when
-        buildWithArgs(compileTaskName, "-Pautofix-comment=foo").also { result ->
+        testProjectDir.buildWithArgs(compileTaskName, "-Pautofix-comment=foo").also { result ->
             // then
             assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         }
 
         // when
-        buildWithArgs(compileTaskName, "-Pautofix-comment=bar").also { result ->
+        testProjectDir.buildWithArgs(compileTaskName, "-Pautofix-comment=bar").also { result ->
             // then
             // (specifically, we don't want UP_TO_DATE)
             assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         }
 
         // when
-        buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=bar").also { result ->
+        testProjectDir.buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=bar").also { result ->
             // then
             // (specifically, we don't want UP_TO_DATE)
             assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         }
 
         // when
-        buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=baz").also { result ->
+        testProjectDir.buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=baz").also { result ->
             // then
             // Changing a property while the check is disabled has no impact on up-to-date checks
             assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.UP_TO_DATE)
