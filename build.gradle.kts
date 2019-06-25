@@ -7,7 +7,7 @@ plugins {
     `kotlin-dsl`
     `maven-publish`
     id("com.gradle.plugin-publish") version "0.10.1"
-    id("com.diffplug.gradle.spotless") version "3.23.0"
+    id("org.jlleitschuh.gradle.ktlint") version "8.1.0"
 }
 
 group = "net.ltgt.gradle"
@@ -105,14 +105,10 @@ buildScan {
     termsOfServiceAgree = "yes"
 }
 
-spotless {
-    val ktlintVersion = "0.32.0"
-    kotlin {
-        ktlint(ktlintVersion)
-    }
-    kotlinGradle {
-        ktlint(ktlintVersion)
-    }
+ktlint {
+    version.set("0.33.0")
+    outputToConsole.set(true)
+    reporters.empty()
 }
 
 fun String.execute(envp: Array<String>?, workingDir: File?) =
