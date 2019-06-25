@@ -93,8 +93,8 @@ class GroovyDslIntegrationTest {
                     acknowledgeRestrictiveAnnotations = true
                     checkOptionalEmptiness = true
                     isSuggestSuppressions().set(true)
-                    isAssertsEnabled().set(true)
-                    isExhaustiveOverride().set(true)
+                    assertsEnabled = true
+                    exhaustiveOverride = true
                     castToNonNullMethod = "com.foo.Bar.castToNonNull"
                     checkOptionalEmptinessCustomClasses = ["com.foo.Optional"]
                     autoFixSuppressionComment = "Auto-fix\\u0020suppression"
