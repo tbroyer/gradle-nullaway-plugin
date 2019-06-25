@@ -137,7 +137,7 @@ abstract class AbstractPluginIntegrationTest(
                     treatGeneratedAsUnannotated.set(true)
                     acknowledgeRestrictiveAnnotations.set(true)
                     checkOptionalEmptiness.set(true)
-                    isSuggestSuppressions.set(true)
+                    suggestSuppressions.set(true)
                     isAssertsEnabled.set(true)
                     isExhaustiveOverride.set(true)
                     castToNonNullMethod.set("com.foo.Bar.castToNonNull")

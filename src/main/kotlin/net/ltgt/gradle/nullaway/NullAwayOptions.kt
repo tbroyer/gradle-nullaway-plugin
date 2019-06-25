@@ -25,7 +25,7 @@ open class NullAwayOptions internal constructor(
     @get:Input @get:Optional val treatGeneratedAsUnannotated = objectFactory.property<Boolean>()
     @get:Input @get:Optional val acknowledgeRestrictiveAnnotations = objectFactory.property<Boolean>()
     @get:Input @get:Optional val checkOptionalEmptiness = objectFactory.property<Boolean>()
-    @get:Input @get:Optional val isSuggestSuppressions = objectFactory.property<Boolean>()
+    @get:Input @get:Optional val suggestSuppressions = objectFactory.property<Boolean>()
     @get:JvmName("getAssertsEnabled")
     @get:Input @get:Optional val isAssertsEnabled = objectFactory.property<Boolean>()
     @get:JvmName("getExhaustiveOverride")
@@ -49,7 +49,7 @@ open class NullAwayOptions internal constructor(
         booleanOption("TreatGeneratedAsUnannotated", treatGeneratedAsUnannotated),
         booleanOption("AcknowledgeRestrictiveAnnotations", acknowledgeRestrictiveAnnotations),
         booleanOption("CheckOptionalEmptiness", checkOptionalEmptiness),
-        booleanOption("SuggestSuppressions", isSuggestSuppressions),
+        booleanOption("SuggestSuppressions", suggestSuppressions),
         booleanOption("AssertsEnabled", isAssertsEnabled),
         booleanOption("ExhaustiveOverride", isExhaustiveOverride),
         stringOption("CastToNonNullMethod", castToNonNullMethod),

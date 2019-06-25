@@ -92,7 +92,7 @@ class GroovyDslIntegrationTest {
                     treatGeneratedAsUnannotated = true
                     acknowledgeRestrictiveAnnotations = true
                     checkOptionalEmptiness = true
-                    isSuggestSuppressions().set(true)
+                    suggestSuppressions = true
                     assertsEnabled = true
                     exhaustiveOverride = true
                     castToNonNullMethod = "com.foo.Bar.castToNonNull"

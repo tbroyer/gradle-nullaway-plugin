@@ -87,7 +87,7 @@ tasks.withType<JavaCompile>().configureEach {
 | `acknowledgeRestrictiveAnnotations` | If set to true, NullAway will acknowledge nullability annotations whenever they are available in _unannotated_ code and also more restrictive than it's optimistic defaults.
 | `checkOptionalEmptiness`            | If set to true, NullAway will check for `.get()` accesses to potentially empty `Optional` values, analogously to how it handles dereferences to `@Nullable` values.
 | `checkOptionalEmptinessCustomClasses` | A list of classes to be treated as `Optional` implementations (e.g. Guava's `com.google.common.base.Optional`).
-| `isSuggestSuppressions`        | If set to true, NullAway will use Error Prone's suggested fix functionality to suggest suppressing any warning that it finds.
+| `suggestSuppressions`          | If set to true, NullAway will use Error Prone's suggested fix functionality to suggest suppressing any warning that it finds.
 | `autoFixSuppressionComment`    | A comment that will be added alongside the `@SuppressWarnings("NullAway")` annotation when `isSuggestSuppressions` is set to true.
 | `castToNonNullMethod`          | The fully qualified name of a method to be used for downcasting to a non-null value rather than standard suppressions in some instances.
 | `assertsEnabled`               | (`isAssertsEnabled` with Kotlin DSL) If set to true, NullAway will handle assertions, and use that to reason about the possibility of null dereferences in the code that follows these assertions. This assumes that assertions will always be enabled at runtime.
