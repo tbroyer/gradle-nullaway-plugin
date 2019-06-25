@@ -86,3 +86,10 @@ tasks.withType<JavaCompile>().configureEach {
 | `treatGeneratedAsUnannotated`  | If set to true, NullAway treats any class annotated with `@Generated` as if its APIs are unannotated when analyzing uses from other classes.
 | `acknowledgeRestrictiveAnnotations` | If set to true, NullAway will acknowledge nullability annotations whenever they are available in _unannotated_ code and also more restrictive than it's optimistic defaults.
 | `checkOptionalEmptiness`            | If set to true, NullAway will check for `.get()` accesses to potentially empty `Optional` values, analogously to how it handles dereferences to `@Nullable` values.
+| `checkOptionalEmptinessCustomClasses` | A list of classes to be treated as `Optional` implementations (e.g. Guava's `com.google.common.base.Optional`).
+| `isSuggestSuppressions`        | If set to true, NullAway will use Error Prone's suggested fix functionality to suggest suppressing any warning that it finds.
+| `autoFixSuppressionComment`    | A comment that will be added alongside the `@SuppressWarnings("NullAway")` annotation when `isSuggestSuppressions` is set to true.
+| `castToNonNullMethod`          | The fully qualified name of a method to be used for downcasting to a non-null value rather than standard suppressions in some instances.
+| `isAssertsEnabled`             | If set to true, NullAway will handle assertions, and use that to reason about the possibility of null dereferences in the code that follows these assertions. This assumes that assertions will always be enabled at runtime.
+| `handleTestAssertionLibraries` | If set to true, NullAway will handle assertions from test libraries, like `assertThat(...).isNotNull()`, and use that to reason about the possibility of null dereferences in the code that follows these assertions.
+| `isExhaustiveOverride`         | If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation.
