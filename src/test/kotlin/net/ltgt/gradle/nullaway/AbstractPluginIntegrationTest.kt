@@ -20,7 +20,7 @@ abstract class AbstractPluginIntegrationTest(
 
         internal const val errorproneVersion = "2.3.3"
         internal const val errorproneJavacVersion = "9+181-r4173-1"
-        internal const val nullawayVersion = "0.7.2"
+        internal const val nullawayVersion = "0.7.4"
 
         internal const val FAILURE_SOURCE_COMPILATION_ERROR = "Failure.java:8: warning: [NullAway]"
     }

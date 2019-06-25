@@ -2,7 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.gradle.build-scan") version "2.2.1"
+    id("com.gradle.build-scan") version "2.3"
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
@@ -35,7 +35,7 @@ gradle.taskGraph.whenReady {
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
 
-val errorpronePluginVersion = "0.8"
+val errorpronePluginVersion = "0.8.1"
 
 repositories {
     mavenCentral()
@@ -46,7 +46,7 @@ dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     testImplementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
 
-    testImplementation("com.google.truth:truth:0.44") {
+    testImplementation("com.google.truth:truth:0.45") {
         // See https://github.com/google/truth/issues/333
         exclude(group = "junit", module = "junit")
     }
@@ -58,7 +58,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    additionalPluginClasspath("com.android.tools.build:gradle:3.4.0")
+    additionalPluginClasspath("com.android.tools.build:gradle:3.4.1")
 }
 
 tasks {
