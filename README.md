@@ -74,6 +74,7 @@ tasks.withType<JavaCompile>().configureEach {
 | Property | Description
 | :------- | :----------
 | `severity`               | The check severity. Equivalent to `options.errorprone.check("NullAway", severity)`. Can be set to `CheckSeverity.OFF` to disable NullAway.
+| `annotatedPackages`      | The list of packages that should be considered properly annotated according to the NullAway convention. This can be used to add to or override the `annotatedPackages` at the project level.
 | `unannotatedSubPackages` | A list of subpackages to be excluded from the AnnotatedPackages list.
 | `unannotatedClasses`     | A list of classes within annotated packages that should be treated as unannotated.
 | `knownInitializers`      | The fully qualified name of those methods from third-party libraries that NullAway should treat as initializers.
