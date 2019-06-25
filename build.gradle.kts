@@ -109,6 +109,7 @@ ktlint {
     version.set("0.33.0")
     outputToConsole.set(true)
     reporters.empty()
+    enableExperimentalRules.set(true)
 }
 
 fun String.execute(envp: Array<String>?, workingDir: File?) =

@@ -3,7 +3,8 @@ package net.ltgt.gradle.nullaway
 import net.ltgt.gradle.errorprone.ErrorPronePlugin
 
 class NullAwayPluginIntegrationTest : AbstractPluginIntegrationTest(
-    buildFileContent = """
+    buildFileContent =
+        """
         plugins {
             `java-library`
             id("${ErrorPronePlugin.PLUGIN_ID}")

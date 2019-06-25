@@ -2,6 +2,7 @@ package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.TruthJUnit.assume
+import java.io.File
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
@@ -9,7 +10,6 @@ import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
-import java.io.File
 
 abstract class AbstractPluginIntegrationTest(
     private val buildFileContent: String,
@@ -36,7 +36,8 @@ abstract class AbstractPluginIntegrationTest(
             createNewFile()
         }
         buildFile = testProjectDir.resolve("build.gradle.kts").apply {
-            writeText("""
+            writeText(
+                """
                 import net.ltgt.gradle.errorprone.*
                 import net.ltgt.gradle.nullaway.nullaway
 
@@ -58,14 +59,16 @@ abstract class AbstractPluginIntegrationTest(
                 nullaway {
                     annotatedPackages.add("test")
                 }
-            """.trimIndent())
+                """.trimIndent()
+            )
         }
     }
 
     protected fun writeSuccessSource() {
         File(testProjectDir.resolve("src/main/java/test").apply { mkdirs() }, "Success.java").apply {
             createNewFile()
-            writeText("""
+            writeText(
+                """
                 package test;
 
                 public class Success {
@@ -80,14 +83,16 @@ abstract class AbstractPluginIntegrationTest(
                 }
 
                 @interface Nullable {}
-            """.trimIndent())
+                """.trimIndent()
+            )
         }
     }
 
     protected fun writeFailureSource() {
         File(testProjectDir.resolve("src/main/java/test").apply { mkdirs() }, "Failure.java").apply {
             createNewFile()
-            writeText("""
+            writeText(
+                """
                 package test;
 
                 public class Failure {
@@ -98,7 +103,8 @@ abstract class AbstractPluginIntegrationTest(
                         log(null);
                     }
                 }
-            """.trimIndent())
+                """.trimIndent()
+            )
         }
     }
 
@@ -123,12 +129,14 @@ abstract class AbstractPluginIntegrationTest(
     @Test
     fun `missing annotated packages option`() {
         // given
-        buildFile.appendText("""
+        buildFile.appendText(
+            """
 
             nullaway {
                 annotatedPackages.empty()
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
         writeSuccessSource()
 
         // when
@@ -167,12 +175,14 @@ abstract class AbstractPluginIntegrationTest(
     @Test
     fun `can disable nullaway`() {
         // given
-        buildFile.appendText("""
+        buildFile.appendText(
+            """
 
             tasks.withType<JavaCompile>().configureEach {
                 options.errorprone.nullaway.severity.set(CheckSeverity.OFF)
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
         writeFailureSource()
 
         // when
@@ -185,7 +195,8 @@ abstract class AbstractPluginIntegrationTest(
     @Test
     fun `can configure nullaway`() {
         // given
-        buildFile.appendText("""
+        buildFile.appendText(
+            """
 
             tasks.withType<JavaCompile>().configureEach {
                 options.errorprone.nullaway {
@@ -209,7 +220,8 @@ abstract class AbstractPluginIntegrationTest(
                     handleTestAssertionLibraries.set(true)
                 }
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
         writeSuccessSource()
 
         // when
@@ -222,7 +234,8 @@ abstract class AbstractPluginIntegrationTest(
     @Test
     fun `plays nicely with up-to-date checks`() {
         // given
-        buildFile.appendText("""
+        buildFile.appendText(
+            """
 
             tasks.withType<JavaCompile>().configureEach {
                 options.errorprone.nullaway {
@@ -232,7 +245,8 @@ abstract class AbstractPluginIntegrationTest(
                     autoFixSuppressionComment.set(project.property("autofix-comment") as String)
                 }
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
         writeSuccessSource()
 
         // when
