@@ -12,10 +12,6 @@ open class NullAwayOptions internal constructor(
     objectFactory: ObjectFactory,
     nullawayExtension: NullAwayExtension
 ) {
-    companion object {
-        const val NAME = "nullaway"
-    }
-
     @get:Input val severity = objectFactory.property<CheckSeverity>().convention(CheckSeverity.DEFAULT)
     @get:Input val annotatedPackages = objectFactory.listProperty<String>().convention(nullawayExtension.annotatedPackages)
     @get:Input @get:Optional val unannotatedSubPackages = objectFactory.listProperty<String>()

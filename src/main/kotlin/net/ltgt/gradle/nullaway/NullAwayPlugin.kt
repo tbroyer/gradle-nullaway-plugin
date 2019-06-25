@@ -18,7 +18,7 @@ import org.gradle.kotlin.dsl.withType
 import org.gradle.process.CommandLineArgumentProvider
 import org.gradle.util.GradleVersion
 
-internal const val EXTENSION_NAME = "nullaway"
+private const val EXTENSION_NAME = "nullaway"
 
 class NullAwayPlugin : Plugin<Project> {
     companion object {
