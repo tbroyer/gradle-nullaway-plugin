@@ -14,26 +14,46 @@ open class NullAwayOptions internal constructor(
 ) {
     @get:Input val severity = objectFactory.property<CheckSeverity>().convention(CheckSeverity.DEFAULT)
     @get:Input val annotatedPackages = objectFactory.listProperty<String>().convention(nullawayExtension.annotatedPackages)
-    @get:Input @get:Optional val unannotatedSubPackages = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val unannotatedClasses = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val knownInitializers = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val excludedClassAnnotations = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val excludedClasses = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val excludedFieldAnnotations = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val customInitializerAnnotations = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val externalInitAnnotations = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val treatGeneratedAsUnannotated = objectFactory.property<Boolean>()
-    @get:Input @get:Optional val acknowledgeRestrictiveAnnotations = objectFactory.property<Boolean>()
-    @get:Input @get:Optional val checkOptionalEmptiness = objectFactory.property<Boolean>()
-    @get:Input @get:Optional val suggestSuppressions = objectFactory.property<Boolean>()
+    @get:Input @get:Optional
+    val unannotatedSubPackages = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val unannotatedClasses = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val knownInitializers = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val excludedClassAnnotations = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val excludedClasses = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val excludedFieldAnnotations = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val customInitializerAnnotations = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val externalInitAnnotations = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val treatGeneratedAsUnannotated = objectFactory.property<Boolean>()
+    @get:Input @get:Optional
+    val acknowledgeRestrictiveAnnotations = objectFactory.property<Boolean>()
+    @get:Input @get:Optional
+    val checkOptionalEmptiness = objectFactory.property<Boolean>()
+    @get:Input @get:Optional
+    val suggestSuppressions = objectFactory.property<Boolean>()
     @get:JvmName("getAssertsEnabled")
-    @get:Input @get:Optional val isAssertsEnabled = objectFactory.property<Boolean>()
+    @get:Input
+    @get:Optional
+    val isAssertsEnabled = objectFactory.property<Boolean>()
     @get:JvmName("getExhaustiveOverride")
-    @get:Input @get:Optional val isExhaustiveOverride = objectFactory.property<Boolean>()
-    @get:Input @get:Optional val castToNonNullMethod = objectFactory.property<String>()
-    @get:Input @get:Optional val checkOptionalEmptinessCustomClasses = objectFactory.listProperty<String>()
-    @get:Input @get:Optional val autoFixSuppressionComment = objectFactory.property<String>()
-    @get:Input @get:Optional val handleTestAssertionLibraries = objectFactory.property<Boolean>()
+    @get:Input
+    @get:Optional
+    val isExhaustiveOverride = objectFactory.property<Boolean>()
+    @get:Input @get:Optional
+    val castToNonNullMethod = objectFactory.property<String>()
+    @get:Input @get:Optional
+    val checkOptionalEmptinessCustomClasses = objectFactory.listProperty<String>()
+    @get:Input @get:Optional
+    val autoFixSuppressionComment = objectFactory.property<String>()
+    @get:Input @get:Optional
+    val handleTestAssertionLibraries = objectFactory.property<Boolean>()
 
     internal fun asArguments(): Iterable<String> = sequenceOf(
         "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",

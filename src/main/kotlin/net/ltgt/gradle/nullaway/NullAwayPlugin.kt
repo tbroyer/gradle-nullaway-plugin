@@ -39,7 +39,9 @@ class NullAwayPlugin : Plugin<Project> {
                     override fun getName() = EXTENSION_NAME
 
                     @Suppress("unused")
-                    @Nested @Optional fun getNullAwayOptions() = nullawayOptions.severity.flatMap { severity ->
+                    @Nested
+                    @Optional
+                    fun getNullAwayOptions() = nullawayOptions.severity.flatMap { severity ->
                         provider { nullawayOptions.takeUnless { severity == CheckSeverity.OFF } }
                     }
 
