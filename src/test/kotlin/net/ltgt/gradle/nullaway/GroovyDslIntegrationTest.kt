@@ -99,6 +99,7 @@ class GroovyDslIntegrationTest {
                     checkOptionalEmptinessCustomClasses = ["com.foo.Optional"]
                     autoFixSuppressionComment = "Auto-fix\\u0020suppression"
                     handleTestAssertionLibraries = true
+                    acknowledgeAndroidRecent = true
                 }
             }
             """.trimIndent()

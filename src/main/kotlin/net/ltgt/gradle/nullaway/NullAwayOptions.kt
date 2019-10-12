@@ -54,6 +54,8 @@ open class NullAwayOptions internal constructor(
     val autoFixSuppressionComment = objectFactory.property<String>()
     @get:Input @get:Optional
     val handleTestAssertionLibraries = objectFactory.property<Boolean>()
+    @get:Input @get:Optional
+    val acknowledgeAndroidRecent = objectFactory.property<Boolean>()
 
     internal fun asArguments(): Iterable<String> = sequenceOf(
         "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
@@ -75,7 +77,8 @@ open class NullAwayOptions internal constructor(
         stringOption("CastToNonNullMethod", castToNonNullMethod),
         listOption("CheckOptionalEmptinessCustomClasses", checkOptionalEmptinessCustomClasses),
         stringOption("AutoFixSuppressionComment", autoFixSuppressionComment),
-        booleanOption("HandleTestAssertionLibraries", handleTestAssertionLibraries)
+        booleanOption("HandleTestAssertionLibraries", handleTestAssertionLibraries),
+        booleanOption("AcknowledgeAndroidRecent", acknowledgeAndroidRecent)
     )
         .filterNotNull()
         .asIterable()
