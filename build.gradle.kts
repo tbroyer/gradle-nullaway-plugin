@@ -46,7 +46,7 @@ dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     testImplementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
 
-    testImplementation("com.google.truth:truth:0.45") {
+    testImplementation("com.google.truth:truth:1.0") {
         // See https://github.com/google/truth/issues/333
         exclude(group = "junit", module = "junit")
     }
@@ -54,8 +54,8 @@ dependencies {
         // See https://github.com/google/truth/issues/333
         because("Truth needs it")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     additionalPluginClasspath("com.android.tools.build:gradle:3.4.1")
