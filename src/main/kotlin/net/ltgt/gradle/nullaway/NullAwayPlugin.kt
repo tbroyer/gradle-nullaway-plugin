@@ -9,6 +9,7 @@ import org.gradle.api.Named
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.compile.JavaCompile
@@ -36,7 +37,7 @@ class NullAwayPlugin : Plugin<Project> {
             tasks.withType<JavaCompile>().configureEach {
                 val nullawayOptions = (options.errorprone as ExtensionAware).extensions.create(EXTENSION_NAME, NullAwayOptions::class, extension)
                 options.errorprone.errorproneArgumentProviders.add(object : CommandLineArgumentProvider, Named {
-                    override fun getName() = EXTENSION_NAME
+                    @Internal override fun getName() = EXTENSION_NAME
 
                     @Suppress("unused")
                     @Nested
