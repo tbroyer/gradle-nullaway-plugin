@@ -45,19 +45,19 @@ dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     testImplementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
 
-    testImplementation("com.google.truth:truth:1.0") {
+    testImplementation("com.google.truth:truth:1.0.1") {
         // See https://github.com/google/truth/issues/333
         exclude(group = "junit", module = "junit")
     }
-    testRuntimeOnly("junit:junit:4.12") {
+    testRuntimeOnly("junit:junit:4.13") {
         // See https://github.com/google/truth/issues/333
         because("Truth needs it")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    additionalPluginClasspath("com.android.tools.build:gradle:3.5.1")
+    additionalPluginClasspath("com.android.tools.build:gradle:3.5.3")
 }
 
 tasks {
@@ -100,7 +100,7 @@ pluginBundle {
 }
 
 ktlint {
-    version.set("0.35.0")
+    version.set("0.36.0")
     outputToConsole.set(true)
     enableExperimentalRules.set(true)
 }

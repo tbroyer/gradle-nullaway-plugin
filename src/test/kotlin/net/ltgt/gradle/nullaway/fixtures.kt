@@ -7,9 +7,9 @@ import org.gradle.util.GradleVersion
 
 val testGradleVersion = System.getProperty("test.gradle-version", GradleVersion.current().version)
 
-const val errorproneVersion = "2.3.3"
+const val errorproneVersion = "2.3.4"
 const val errorproneJavacVersion = "9+181-r4173-1"
-const val nullawayVersion = "0.7.8"
+const val nullawayVersion = "0.7.9"
 
 const val FAILURE_SOURCE_COMPILATION_ERROR = "Failure.java:8: warning: [NullAway]"
 
