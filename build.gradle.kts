@@ -57,7 +57,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    additionalPluginClasspath("com.android.tools.build:gradle:3.5.3")
+    additionalPluginClasspath("com.android.tools.build:gradle:3.6.0")
 }
 
 tasks {
