@@ -1,3 +1,4 @@
+import com.android.Version
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -7,6 +8,7 @@ plugins {
     `maven-publish`
     id("com.gradle.plugin-publish") version "0.12.0"
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+    id("com.android.lint") version "3.6.3"
 }
 
 group = "net.ltgt.gradle"
@@ -57,7 +59,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    additionalPluginClasspath("com.android.tools.build:gradle:3.6.3")
+    additionalPluginClasspath("com.android.tools.build:gradle:${Version.ANDROID_GRADLE_PLUGIN_VERSION}")
 }
 
 tasks {
