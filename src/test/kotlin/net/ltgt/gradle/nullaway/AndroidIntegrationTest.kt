@@ -1,10 +1,10 @@
 package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.TruthJUnit.assume
-import java.io.File
 import net.ltgt.gradle.errorprone.ErrorPronePlugin
 import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.BeforeEach
+import java.io.File
 
 class AndroidIntegrationTest : AbstractPluginIntegrationTest(
     buildFileContent =

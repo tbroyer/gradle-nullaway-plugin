@@ -1,12 +1,12 @@
 package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
-import java.io.File
 import net.ltgt.gradle.errorprone.ErrorPronePlugin
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import java.io.File
 
 class GroovyDslIntegrationTest {
     @TempDir

@@ -1,9 +1,9 @@
 package net.ltgt.gradle.nullaway
 
-import java.io.File
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.util.GradleVersion
+import java.io.File
 
 val testGradleVersion = System.getProperty("test.gradle-version", GradleVersion.current().version)
 

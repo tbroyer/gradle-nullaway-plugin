@@ -2,11 +2,11 @@ package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.TruthJUnit.assume
-import java.io.File
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import java.io.File
 
 abstract class AbstractPluginIntegrationTest(
     private val buildFileContent: String,
