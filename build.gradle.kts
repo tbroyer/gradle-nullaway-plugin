@@ -5,7 +5,7 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "0.10.1"
+    id("com.gradle.plugin-publish") version "0.12.0"
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
 }
 
@@ -34,7 +34,7 @@ gradle.taskGraph.whenReady {
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
 
-val errorpronePluginVersion = "1.0.0"
+val errorpronePluginVersion = "1.2.1"
 
 repositories {
     mavenCentral()
@@ -53,11 +53,11 @@ dependencies {
         // See https://github.com/google/truth/issues/333
         because("Truth needs it")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    additionalPluginClasspath("com.android.tools.build:gradle:3.6.0")
+    additionalPluginClasspath("com.android.tools.build:gradle:3.6.3")
 }
 
 tasks {
