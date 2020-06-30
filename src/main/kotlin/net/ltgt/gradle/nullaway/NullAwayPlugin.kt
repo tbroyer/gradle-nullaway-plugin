@@ -42,8 +42,8 @@ class NullAwayPlugin : Plugin<Project> {
                     @Suppress("unused")
                     @Nested
                     @Optional
-                    fun getNullAwayOptions() = nullawayOptions.severity.flatMap { severity ->
-                        provider { nullawayOptions.takeUnless { severity == CheckSeverity.OFF } }
+                    fun getNullAwayOptions() = nullawayOptions.takeUnless {
+                        nullawayOptions.severity.getOrElse(CheckSeverity.DEFAULT) == CheckSeverity.OFF
                     }
 
                     override fun asArguments() = nullawayOptions.asArguments()
