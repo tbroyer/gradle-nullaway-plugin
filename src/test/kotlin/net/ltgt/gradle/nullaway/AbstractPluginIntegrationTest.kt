@@ -193,14 +193,14 @@ abstract class AbstractPluginIntegrationTest(
         testProjectDir.buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=bar").also { result ->
             // then
             // (specifically, we don't want UP_TO_DATE)
-            assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+            assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         }
 
         // when
         testProjectDir.buildWithArgs(compileTaskName, "-Pdisable-nullaway", "-Pautofix-comment=baz").also { result ->
             // then
             // Changing a property while the check is disabled has no impact on up-to-date checks
-            assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.UP_TO_DATE)
+            assertThat(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.UP_TO_DATE)
         }
     }
 }
