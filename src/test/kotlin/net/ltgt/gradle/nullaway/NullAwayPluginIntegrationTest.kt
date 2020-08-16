@@ -20,16 +20,16 @@ class NullAwayPluginIntegrationTest : AbstractPluginIntegrationTest(
 
     @Test
     fun `is configuration-cache friendly`() {
-        TruthJUnit.assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("6.5"))
+        TruthJUnit.assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("6.6"))
 
         // given
         testProjectDir.writeSuccessSource()
 
         // Prime the configuration cache
-        testProjectDir.buildWithArgs("--configuration-cache=on", "compileJava")
+        testProjectDir.buildWithArgs("--configuration-cache", "compileJava")
 
         // when
-        val result = testProjectDir.buildWithArgs("--configuration-cache=on", "compileJava")
+        val result = testProjectDir.buildWithArgs("--configuration-cache", "compileJava")
 
         // then
         Truth.assertThat(result.output).contains("Reusing configuration cache.")
