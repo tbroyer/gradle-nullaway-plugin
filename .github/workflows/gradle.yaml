@@ -19,10 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup JDK 8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 8
+      - name: Setup environment
+        run: echo "JAVA_HOME=${JAVA_HOME_8_X64}" | tee -a $GITHUB_ENV
 
       - name: Build with Gradle
         id: gradle-build
@@ -50,10 +48,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup JDK 8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 8
+      - name: Setup environment
+        run: echo "JAVA_HOME=${JAVA_HOME_8_X64}" | tee -a $GITHUB_ENV
 
       - name: Cache Gradle test wrapper (${{ matrix.gradle }})
         uses: actions/cache@v1
@@ -89,19 +85,20 @@ jobs:
 
       - name: Setup JDK ${{ matrix.java }}
         id: setup-test-java
+        if: matrix.java != 11
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Setup JDK 8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 8
+      - name: Setup JAVA_HOME_${{ matrix.java }}_X64 environment variable
+        if: matrix.java != 11
+        run: echo "JAVA_HOME_${{ matrix.java }}_X64=${{ steps.setup-test-java.outputs.path }}" | tee -a $GITHUB_ENV
 
-      - name: Setup Gradle toolchains
+      - name: Setup environment
         run: |
+          echo "JAVA_HOME=${JAVA_HOME_8_X64}" | tee -a $GITHUB_ENV
           echo "org.gradle.java.installations.auto-download=false" | tee -a gradle.properties
-          echo "org.gradle.java.installations.paths=${{ steps.setup-test-java.outputs.path }}" | tee -a gradle.properties
+          echo "org.gradle.java.installations.fromEnv=JAVA_HOME_${{ matrix.java }}_X64" | tee -a gradle.properties
 
       - name: Build with Gradle
         id: gradle-build
