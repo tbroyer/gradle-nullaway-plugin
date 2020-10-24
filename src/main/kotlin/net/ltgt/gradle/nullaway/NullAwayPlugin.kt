@@ -36,18 +36,21 @@ class NullAwayPlugin : Plugin<Project> {
         pluginManager.withPlugin(ErrorPronePlugin.PLUGIN_ID) {
             tasks.withType<JavaCompile>().configureEach {
                 val nullawayOptions = (options.errorprone as ExtensionAware).extensions.create(EXTENSION_NAME, NullAwayOptions::class, extension)
-                options.errorprone.errorproneArgumentProviders.add(object : CommandLineArgumentProvider, Named {
-                    @Internal override fun getName() = EXTENSION_NAME
+                options.errorprone.errorproneArgumentProviders.add(
+                    object : CommandLineArgumentProvider, Named {
 
-                    @Suppress("unused")
-                    @Nested
-                    @Optional
-                    fun getNullAwayOptions() = nullawayOptions.takeUnless {
-                        nullawayOptions.severity.getOrElse(CheckSeverity.DEFAULT) == CheckSeverity.OFF
+                        @Internal override fun getName() = EXTENSION_NAME
+
+                        @Suppress("unused")
+                        @Nested
+                        @Optional
+                        fun getNullAwayOptions() = nullawayOptions.takeUnless {
+                            nullawayOptions.severity.getOrElse(CheckSeverity.DEFAULT) == CheckSeverity.OFF
+                        }
+
+                        override fun asArguments() = nullawayOptions.asArguments()
                     }
-
-                    override fun asArguments() = nullawayOptions.asArguments()
-                })
+                )
             }
         }
     }
