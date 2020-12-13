@@ -75,6 +75,8 @@ _Please note that all properties are [lazy](https://docs.gradle.org/current/user
 so while you can use `=` in place of `.set(…)` in the Groovy DSL,
 you cannot use `<<` or `+=` to add to lists for instance._
 
+Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName]=[value]` Error Prone argument.
+
 | Property | Description
 | :------- | :----------
 | `severity`               | The check severity. Equivalent to `options.errorprone.check("NullAway", severity)`. Can be set to `CheckSeverity.OFF` to disable NullAway.
