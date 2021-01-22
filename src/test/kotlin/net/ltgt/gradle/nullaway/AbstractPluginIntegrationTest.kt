@@ -1,7 +1,6 @@
 package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
-import com.google.common.truth.TruthJUnit.assume
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -177,10 +176,7 @@ abstract class AbstractPluginIntegrationTest(
         testProjectDir.writeSuccessSource()
 
         // when
-        testProjectDir.buildWithArgs(compileTaskName, "-Pautofix-comment=foo").also { result ->
-            // then
-            assume().that(result.task(compileTaskName)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        }
+        testProjectDir.buildWithArgs(compileTaskName, "-Pautofix-comment=foo")
 
         // when
         testProjectDir.buildWithArgs(compileTaskName, "-Pautofix-comment=bar").also { result ->

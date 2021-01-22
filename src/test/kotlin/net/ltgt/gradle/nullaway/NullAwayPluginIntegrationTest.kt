@@ -1,9 +1,7 @@
 package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth
-import com.google.common.truth.TruthJUnit
 import net.ltgt.gradle.errorprone.ErrorPronePlugin
-import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.Test
 
 class NullAwayPluginIntegrationTest : AbstractPluginIntegrationTest(
@@ -20,8 +18,6 @@ class NullAwayPluginIntegrationTest : AbstractPluginIntegrationTest(
 
     @Test
     fun `is configuration-cache friendly`() {
-        TruthJUnit.assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("6.6"))
-
         // given
         testProjectDir.writeSuccessSource()
 
