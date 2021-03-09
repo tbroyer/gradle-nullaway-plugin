@@ -100,3 +100,4 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `handleTestAssertionLibraries` | If set to true, NullAway will handle assertions from test libraries, like `assertThat(...).isNotNull()`, and use that to reason about the possibility of null dereferences in the code that follows these assertions.
 | `exhaustiveOverride`           | (`isExhaustiveOverride` with Kotlin DSL) If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation.
 | `acknowledgeAndroidRecent`     | If set to true, treats `@RecentlyNullable` as `@Nullable`, and `@RecentlyNonNull` as `@NonNull`; requires that `acknowledgeRestrictiveAnnotations` is also set to true.
+| `checkContracts`               | If set to true, NullAway will check `@Contract` annotations.

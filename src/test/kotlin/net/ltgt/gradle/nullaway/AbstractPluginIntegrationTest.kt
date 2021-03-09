@@ -145,6 +145,7 @@ abstract class AbstractPluginIntegrationTest(
                     autoFixSuppressionComment.set("Auto-fix\\u0020suppression")
                     handleTestAssertionLibraries.set(true)
                     acknowledgeAndroidRecent.set(true)
+                    checkContracts.set(true)
                 }
             }
             """.trimIndent()

@@ -100,6 +100,7 @@ class GroovyDslIntegrationTest {
                     autoFixSuppressionComment = "Auto-fix\\u0020suppression"
                     handleTestAssertionLibraries = true
                     acknowledgeAndroidRecent = true
+                    checkContracts = true
                 }
             }
             """.trimIndent()
