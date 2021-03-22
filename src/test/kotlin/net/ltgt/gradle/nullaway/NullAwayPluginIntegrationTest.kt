@@ -1,8 +1,9 @@
 package net.ltgt.gradle.nullaway
 
-import com.google.common.truth.Truth
-import com.google.common.truth.TruthJUnit
+import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.TruthJUnit.assume
 import net.ltgt.gradle.errorprone.ErrorPronePlugin
+import org.gradle.api.JavaVersion
 import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.Test
 
@@ -19,7 +20,11 @@ class NullAwayPluginIntegrationTest : AbstractPluginIntegrationTest(
 
     @Test
     fun `is configuration-cache friendly`() {
-        TruthJUnit.assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("6.6"))
+        assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("6.6"))
+        assume().that(
+            JavaVersion.current() < JavaVersion.VERSION_16 ||
+                GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0")
+        ).isTrue()
 
         // given
         testProjectDir.writeSuccessSource()
@@ -31,6 +36,6 @@ class NullAwayPluginIntegrationTest : AbstractPluginIntegrationTest(
         val result = testProjectDir.buildWithArgs("--configuration-cache", "compileJava")
 
         // then
-        Truth.assertThat(result.output).contains("Reusing configuration cache.")
+        assertThat(result.output).contains("Reusing configuration cache.")
     }
 }
