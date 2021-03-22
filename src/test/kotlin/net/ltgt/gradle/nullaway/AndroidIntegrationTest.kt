@@ -7,8 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import java.io.File
 
 class AndroidIntegrationTest : AbstractPluginIntegrationTest(
-    buildFileContent =
-        """
+    buildFileContent = """
         plugins {
             id("${ErrorPronePlugin.PLUGIN_ID}")
             id("${NullAwayPlugin.PLUGIN_ID}")
@@ -37,7 +36,7 @@ class AndroidIntegrationTest : AbstractPluginIntegrationTest(
 ) {
     @BeforeEach
     fun setupAndroid() {
-        assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("5.6.4"))
+        assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("6.5"))
 
         File(testProjectDir.resolve("src/main").apply { mkdirs() }, "AndroidManifest.xml").writeText(
             """

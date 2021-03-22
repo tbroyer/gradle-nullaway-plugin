@@ -7,8 +7,7 @@ import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.Test
 
 class NullAwayPluginIntegrationTest : AbstractPluginIntegrationTest(
-    buildFileContent =
-        """
+    buildFileContent = """
         plugins {
             `java-library`
             id("${ErrorPronePlugin.PLUGIN_ID}")
