@@ -24,6 +24,10 @@ dependencyLocking {
 
 group = "net.ltgt.gradle"
 
+kotlinDslPluginOptions {
+    experimentalWarning.set(false)
+}
+
 tasks.withType<KotlinCompile>().configureEach {
     // This is the version used in Gradle 5.2, for backwards compatibility when we'll upgrade
     kotlinOptions.apiVersion = "1.3"
