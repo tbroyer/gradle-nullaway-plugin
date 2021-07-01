@@ -101,3 +101,4 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `exhaustiveOverride`           | (`isExhaustiveOverride` with Kotlin DSL) If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation.
 | `acknowledgeAndroidRecent`     | If set to true, treats `@RecentlyNullable` as `@Nullable`, and `@RecentlyNonNull` as `@NonNull`; requires that `acknowledgeRestrictiveAnnotations` is also set to true.
 | `checkContracts`               | If set to true, NullAway will check `@Contract` annotations.
+| `customContractAnnotations`    | A list of annotations that should be considered equivalent to `@Contract` annotations.

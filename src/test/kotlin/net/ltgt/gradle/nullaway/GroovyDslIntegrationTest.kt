@@ -109,6 +109,7 @@ class GroovyDslIntegrationTest {
                     handleTestAssertionLibraries = true
                     acknowledgeAndroidRecent = true
                     checkContracts = true
+                    customContractAnnotations = ["com.example.Contract"]
                 }
             }
             """.trimIndent()

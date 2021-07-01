@@ -144,6 +144,10 @@ open class NullAwayOptions internal constructor(
     @get:Input @get:Optional
     val checkContracts = objectFactory.property<Boolean>()
 
+    /** A list of annotations that should be considered equivalent to `@Contract` annotations; maps to `-XepOpt:NullAway:CustomContractAnnotations`. */
+    @get:Input @get:Optional
+    val customContractAnnotations = objectFactory.listProperty<String>()
+
     internal fun asArguments(): Iterable<String> = sequenceOf(
         "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
         listOption("AnnotatedPackages", annotatedPackages),
@@ -166,7 +170,8 @@ open class NullAwayOptions internal constructor(
         stringOption("AutoFixSuppressionComment", autoFixSuppressionComment),
         booleanOption("HandleTestAssertionLibraries", handleTestAssertionLibraries),
         booleanOption("AcknowledgeAndroidRecent", acknowledgeAndroidRecent),
-        booleanOption("CheckContracts", checkContracts)
+        booleanOption("CheckContracts", checkContracts),
+        listOption("CustomContractAnnotations", customContractAnnotations)
     )
         .filterNotNull()
         .asIterable()

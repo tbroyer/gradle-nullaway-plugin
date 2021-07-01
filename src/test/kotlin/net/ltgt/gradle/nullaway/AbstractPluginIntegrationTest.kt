@@ -146,6 +146,7 @@ abstract class AbstractPluginIntegrationTest(
                     handleTestAssertionLibraries.set(true)
                     acknowledgeAndroidRecent.set(true)
                     checkContracts.set(true)
+                    customContractAnnotations.add("com.example.Contract")
                 }
             }
             """.trimIndent()
