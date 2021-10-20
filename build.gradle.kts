@@ -6,10 +6,10 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "0.15.0"
-    id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
+    id("com.gradle.plugin-publish") version "0.16.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     id("com.android.lint") version "4.1.3"
-    id("org.nosphere.gradle.github.actions") version "1.2.0"
+    id("org.nosphere.gradle.github.actions") version "1.3.2"
 }
 buildscript {
     dependencyLocking {
@@ -63,8 +63,8 @@ dependencies {
         // See https://github.com/google/truth/issues/333
         because("Truth needs it")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     additionalPluginClasspath("com.android.tools.build:gradle:${Version.ANDROID_GRADLE_PLUGIN_VERSION}")
