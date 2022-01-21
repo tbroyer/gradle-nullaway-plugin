@@ -102,3 +102,5 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `acknowledgeAndroidRecent`     | If set to true, treats `@RecentlyNullable` as `@Nullable`, and `@RecentlyNonNull` as `@NonNull`; requires that `acknowledgeRestrictiveAnnotations` is also set to true.
 | `checkContracts`               | If set to true, NullAway will check `@Contract` annotations.
 | `customContractAnnotations`    | A list of annotations that should be considered equivalent to `@Contract` annotations.
+| `customNullableAnnotations`    | A list of annotations that should be considered equivalent to `@Nullable` annotations.
+| `customNonnullAnnotations`     | A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. `acknowledgeRestrictiveAnnotations`).

@@ -110,6 +110,8 @@ class GroovyDslIntegrationTest {
                     acknowledgeAndroidRecent = true
                     checkContracts = true
                     customContractAnnotations = ["com.example.Contract"]
+                    customNullableAnnotations = ["com.example.CouldBeNull"]
+                    customNonnullAnnotations = ["com.example.MustNotBeNull"]
                 }
             }
             """.trimIndent()

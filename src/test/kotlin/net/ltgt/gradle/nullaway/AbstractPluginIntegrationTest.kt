@@ -147,6 +147,8 @@ abstract class AbstractPluginIntegrationTest(
                     acknowledgeAndroidRecent.set(true)
                     checkContracts.set(true)
                     customContractAnnotations.add("com.example.Contract")
+                    customNullableAnnotations.add("com.example.CouldBeNull")
+                    customNonnullAnnotations.add("com.example.MustNotBeNull")
                 }
             }
             """.trimIndent()

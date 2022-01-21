@@ -148,6 +148,14 @@ open class NullAwayOptions internal constructor(
     @get:Input @get:Optional
     val customContractAnnotations = objectFactory.listProperty<String>()
 
+    /** A list of annotations that should be considered equivalent to `@Nullable` annotations. */
+    @get:Input @get:Optional
+    val customNullableAnnotations = objectFactory.listProperty<String>()
+
+    /** A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. `acknowledgeRestrictiveAnnotations`). */
+    @get:Input @get:Optional
+    val customNonnullAnnotations = objectFactory.listProperty<String>()
+
     internal fun asArguments(): Iterable<String> = sequenceOf(
         "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
         listOption("AnnotatedPackages", annotatedPackages),
@@ -171,7 +179,9 @@ open class NullAwayOptions internal constructor(
         booleanOption("HandleTestAssertionLibraries", handleTestAssertionLibraries),
         booleanOption("AcknowledgeAndroidRecent", acknowledgeAndroidRecent),
         booleanOption("CheckContracts", checkContracts),
-        listOption("CustomContractAnnotations", customContractAnnotations)
+        listOption("CustomContractAnnotations", customContractAnnotations),
+        listOption("CustomNullableAnnotations", customNullableAnnotations),
+        listOption("CustomNonnullAnnotations", customNonnullAnnotations)
     )
         .filterNotNull()
         .asIterable()
