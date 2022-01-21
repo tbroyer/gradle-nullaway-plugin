@@ -12,7 +12,7 @@ pluginManagement {
     }
 }
 plugins {
-    id("com.gradle.enterprise") version "3.7.1"
+    id("com.gradle.enterprise") version "3.8.1"
 }
 buildscript {
     dependencyLocking {

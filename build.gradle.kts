@@ -6,8 +6,8 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "0.16.0"
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+    id("com.gradle.plugin-publish") version "0.20.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("com.android.lint") version "4.1.3"
     id("org.nosphere.gradle.github.actions") version "1.3.2"
 }
@@ -44,7 +44,7 @@ gradle.taskGraph.whenReady {
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
 
-val errorpronePluginVersion = "2.0.1"
+val errorpronePluginVersion = "2.0.2"
 
 repositories {
     mavenCentral()
@@ -63,8 +63,8 @@ dependencies {
         // See https://github.com/google/truth/issues/333
         because("Truth needs it")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     additionalPluginClasspath("com.android.tools.build:gradle:${Version.ANDROID_GRADLE_PLUGIN_VERSION}")
@@ -119,7 +119,7 @@ pluginBundle {
 }
 
 ktlint {
-    version.set("0.40.0")
+    version.set("0.43.2")
     outputToConsole.set(true)
     enableExperimentalRules.set(true)
 }
