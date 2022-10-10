@@ -112,6 +112,7 @@ class GroovyDslIntegrationTest {
                     customContractAnnotations = ["com.example.Contract"]
                     customNullableAnnotations = ["com.example.CouldBeNull"]
                     customNonnullAnnotations = ["com.example.MustNotBeNull"]
+                    customGeneratedCodeAnnotations = ["com.example.Generated"]
                 }
             }
             """.trimIndent()

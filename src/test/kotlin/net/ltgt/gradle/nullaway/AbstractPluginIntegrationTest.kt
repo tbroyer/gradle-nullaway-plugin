@@ -149,6 +149,7 @@ abstract class AbstractPluginIntegrationTest(
                     customContractAnnotations.add("com.example.Contract")
                     customNullableAnnotations.add("com.example.CouldBeNull")
                     customNonnullAnnotations.add("com.example.MustNotBeNull")
+                    customGeneratedCodeAnnotations.add("com.example.Generated")
                 }
             }
             """.trimIndent()

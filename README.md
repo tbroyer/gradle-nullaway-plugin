@@ -104,3 +104,4 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `customContractAnnotations`    | A list of annotations that should be considered equivalent to `@Contract` annotations.
 | `customNullableAnnotations`    | A list of annotations that should be considered equivalent to `@Nullable` annotations.
 | `customNonnullAnnotations`     | A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. `acknowledgeRestrictiveAnnotations`).
+| `customGeneratedCodeAnnotations` | A list of annotations that should be considered equivalent to `@Generated` annotations, for the cases where NullAway cares about such annotations (see e.g. `treatGeneratedAsUnannotated`).

@@ -156,6 +156,10 @@ open class NullAwayOptions internal constructor(
     @get:Input @get:Optional
     val customNonnullAnnotations = objectFactory.listProperty<String>()
 
+    /** A list of annotations that should be considered equivalent to `@Generated` annotations, for the cases where NullAway cares about such annotations (see e.g. [treatGeneratedAsUnannotated]); maps to `-XepOpt:NullAway:CustomGeneratedCodeAnnotations`. */
+    @get:Input @get:Optional
+    val customGeneratedCodeAnnotations = objectFactory.listProperty<String>()
+
     internal fun asArguments(): Iterable<String> = sequenceOf(
         "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
         listOption("AnnotatedPackages", annotatedPackages),
@@ -181,7 +185,8 @@ open class NullAwayOptions internal constructor(
         booleanOption("CheckContracts", checkContracts),
         listOption("CustomContractAnnotations", customContractAnnotations),
         listOption("CustomNullableAnnotations", customNullableAnnotations),
-        listOption("CustomNonnullAnnotations", customNonnullAnnotations)
+        listOption("CustomNonnullAnnotations", customNonnullAnnotations),
+        listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations)
     )
         .filterNotNull()
         .asIterable()
