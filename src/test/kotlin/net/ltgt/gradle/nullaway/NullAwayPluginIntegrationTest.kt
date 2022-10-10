@@ -41,7 +41,6 @@ class NullAwayPluginIntegrationTest {
                 dependencies {
                     errorprone("com.google.errorprone:error_prone_core:$errorproneVersion")
                     errorprone("com.uber.nullaway:nullaway:$nullawayVersion")
-                    errorproneJavac("com.google.errorprone:javac:$errorproneJavacVersion")
                 }
 
                 tasks.withType<JavaCompile>().configureEach {
