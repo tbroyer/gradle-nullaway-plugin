@@ -8,7 +8,7 @@ that adds a Gradle DSL to configure [NullAway]
 
 ## Requirements
 
-This plugin requires using at least Gradle 5.2,
+This plugin requires using at least Gradle 6.8,
 and applying the `net.ltgt.errorprone` plugin (it won't do anything otherwise).
 
 ## Usage

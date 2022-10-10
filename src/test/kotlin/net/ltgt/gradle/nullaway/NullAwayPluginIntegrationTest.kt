@@ -216,7 +216,6 @@ class NullAwayPluginIntegrationTest {
 
     @Test
     fun `is configuration-cache friendly`() {
-        assume().that(GradleVersion.version(testGradleVersion)).isAtLeast(GradleVersion.version("6.6"))
         assume().that(
             JavaVersion.current() < JavaVersion.VERSION_16 ||
                 GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0")

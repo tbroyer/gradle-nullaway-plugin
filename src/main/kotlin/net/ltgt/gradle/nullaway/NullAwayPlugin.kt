@@ -27,8 +27,8 @@ class NullAwayPlugin : Plugin<Project> {
     }
 
     override fun apply(project: Project) = with(project) {
-        if (GradleVersion.current() < GradleVersion.version("5.2.1")) {
-            throw UnsupportedOperationException("$PLUGIN_ID requires at least Gradle 5.2.1")
+        if (GradleVersion.current() < GradleVersion.version("6.8")) {
+            throw UnsupportedOperationException("$PLUGIN_ID requires at least Gradle 6.8")
         }
 
         val extension = extensions.create(EXTENSION_NAME, NullAwayExtension::class)
