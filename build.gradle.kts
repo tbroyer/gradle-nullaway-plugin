@@ -1,4 +1,3 @@
-import com.android.Version
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -54,7 +53,11 @@ val errorproneVersion = "2.10.0"
 
 repositories {
     mavenCentral()
-    google()
+    google {
+        content {
+            onlyForConfigurations(configurations.lintClassPath.name)
+        }
+    }
     gradlePluginPortal()
 }
 dependencies {
@@ -77,7 +80,6 @@ dependencies {
     }
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    additionalPluginClasspath("com.android.tools.build:gradle:${Version.ANDROID_GRADLE_PLUGIN_VERSION}")
 }
 
 tasks {
