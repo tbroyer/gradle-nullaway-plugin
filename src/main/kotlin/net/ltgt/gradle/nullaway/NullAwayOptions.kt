@@ -148,11 +148,11 @@ open class NullAwayOptions internal constructor(
     @get:Input @get:Optional
     val customContractAnnotations = objectFactory.listProperty<String>()
 
-    /** A list of annotations that should be considered equivalent to `@Nullable` annotations. */
+    /** A list of annotations that should be considered equivalent to `@Nullable` annotations; maps to `-XepOpt:NullAway:CustomNullableAnnotations`. */
     @get:Input @get:Optional
     val customNullableAnnotations = objectFactory.listProperty<String>()
 
-    /** A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. `acknowledgeRestrictiveAnnotations`). */
+    /** A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. [acknowledgeRestrictiveAnnotations]); maps to `-XepOpt:NullAway:CustomNonnullAnnotations`. */
     @get:Input @get:Optional
     val customNonnullAnnotations = objectFactory.listProperty<String>()
 
