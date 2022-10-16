@@ -24,6 +24,11 @@ dependencyLocking {
 
 group = "net.ltgt.gradle"
 
+// Make sure Gradle Module Metadata targets the appropriate JVM version
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(kotlinDslPluginOptions.jvmTarget.map { JavaVersion.toVersion(it).majorVersion.toInt() })
+}
+
 kotlinDslPluginOptions {
     experimentalWarning.set(false)
 }
