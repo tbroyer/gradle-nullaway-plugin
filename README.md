@@ -51,8 +51,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 ```
 
-<details>
-<summary>with Kotlin DSL</summary>
+or with Kotlin DSL:
 
 ```kotlin
 import net.ltgt.gradle.errorprone.*
@@ -65,8 +64,6 @@ tasks.withType<JavaCompile>().configureEach {
     }
 }
 ```
-
-</details>
 
 
 ### Properties
