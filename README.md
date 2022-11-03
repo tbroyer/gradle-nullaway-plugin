@@ -55,8 +55,8 @@ tasks.withType(JavaCompile).configureEach {
 <summary>with Kotlin DSL</summary>
 
 ```kotlin
-import net.ltgt.errorprone.*
-import net.ltgt.nullaway.nullaway
+import net.ltgt.gradle.errorprone.*
+import net.ltgt.gradle.nullaway.nullaway
 
 tasks.withType<JavaCompile>().configureEach {
     options.errorprone.nullaway {
