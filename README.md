@@ -108,6 +108,6 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | Method      | Description
 |:------------| :----------
 | `enable()`  | Enable NullAway. Equivalent to `severity.set(CheckSeverity.DEFAULT)`.
-| `disable()` | Disable NullAway. Equivalent to `severity.set(CheckSeverity.DEFAULT)`.
+| `disable()` | Disable NullAway. Equivalent to `severity.set(CheckSeverity.OFF)`.
 | `warn()`    | Enable NullAway as a warning. Equivalent to `severity.set(CheckSeverity.WARN)`.
 | `error()`   | Enable NullAway as an error. Equivalent to `severity.set(CheckSeverity.ERROR)`.
