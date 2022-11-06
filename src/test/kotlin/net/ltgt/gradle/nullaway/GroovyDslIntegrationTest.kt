@@ -66,7 +66,7 @@ class GroovyDslIntegrationTest {
             """
 
             tasks.withType(JavaCompile).configureEach {
-                options.errorprone.nullaway.severity = CheckSeverity.OFF
+                options.errorprone.nullaway.disable()
             }
             """.trimIndent()
         )

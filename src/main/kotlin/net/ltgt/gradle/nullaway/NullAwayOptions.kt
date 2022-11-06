@@ -15,9 +15,15 @@ open class NullAwayOptions internal constructor(
     /**
      * The severity of the NullAway check.
      *
-     * Equivalent to `options.errorprone.check("NullAway", severity)`. Can be set to `CheckSeverity.OFF` to disable NullAway.
+     * Almost equivalent to `options.errorprone.check("NullAway", severity)` (NullAway won't actually appear in `options.errorprone.checks`).
+     * Can be set to [CheckSeverity.OFF] to disable NullAway.
      *
      * @see net.ltgt.gradle.errorprone.ErrorProneOptions.check
+     * @see net.ltgt.gradle.errorprone.ErrorProneOptions.checks
+     * @see enable
+     * @see disable
+     * @see warn
+     * @see error
      */
     @get:Input val severity = objectFactory.property<CheckSeverity>().convention(CheckSeverity.DEFAULT)
 
@@ -159,6 +165,34 @@ open class NullAwayOptions internal constructor(
     /** A list of annotations that should be considered equivalent to `@Generated` annotations, for the cases where NullAway cares about such annotations (see e.g. [treatGeneratedAsUnannotated]); maps to `-XepOpt:NullAway:CustomGeneratedCodeAnnotations`. */
     @get:Input @get:Optional
     val customGeneratedCodeAnnotations = objectFactory.listProperty<String>()
+
+    /**
+     * Enable NullAway.
+     *
+     * Equivalent to setting [severity] to [CheckSeverity.DEFAULT].
+     */
+    fun enable() = severity.set(CheckSeverity.DEFAULT)
+
+    /**
+     * Disable NullAway.
+     *
+     * Equivalent to setting [severity] to [CheckSeverity.OFF].
+     */
+    fun disable() = severity.set(CheckSeverity.OFF)
+
+    /**
+     * Enable NullAway as a warning.
+     *
+     * Equivalent to setting [severity] to [CheckSeverity.WARN]
+     */
+    fun warn() = severity.set(CheckSeverity.WARN)
+
+    /**
+     * Enable NullAway as an error.
+     *
+     * Equivalent to setting [severity] to [CheckSeverity.ERROR]
+     */
+    fun error() = severity.set(CheckSeverity.ERROR)
 
     internal fun asArguments(): Iterable<String> = sequenceOf(
         "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",

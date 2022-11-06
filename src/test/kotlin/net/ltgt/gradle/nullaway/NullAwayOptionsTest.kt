@@ -69,6 +69,10 @@ class NullAwayOptionsTest {
     @Test
     fun `generates correct error prone options`() {
         doTestOptions { severity.set(CheckSeverity.DEFAULT) }
+        doTestOptions { enable() }
+        doTestOptions { disable() }
+        doTestOptions { warn() }
+        doTestOptions { error() }
         doTestOptions { annotatedPackages.add("test") }
         doTestOptions { unannotatedSubPackages.add("test.dummy") }
         doTestOptions { unannotatedClasses.add("test.Unannotated") }
@@ -96,7 +100,7 @@ class NullAwayOptionsTest {
         doTestOptions { customGeneratedCodeAnnotations.add("com.example.Generated") }
 
         doTestOptions {
-            severity.set(CheckSeverity.ERROR)
+            enable()
             annotatedPackages.add("test")
             unannotatedSubPackages.add("test.dummy")
             unannotatedClasses.add("test.Unannotated")

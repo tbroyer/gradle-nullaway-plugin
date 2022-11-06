@@ -105,7 +105,7 @@ abstract class AbstractPluginIntegrationTest(
             """
 
             tasks.withType<JavaCompile>().configureEach {
-                options.errorprone.nullaway.severity.set(CheckSeverity.OFF)
+                options.errorprone.nullaway.disable()
             }
             """.trimIndent()
         )
@@ -126,6 +126,7 @@ abstract class AbstractPluginIntegrationTest(
 
             tasks.withType<JavaCompile>().configureEach {
                 options.errorprone.nullaway {
+                    severity.set(CheckSeverity.DEFAULT)
                     unannotatedSubPackages.add("test.dummy")
                     unannotatedClasses.add("test.Unannotated")
                     knownInitializers.add("com.foo.Bar.method")
@@ -172,7 +173,7 @@ abstract class AbstractPluginIntegrationTest(
             tasks.withType<JavaCompile>().configureEach {
                 options.errorprone.nullaway {
                     if (project.hasProperty("disable-nullaway")) {
-                        severity.set(CheckSeverity.OFF)
+                        disable()
                     }
                     autoFixSuppressionComment.set(project.property("autofix-comment") as String)
                 }

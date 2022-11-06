@@ -76,7 +76,7 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 
 | Property | Description
 | :------- | :----------
-| `severity`               | The check severity. Equivalent to `options.errorprone.check("NullAway", severity)`. Can be set to `CheckSeverity.OFF` to disable NullAway.
+| `severity`               | The check severity. Almost equivalent to `options.errorprone.check("NullAway", severity)` (NullAway won't actually appear in `options.errorprone.checks`). Can be set to `CheckSeverity.OFF` to disable NullAway.
 | `annotatedPackages`      | The list of packages that should be considered properly annotated according to the NullAway convention. This can be used to add to or override the `annotatedPackages` at the project level.
 | `unannotatedSubPackages` | A list of subpackages to be excluded from the AnnotatedPackages list.
 | `unannotatedClasses`     | A list of classes within annotated packages that should be treated as unannotated.
@@ -102,3 +102,12 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `customNullableAnnotations`    | A list of annotations that should be considered equivalent to `@Nullable` annotations.
 | `customNonnullAnnotations`     | A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. `acknowledgeRestrictiveAnnotations`).
 | `customGeneratedCodeAnnotations` | A list of annotations that should be considered equivalent to `@Generated` annotations, for the cases where NullAway cares about such annotations (see e.g. `treatGeneratedAsUnannotated`).
+
+### Methods
+
+| Method      | Description
+|:------------| :----------
+| `enable()`  | Enable NullAway. Equivalent to `severity.set(CheckSeverity.DEFAULT)`.
+| `disable()` | Disable NullAway. Equivalent to `severity.set(CheckSeverity.DEFAULT)`.
+| `warn()`    | Enable NullAway as a warning. Equivalent to `severity.set(CheckSeverity.WARN)`.
+| `error()`   | Enable NullAway as an error. Equivalent to `severity.set(CheckSeverity.ERROR)`.
