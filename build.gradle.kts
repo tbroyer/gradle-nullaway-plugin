@@ -5,7 +5,7 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "1.0.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("com.android.lint") version "4.2.2"
     id("org.nosphere.gradle.github.actions") version "1.3.2"
@@ -16,10 +16,6 @@ group = "net.ltgt.gradle"
 // Make sure Gradle Module Metadata targets the appropriate JVM version
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(kotlinDslPluginOptions.jvmTarget.map { JavaVersion.toVersion(it).majorVersion.toInt() })
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }
 
 tasks.withType<KotlinCompile>().configureEach {
@@ -101,20 +97,17 @@ tasks {
 }
 
 gradlePlugin {
+    website.set("https://github.com/tbroyer/gradle-nullaway-plugin")
+    vcsUrl.set("https://github.com/tbroyer/gradle-nullaway-plugin")
     plugins {
         register("nullaway") {
             id = "net.ltgt.nullaway"
             displayName = "Adds NullAway DSL to Gradle Error Prone plugin"
             description = "Adds NullAway DSL to Gradle Error Prone plugin"
             implementationClass = "net.ltgt.gradle.nullaway.NullAwayPlugin"
+            tags.addAll("javac", "error-prone", "nullaway", "nullability")
         }
     }
-}
-
-pluginBundle {
-    website = "https://github.com/tbroyer/gradle-nullaway-plugin"
-    vcsUrl = "https://github.com/tbroyer/gradle-nullaway-plugin"
-    tags = listOf("javac", "error-prone", "nullaway", "nullability")
 }
 
 ktlint {

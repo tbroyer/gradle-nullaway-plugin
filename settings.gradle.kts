@@ -22,5 +22,3 @@ gradleEnterprise {
 }
 
 rootProject.name = "gradle-nullaway-plugin"
-
-enableFeaturePreview("ONE_LOCKFILE_PER_PROJECT")

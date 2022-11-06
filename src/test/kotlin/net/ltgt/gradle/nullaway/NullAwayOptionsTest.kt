@@ -2,11 +2,9 @@ package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth8.assertThat
-import com.google.common.truth.TruthJUnit.assume
 import com.google.errorprone.ErrorProneOptions
 import com.google.errorprone.ErrorProneOptions.Severity
 import net.ltgt.gradle.errorprone.CheckSeverity
-import org.gradle.api.JavaVersion
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
@@ -58,9 +56,6 @@ class NullAwayOptionsTest {
 
     @BeforeAll
     fun setup(@TempDir projectDir: File) {
-        // FIXME: remove when updating to Gradle 7
-        assume().that(JavaVersion.current()).isLessThan(JavaVersion.VERSION_16)
-
         ProjectBuilder.builder().withProjectDir(projectDir).build().let { project ->
             objects = project.objects
             providers = project.providers
