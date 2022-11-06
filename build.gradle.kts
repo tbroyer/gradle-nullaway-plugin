@@ -50,6 +50,7 @@ gradle.taskGraph.whenReady {
 val additionalPluginClasspath by configurations.creating
 
 val errorpronePluginVersion = "2.0.2"
+val errorproneVersion = "2.10.0"
 
 repositories {
     mavenCentral()
@@ -60,7 +61,7 @@ dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     testImplementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
 
-    testImplementation("com.google.truth:truth:1.1.3") {
+    testImplementation("com.google.truth.extensions:truth-java8-extension:1.1.3") {
         // See https://github.com/google/truth/issues/333
         exclude(group = "junit", module = "junit")
     }
@@ -70,6 +71,10 @@ dependencies {
     }
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+
+    testImplementation("com.google.errorprone:error_prone_check_api:$errorproneVersion") {
+        exclude(group = "com.google.errorprone", module = "javac")
+    }
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
     additionalPluginClasspath("com.android.tools.build:gradle:${Version.ANDROID_GRADLE_PLUGIN_VERSION}")
@@ -91,6 +96,8 @@ tasks {
 
         val testGradleVersion = project.findProperty("test.gradle-version")
         testGradleVersion?.also { systemProperty("test.gradle-version", testGradleVersion) }
+
+        systemProperty("errorprone.version", errorproneVersion)
 
         useJUnitPlatform()
         testLogging {

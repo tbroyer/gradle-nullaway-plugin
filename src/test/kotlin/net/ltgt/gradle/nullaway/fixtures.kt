@@ -7,7 +7,8 @@ import java.io.File
 
 val testGradleVersion = System.getProperty("test.gradle-version", GradleVersion.current().version)
 
-const val errorproneVersion = "2.10.0"
+val errorproneVersion = System.getProperty("errorprone.version")!!
+
 const val errorproneJavacVersion = "9+181-r4173-1"
 const val nullawayVersion = "0.10.2"
 
