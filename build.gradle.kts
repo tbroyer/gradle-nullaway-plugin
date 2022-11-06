@@ -6,7 +6,7 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "0.21.0"
+    id("com.gradle.plugin-publish") version "1.0.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("com.android.lint") version "4.2.2"
     id("org.nosphere.gradle.github.actions") version "1.3.2"
@@ -123,11 +123,6 @@ pluginBundle {
     website = "https://github.com/tbroyer/gradle-nullaway-plugin"
     vcsUrl = "https://github.com/tbroyer/gradle-nullaway-plugin"
     tags = listOf("javac", "error-prone", "nullaway", "nullability")
-
-    mavenCoordinates {
-        groupId = project.group.toString()
-        artifactId = project.name
-    }
 }
 
 ktlint {
