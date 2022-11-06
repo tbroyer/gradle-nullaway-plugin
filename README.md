@@ -45,7 +45,7 @@ Other [NullAway flags], as well as the check severity, can be configured on the 
 ```gradle
 tasks.withType(JavaCompile).configureEach {
     options.errorprone.nullaway {
-        severity = CheckSeverity.ERROR
+        error()
         unannotatedSubPackages.add("com.foo.baz")
     }
 }
@@ -54,12 +54,12 @@ tasks.withType(JavaCompile).configureEach {
 or with Kotlin DSL:
 
 ```kotlin
-import net.ltgt.gradle.errorprone.*
+import net.ltgt.gradle.errorprone.errorprone
 import net.ltgt.gradle.nullaway.nullaway
 
 tasks.withType<JavaCompile>().configureEach {
     options.errorprone.nullaway {
-        severity.set(CheckSeverity.ERROR)
+        error()
         unannotatedSubPackages.add("com.foo.baz")
     }
 }
