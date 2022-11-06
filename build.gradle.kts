@@ -6,9 +6,9 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "0.20.0"
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
-    id("com.android.lint") version "4.1.3"
+    id("com.gradle.plugin-publish") version "0.21.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("com.android.lint") version "4.2.2"
     id("org.nosphere.gradle.github.actions") version "1.3.2"
 }
 buildscript {
@@ -69,8 +69,8 @@ dependencies {
         // See https://github.com/google/truth/issues/333
         because("Truth needs it")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
 
     testImplementation("com.google.errorprone:error_prone_check_api:$errorproneVersion") {
         exclude(group = "com.google.errorprone", module = "javac")
@@ -131,7 +131,7 @@ pluginBundle {
 }
 
 ktlint {
-    version.set("0.43.2")
+    version.set("0.45.2")
     outputToConsole.set(true)
     enableExperimentalRules.set(true)
 }
