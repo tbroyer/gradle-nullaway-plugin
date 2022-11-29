@@ -8,9 +8,6 @@ on:
     path-ignore:
       - '**/*.md'
 
-env:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-
 # First build on Linux with JDK 8
 # Then run tests with various Gradle and JDKs versions
 jobs:
