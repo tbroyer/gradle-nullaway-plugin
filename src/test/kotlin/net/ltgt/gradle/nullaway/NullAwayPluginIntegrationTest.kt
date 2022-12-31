@@ -154,6 +154,7 @@ class NullAwayPluginIntegrationTest {
                     customContractAnnotations.add("com.example.Contract")
                     customNullableAnnotations.add("com.example.CouldBeNull")
                     customNonnullAnnotations.add("com.example.MustNotBeNull")
+                    isJSpecifyMode.set(true)
                 }
             }
             """.trimIndent()

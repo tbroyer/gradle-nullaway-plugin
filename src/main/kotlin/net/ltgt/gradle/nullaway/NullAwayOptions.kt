@@ -166,6 +166,13 @@ open class NullAwayOptions internal constructor(
     @get:Input @get:Optional
     val customGeneratedCodeAnnotations = objectFactory.listProperty<String>()
 
+    /** If set to true, enables new checks based on JSpecify (like checks for generic types); maps to `-XepOpt:NullAway:JSpecifyMode`. */
+    // Note the differing case, for Groovy DSL, so it can be read as `jspecifyMode` and set as `jspecifyMode = true`
+    @get:JvmName("getJspecifyMode")
+    @get:Input
+    @get:Optional
+    val isJSpecifyMode = objectFactory.property<Boolean>()
+
     /**
      * Enable NullAway.
      *
@@ -220,7 +227,8 @@ open class NullAwayOptions internal constructor(
         listOption("CustomContractAnnotations", customContractAnnotations),
         listOption("CustomNullableAnnotations", customNullableAnnotations),
         listOption("CustomNonnullAnnotations", customNonnullAnnotations),
-        listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations)
+        listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations),
+        booleanOption("JSpecifyMode", isJSpecifyMode)
     )
         .filterNotNull()
         .asIterable()

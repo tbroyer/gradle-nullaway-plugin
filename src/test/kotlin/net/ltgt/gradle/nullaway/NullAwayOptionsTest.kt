@@ -48,7 +48,8 @@ class NullAwayOptionsTest {
             "NullAway:CustomContractAnnotations",
             "NullAway:CustomNullableAnnotations",
             "NullAway:CustomNonnullAnnotations",
-            "NullAway:CustomGeneratedCodeAnnotations"
+            "NullAway:CustomGeneratedCodeAnnotations",
+            "NullAway:JSpecifyMode"
         )
     }
 
@@ -98,6 +99,7 @@ class NullAwayOptionsTest {
         doTestOptions { customNullableAnnotations.add("com.example.CouldBeNull") }
         doTestOptions { customNonnullAnnotations.add("com.example.MustNotBeNull") }
         doTestOptions { customGeneratedCodeAnnotations.add("com.example.Generated") }
+        doTestOptions { isJSpecifyMode.set(true) }
 
         doTestOptions {
             enable()
@@ -126,6 +128,7 @@ class NullAwayOptionsTest {
             customNullableAnnotations.add("com.example.CouldBeNull")
             customNonnullAnnotations.add("com.example.MustNotBeNull")
             customGeneratedCodeAnnotations.add("com.example.Generated")
+            isJSpecifyMode.set(true)
         }
     }
 
@@ -183,6 +186,7 @@ class NullAwayOptionsTest {
         assertListOptionEqual(parsedOptions, "NullAway:CustomNullableAnnotations", options.customNullableAnnotations)
         assertListOptionEqual(parsedOptions, "NullAway:CustomNonnullAnnotations", options.customNonnullAnnotations)
         assertListOptionEqual(parsedOptions, "NullAway:CustomGeneratedCodeAnnotations", options.customGeneratedCodeAnnotations)
+        assertBooleanOptionEqual(parsedOptions, "NullAway:JSpecifyMode", options.isJSpecifyMode)
 
         assertThat(parsedOptions.flags.flagsMap.keys - ALL_NULLAWAY_OPTION_NAMES).isEmpty()
         assertThat(parsedOptions.remainingArgs).isEmpty()

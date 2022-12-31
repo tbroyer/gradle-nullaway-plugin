@@ -10,7 +10,7 @@ val testGradleVersion = System.getProperty("test.gradle-version", GradleVersion.
 val errorproneVersion = System.getProperty("errorprone.version")!!
 
 const val errorproneJavacVersion = "9+181-r4173-1"
-const val nullawayVersion = "0.10.2"
+const val nullawayVersion = "0.10.9"
 
 const val FAILURE_SOURCE_COMPILATION_ERROR = "Failure.java:8: warning: [NullAway]"
 
