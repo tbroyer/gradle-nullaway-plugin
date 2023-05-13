@@ -50,7 +50,7 @@ class NullAwayPluginIntegrationTest {
                 nullaway {
                     annotatedPackages.add("test")
                 }
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -64,7 +64,7 @@ class NullAwayPluginIntegrationTest {
             nullaway {
                 annotatedPackages.empty()
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         testProjectDir.writeSuccessSource()
 
@@ -110,7 +110,7 @@ class NullAwayPluginIntegrationTest {
             tasks.withType<JavaCompile>().configureEach {
                 options.errorprone.nullaway.disable()
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         testProjectDir.writeFailureSource()
 
@@ -156,7 +156,7 @@ class NullAwayPluginIntegrationTest {
                     isJSpecifyMode.set(true)
                 }
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         testProjectDir.writeSuccessSource()
 
@@ -181,7 +181,7 @@ class NullAwayPluginIntegrationTest {
                     autoFixSuppressionComment.set(project.property("autofix-comment") as String)
                 }
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         testProjectDir.writeSuccessSource()
 
@@ -217,7 +217,7 @@ class NullAwayPluginIntegrationTest {
     fun `is configuration-cache friendly`() {
         assume().that(
             JavaVersion.current() < JavaVersion.VERSION_16 ||
-                GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0")
+                GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0"),
         ).isTrue()
 
         // given

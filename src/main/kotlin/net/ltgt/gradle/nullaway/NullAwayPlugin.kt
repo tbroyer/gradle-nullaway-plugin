@@ -49,7 +49,7 @@ class NullAwayPlugin : Plugin<Project> {
                         }
 
                         override fun asArguments() = nullawayOptions.asArguments()
-                    }
+                    },
                 )
             }
         }

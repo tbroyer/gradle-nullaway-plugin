@@ -21,7 +21,7 @@ class GroovyDslIntegrationTest {
     fun setupProject() {
         assume().that(
             JavaVersion.current() < JavaVersion.VERSION_16 ||
-                GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0")
+                GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0"),
         ).isTrue()
 
         settingsFile = testProjectDir.resolve("settings.gradle").apply {
@@ -53,7 +53,7 @@ class GroovyDslIntegrationTest {
                 nullaway {
                     annotatedPackages.add("test")
                 }
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -67,7 +67,7 @@ class GroovyDslIntegrationTest {
             tasks.withType(JavaCompile).configureEach {
                 options.errorprone.nullaway.disable()
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         testProjectDir.writeFailureSource()
 
@@ -115,7 +115,7 @@ class GroovyDslIntegrationTest {
                     jspecifyMode = true
                 }
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         testProjectDir.writeSuccessSource()
 

@@ -78,7 +78,7 @@ tasks {
             javaLauncher.set(
                 project.javaToolchains.launcherFor {
                     languageVersion.set(JavaLanguageVersion.of(testJavaToolchain.toString()))
-                }
+                },
             )
         }
 
@@ -111,7 +111,7 @@ gradlePlugin {
 }
 
 ktlint {
-    version.set("0.45.2")
+    version.set("0.48.2")
     outputToConsole.set(true)
     enableExperimentalRules.set(true)
 }

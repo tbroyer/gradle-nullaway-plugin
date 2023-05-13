@@ -47,7 +47,7 @@ class NullAwayOptionsTest {
             "NullAway:CustomNullableAnnotations",
             "NullAway:CustomNonnullAnnotations",
             "NullAway:CustomGeneratedCodeAnnotations",
-            "NullAway:JSpecifyMode"
+            "NullAway:JSpecifyMode",
         )
     }
 
@@ -142,7 +142,7 @@ class NullAwayOptionsTest {
 
     private fun assertOptionsEqual(
         options: NullAwayOptions,
-        parsedOptions: ErrorProneOptions
+        parsedOptions: ErrorProneOptions,
     ) {
         assertDefault(parsedOptions, ErrorProneOptions::isDisableAllChecks)
         assertDefault(parsedOptions, ErrorProneOptions::isDisableAllChecks)

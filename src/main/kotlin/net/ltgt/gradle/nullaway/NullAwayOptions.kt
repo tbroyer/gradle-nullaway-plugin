@@ -10,7 +10,7 @@ import org.gradle.kotlin.dsl.property
 
 open class NullAwayOptions internal constructor(
     objectFactory: ObjectFactory,
-    nullawayExtension: NullAwayExtension
+    nullawayExtension: NullAwayExtension,
 ) {
     /**
      * The severity of the NullAway check.
@@ -228,7 +228,7 @@ open class NullAwayOptions internal constructor(
         listOption("CustomNullableAnnotations", customNullableAnnotations),
         listOption("CustomNonnullAnnotations", customNonnullAnnotations),
         listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations),
-        booleanOption("JSpecifyMode", isJSpecifyMode)
+        booleanOption("JSpecifyMode", isJSpecifyMode),
     )
         .filterNotNull()
         .asIterable()
