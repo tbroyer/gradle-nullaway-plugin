@@ -5,9 +5,9 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "1.1.0"
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("com.android.lint") version "4.2.2"
+    id("com.gradle.plugin-publish") version "1.2.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
+    id("com.android.lint") version "7.4.2"
     id("org.nosphere.gradle.github.actions") version "1.3.2"
 }
 
@@ -34,17 +34,17 @@ gradle.taskGraph.whenReady {
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
 
-val errorpronePluginVersion = "3.0.1"
+val errorpronePluginVersion = "3.1.0"
 val errorproneVersion = "2.10.0"
 
 repositories {
     mavenCentral()
-    google {
+    google()
+    gradlePluginPortal {
         content {
-            onlyForConfigurations(configurations.lintClassPath.name)
+            includeGroupByRegex("""net\.ltgt\..*""")
         }
     }
-    gradlePluginPortal()
 }
 dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
@@ -58,8 +58,8 @@ dependencies {
         // See https://github.com/google/truth/issues/333
         because("Truth needs it")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 
     testImplementation("com.google.errorprone:error_prone_check_api:$errorproneVersion") {
         exclude(group = "com.google.errorprone", module = "javac")
