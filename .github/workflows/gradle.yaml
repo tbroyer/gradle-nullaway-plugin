@@ -28,7 +28,7 @@ jobs:
           arguments: --scan build
 
       - name: Store reports
-        if: steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure'
+        if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
         uses: actions/upload-artifact@v3
         with:
           name: linux-reports
@@ -55,7 +55,7 @@ jobs:
           arguments: --scan test "-Ptest.gradle-version=${{ matrix.gradle }}"
 
       - name: Store reports
-        if: steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure'
+        if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
         uses: actions/upload-artifact@v3
         with:
           name: gradle-${{ matrix.gradle }}-tests
@@ -89,7 +89,7 @@ jobs:
           arguments: --scan test "-Ptest.java-toolchain=${{ matrix.java }}"
 
       - name: Store reports
-        if: steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure'
+        if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
         uses: actions/upload-artifact@v3
         with:
           name: jdk-${{ matrix.java }}-tests
