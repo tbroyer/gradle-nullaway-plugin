@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import java.util.Properties
 
 class NullAwayPluginIntegrationTest {
 
@@ -20,6 +21,12 @@ class NullAwayPluginIntegrationTest {
 
     @BeforeEach
     fun setupProject() {
+        testProjectDir.resolve("gradle.properties").outputStream().use {
+            Properties().apply {
+                setProperty("org.gradle.java.home", testJavaHome)
+                store(it, null)
+            }
+        }
         settingsFile = testProjectDir.resolve("settings.gradle.kts").apply {
             createNewFile()
         }
@@ -216,7 +223,7 @@ class NullAwayPluginIntegrationTest {
     @Test
     fun `is configuration-cache friendly`() {
         assume().that(
-            JavaVersion.current() < JavaVersion.VERSION_16 ||
+            testJavaVersion < JavaVersion.VERSION_16 ||
                 GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0"),
         ).isTrue()
 

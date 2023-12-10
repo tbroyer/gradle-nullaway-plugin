@@ -1,10 +1,13 @@
 package net.ltgt.gradle.nullaway
 
+import org.gradle.api.JavaVersion
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.util.GradleVersion
 import java.io.File
 
+val testJavaVersion = JavaVersion.toVersion(System.getProperty("test.java-version") ?: JavaVersion.current())
+val testJavaHome = System.getProperty("test.java-home", System.getProperty("java.home"))
 val testGradleVersion = System.getProperty("test.gradle-version", GradleVersion.current().version)
 
 val errorproneVersion = System.getProperty("errorprone.version")!!
