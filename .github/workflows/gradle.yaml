@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    path-ignore:
+    paths-ignore:
       - '**/*.md'
   pull_request:
-    path-ignore:
+    paths-ignore:
       - '**/*.md'
 
 # First build on Linux with JDK 11
