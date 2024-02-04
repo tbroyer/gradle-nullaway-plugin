@@ -22,10 +22,14 @@ jobs:
           java-version: '11'
 
       - uses: gradle/actions/setup-gradle@v3
+        with:
+          build-scan-publish: true
+          build-scan-terms-of-service-url: "https://gradle.com/terms-of-service"
+          build-scan-terms-of-service-agree: "yes"
 
       - name: Build with Gradle
         id: gradle-build
-        run: ./gradlew --scan build
+        run: ./gradlew build
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
@@ -49,10 +53,14 @@ jobs:
           java-version: '11'
 
       - uses: gradle/actions/setup-gradle@v3
+        with:
+          build-scan-publish: true
+          build-scan-terms-of-service-url: "https://gradle.com/terms-of-service"
+          build-scan-terms-of-service-agree: "yes"
 
       - name: Build with Gradle
         id: gradle-build
-        run: ./gradlew --scan test "-Ptest.gradle-version=${{ matrix.gradle }}"
+        run: ./gradlew test "-Ptest.gradle-version=${{ matrix.gradle }}"
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
@@ -83,10 +91,14 @@ jobs:
           echo "org.gradle.java.installations.fromEnv=JAVA_HOME_${{ matrix.java }}_X64" | tee -a gradle.properties
 
       - uses: gradle/actions/setup-gradle@v3
+        with:
+          build-scan-publish: true
+          build-scan-terms-of-service-url: "https://gradle.com/terms-of-service"
+          build-scan-terms-of-service-agree: "yes"
 
       - name: Build with Gradle
         id: gradle-build
-        run: ./gradlew --scan test "-Ptest.java-toolchain=${{ matrix.java }}"
+        run: ./gradlew test "-Ptest.java-toolchain=${{ matrix.java }}"
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
@@ -117,10 +129,14 @@ jobs:
           echo "org.gradle.java.installations.fromEnv=JAVA_HOME_17_X64" | tee -a gradle.properties
 
       - uses: gradle/actions/setup-gradle@v3
+        with:
+          build-scan-publish: true
+          build-scan-terms-of-service-url: "https://gradle.com/terms-of-service"
+          build-scan-terms-of-service-agree: "yes"
 
       - name: Build with Gradle
         id: gradle-build
-        run: ./gradlew --scan test -Ptest.java-toolchain=17 "-Ptest.gradle-version=${{ matrix.gradle }}"
+        run: ./gradlew test -Ptest.java-toolchain=17 "-Ptest.gradle-version=${{ matrix.gradle }}"
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
@@ -151,10 +167,14 @@ jobs:
           echo "org.gradle.java.installations.fromEnv=JAVA_HOME_21_X64" | tee -a gradle.properties
 
       - uses: gradle/actions/setup-gradle@v3
+        with:
+          build-scan-publish: true
+          build-scan-terms-of-service-url: "https://gradle.com/terms-of-service"
+          build-scan-terms-of-service-agree: "yes"
 
       - name: Build with Gradle
         id: gradle-build
-        run: ./gradlew --scan test -Ptest.java-toolchain=21 "-Ptest.gradle-version=${{ matrix.gradle }}"
+        run: ./gradlew test -Ptest.java-toolchain=21 "-Ptest.gradle-version=${{ matrix.gradle }}"
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
