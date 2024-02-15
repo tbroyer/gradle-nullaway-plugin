@@ -161,6 +161,7 @@ class NullAwayPluginIntegrationTest {
                     customNullableAnnotations.add("com.example.CouldBeNull")
                     customNonnullAnnotations.add("com.example.MustNotBeNull")
                     isJSpecifyMode.set(true)
+                    extraFuturesClasses.add("com.example.Future")
                 }
             }
             """.trimIndent(),

@@ -48,6 +48,7 @@ class NullAwayOptionsTest {
             "NullAway:CustomNonnullAnnotations",
             "NullAway:CustomGeneratedCodeAnnotations",
             "NullAway:JSpecifyMode",
+            "NullAway:ExtraFuturesClasses",
         )
     }
 
@@ -95,6 +96,7 @@ class NullAwayOptionsTest {
         doTestOptions { customNonnullAnnotations.add("com.example.MustNotBeNull") }
         doTestOptions { customGeneratedCodeAnnotations.add("com.example.Generated") }
         doTestOptions { isJSpecifyMode.set(true) }
+        doTestOptions { extraFuturesClasses.add("com.example.Future") }
 
         doTestOptions {
             enable()
@@ -124,6 +126,7 @@ class NullAwayOptionsTest {
             customNonnullAnnotations.add("com.example.MustNotBeNull")
             customGeneratedCodeAnnotations.add("com.example.Generated")
             isJSpecifyMode.set(true)
+            extraFuturesClasses.add("com.example.Future")
         }
     }
 
@@ -182,6 +185,7 @@ class NullAwayOptionsTest {
         assertListOptionEqual(parsedOptions, "NullAway:CustomNonnullAnnotations", options.customNonnullAnnotations)
         assertListOptionEqual(parsedOptions, "NullAway:CustomGeneratedCodeAnnotations", options.customGeneratedCodeAnnotations)
         assertBooleanOptionEqual(parsedOptions, "NullAway:JSpecifyMode", options.isJSpecifyMode)
+        assertListOptionEqual(parsedOptions, "NullAway:ExtraFuturesClasses", options.extraFuturesClasses)
 
         assertThat(parsedOptions.flags.flagsMap.keys - ALL_NULLAWAY_OPTION_NAMES).isEmpty()
         assertThat(parsedOptions.remainingArgs).isEmpty()

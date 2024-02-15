@@ -120,6 +120,7 @@ class GroovyDslIntegrationTest {
                     customNonnullAnnotations = ["com.example.MustNotBeNull"]
                     customGeneratedCodeAnnotations = ["com.example.Generated"]
                     jspecifyMode = true
+                    extraFuturesClasses = ["com.example.Future"]
                 }
             }
             """.trimIndent(),

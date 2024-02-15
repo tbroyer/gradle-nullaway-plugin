@@ -174,6 +174,14 @@ open class NullAwayOptions internal constructor(
     val isJSpecifyMode = objectFactory.property<Boolean>()
 
     /**
+     * A list of classes to be treated equivalently to Guava `Futures` and `FluentFuture`; maps to `-XepOpt:NullAway:ExtraFuturesClasses`.
+     *
+     * This special support will likely be removed once NullAway's JSpecify support is more complete.
+     */
+    @get:Input @get:Optional
+    val extraFuturesClasses = objectFactory.listProperty<String>()
+
+    /**
      * Enable NullAway.
      *
      * Equivalent to setting [severity] to [CheckSeverity.DEFAULT].
@@ -229,6 +237,7 @@ open class NullAwayOptions internal constructor(
         listOption("CustomNonnullAnnotations", customNonnullAnnotations),
         listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations),
         booleanOption("JSpecifyMode", isJSpecifyMode),
+        listOption("ExtraFuturesClasses", extraFuturesClasses),
     )
         .filterNotNull()
         .asIterable()
