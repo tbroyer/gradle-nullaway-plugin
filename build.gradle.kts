@@ -110,6 +110,33 @@ gradlePlugin {
     }
 }
 
+publishing {
+    publications.withType<MavenPublication>().configureEach {
+        pom {
+            name.set("Adds NullAway DSL to Gradle Error Prone plugin")
+            description.set("Adds NullAway DSL to Gradle Error Prone plugin")
+            url.set("https://github.com/tbroyer/gradle-nullaway-plugin")
+            licenses {
+                license {
+                    name.set("Apache-2.0")
+                    url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                }
+            }
+            developers {
+                developer {
+                    name.set("Thomas Broyer")
+                    email.set("t.broyer@ltgt.net")
+                }
+            }
+            scm {
+                connection.set("https://github.com/tbroyer/gradle-nullaway-plugin.git")
+                developerConnection.set("scm:git:ssh://github.com:tbroyer/gradle-nullaway-plugin.git")
+                url.set("https://github.com/tbroyer/gradle-nullaway-plugin")
+            }
+        }
+    }
+}
+
 ktlint {
     version.set("0.49.1")
     outputToConsole.set(true)
