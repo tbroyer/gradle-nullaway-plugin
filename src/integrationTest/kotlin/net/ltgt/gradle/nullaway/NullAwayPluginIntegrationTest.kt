@@ -2,7 +2,6 @@ package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.TruthJUnit.assume
-import net.ltgt.gradle.errorprone.ErrorPronePlugin
 import org.gradle.api.JavaVersion
 import org.gradle.testkit.runner.TaskOutcome
 import org.gradle.util.GradleVersion
@@ -38,8 +37,8 @@ class NullAwayPluginIntegrationTest {
 
                 plugins {
                     `java-library`
-                    id("${ErrorPronePlugin.PLUGIN_ID}")
-                    id("${NullAwayPlugin.PLUGIN_ID}")
+                    id("net.ltgt.errorprone")
+                    id("net.ltgt.nullaway")
                 }
 
                 repositories {

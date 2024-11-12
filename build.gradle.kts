@@ -55,22 +55,6 @@ repositories {
 }
 dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-    testImplementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-
-    testImplementation("com.google.truth.extensions:truth-java8-extension:1.1.5") {
-        // See https://github.com/google/truth/issues/333
-        exclude(group = "junit", module = "junit")
-    }
-    testRuntimeOnly("junit:junit:4.13.2") {
-        // See https://github.com/google/truth/issues/333
-        because("Truth needs it")
-    }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
-
-    testImplementation("com.google.errorprone:error_prone_check_api:$errorproneVersion") {
-        exclude(group = "com.google.errorprone", module = "javac")
-    }
 
     additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
 }
@@ -79,26 +63,68 @@ tasks {
     pluginUnderTestMetadata {
         this.pluginClasspath.from(additionalPluginClasspath)
     }
-    test {
-        val testJavaToolchain = project.findProperty("test.java-toolchain")
-        testJavaToolchain?.also {
-            val metadata = project.javaToolchains.launcherFor {
-                languageVersion.set(JavaLanguageVersion.of(testJavaToolchain.toString()))
-            }.get().metadata
-            systemProperty("test.java-version", metadata.languageVersion.asInt())
-            systemProperty("test.java-home", metadata.installationPath.asFile.canonicalPath)
+    check {
+        dependsOn(testing.suites)
+    }
+}
+testing {
+    suites {
+        withType<JvmTestSuite>().configureEach {
+            useJUnitJupiter("5.9.3")
+            dependencies {
+                implementation("com.google.truth.extensions:truth-java8-extension:1.1.5") {
+                    // See https://github.com/google/truth/issues/333
+                    exclude(group = "junit", module = "junit")
+                }
+                runtimeOnly("junit:junit:4.13.2") {
+                    // See https://github.com/google/truth/issues/333
+                    because("Truth needs it")
+                }
+            }
+            targets.configureEach {
+                testTask {
+                    testLogging {
+                        showExceptions = true
+                        showStackTraces = true
+                        exceptionFormat = TestExceptionFormat.FULL
+                    }
+                }
+            }
         }
+        val test by getting(JvmTestSuite::class) {
+            dependencies {
+                implementation(project())
+                implementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
+                implementation("com.google.errorprone:error_prone_check_api:$errorproneVersion") {
+                    exclude(group = "com.google.errorprone", module = "javac")
+                }
+            }
+        }
+        register<JvmTestSuite>("integrationTest") {
+            dependencies {
+                implementation(gradleTestKit())
+            }
+            // make plugin-under-test-metadata.properties accessible to TestKit
+            gradlePlugin.testSourceSet(sources)
+            targets.configureEach {
+                testTask {
+                    shouldRunAfter(test)
 
-        val testGradleVersion = project.findProperty("test.gradle-version")
-        testGradleVersion?.also { systemProperty("test.gradle-version", testGradleVersion) }
+                    val testJavaToolchain = project.findProperty("test.java-toolchain")
+                    testJavaToolchain?.also {
+                        val metadata = project.javaToolchains.launcherFor {
+                            languageVersion.set(JavaLanguageVersion.of(testJavaToolchain.toString()))
+                        }.get().metadata
+                        systemProperty("test.java-version", metadata.languageVersion.asInt())
+                        systemProperty("test.java-home", metadata.installationPath.asFile.canonicalPath)
+                    }
 
-        systemProperty("errorprone.version", errorproneVersion)
+                    val testGradleVersion = project.findProperty("test.gradle-version")
+                    testGradleVersion?.also { systemProperty("test.gradle-version", testGradleVersion) }
 
-        useJUnitPlatform()
-        testLogging {
-            showExceptions = true
-            showStackTraces = true
-            exceptionFormat = TestExceptionFormat.FULL
+                    systemProperty("errorprone.version", errorproneVersion)
+                }
+            }
         }
     }
 }
