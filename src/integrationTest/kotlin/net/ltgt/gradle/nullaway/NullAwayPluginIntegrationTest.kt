@@ -10,7 +10,6 @@ import java.io.File
 import java.util.Properties
 
 class NullAwayPluginIntegrationTest {
-
     @TempDir
     lateinit var testProjectDir: File
     lateinit var settingsFile: File
@@ -25,39 +24,41 @@ class NullAwayPluginIntegrationTest {
                 store(it, null)
             }
         }
-        settingsFile = testProjectDir.resolve("settings.gradle.kts").apply {
-            createNewFile()
-        }
-        buildFile = testProjectDir.resolve("build.gradle.kts").apply {
-            writeText(
-                """
-                import net.ltgt.gradle.errorprone.*
-                import net.ltgt.gradle.nullaway.nullaway
+        settingsFile =
+            testProjectDir.resolve("settings.gradle.kts").apply {
+                createNewFile()
+            }
+        buildFile =
+            testProjectDir.resolve("build.gradle.kts").apply {
+                writeText(
+                    """
+                    import net.ltgt.gradle.errorprone.*
+                    import net.ltgt.gradle.nullaway.nullaway
 
-                plugins {
-                    `java-library`
-                    id("net.ltgt.errorprone")
-                    id("net.ltgt.nullaway")
-                }
+                    plugins {
+                        `java-library`
+                        id("net.ltgt.errorprone")
+                        id("net.ltgt.nullaway")
+                    }
 
-                repositories {
-                    mavenCentral()
-                }
-                dependencies {
-                    errorprone("com.google.errorprone:error_prone_core:$errorproneVersion")
-                    errorprone("com.uber.nullaway:nullaway:$nullawayVersion")
-                }
+                    repositories {
+                        mavenCentral()
+                    }
+                    dependencies {
+                        errorprone("com.google.errorprone:error_prone_core:$errorproneVersion")
+                        errorprone("com.uber.nullaway:nullaway:$nullawayVersion")
+                    }
 
-                tasks.withType<JavaCompile>().configureEach {
-                    options.compilerArgs.add("-Werror")
-                }
+                    tasks.withType<JavaCompile>().configureEach {
+                        options.compilerArgs.add("-Werror")
+                    }
 
-                nullaway {
-                    annotatedPackages.add("test")
-                }
-                """.trimIndent(),
-            )
-        }
+                    nullaway {
+                        annotatedPackages.add("test")
+                    }
+                    """.trimIndent(),
+                )
+            }
     }
 
     @Test

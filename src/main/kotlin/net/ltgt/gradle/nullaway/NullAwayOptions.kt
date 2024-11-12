@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:no-wildcard-imports")
+
 package net.ltgt.gradle.nullaway
 
 import net.ltgt.gradle.errorprone.CheckSeverity
@@ -5,8 +7,7 @@ import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
-import org.gradle.kotlin.dsl.listProperty
-import org.gradle.kotlin.dsl.property
+import org.gradle.kotlin.dsl.*
 
 open class NullAwayOptions internal constructor(
     objectFactory: ObjectFactory,
@@ -167,8 +168,7 @@ open class NullAwayOptions internal constructor(
     val customGeneratedCodeAnnotations = objectFactory.listProperty<String>()
 
     /** If set to true, enables new checks based on JSpecify (like checks for generic types); maps to `-XepOpt:NullAway:JSpecifyMode`. */
-    // Note the differing case, for Groovy DSL, so it can be read as `jspecifyMode` and set as `jspecifyMode = true`
-    @get:JvmName("getJspecifyMode")
+    @get:JvmName("getJspecifyMode") // Note the differing case, for Groovy DSL, so it's exposed as `jspecifyMode`
     @get:Input
     @get:Optional
     val isJSpecifyMode = objectFactory.property<Boolean>()
@@ -209,51 +209,58 @@ open class NullAwayOptions internal constructor(
      */
     fun error() = severity.set(CheckSeverity.ERROR)
 
-    internal fun asArguments(): Iterable<String> = sequenceOf(
-        "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
-        listOption("AnnotatedPackages", annotatedPackages),
-        listOption("UnannotatedSubPackages", unannotatedSubPackages),
-        listOption("UnannotatedClasses", unannotatedClasses),
-        listOption("KnownInitializers", knownInitializers),
-        listOption("ExcludedClassAnnotations", excludedClassAnnotations),
-        listOption("ExcludedClasses", excludedClasses),
-        listOption("ExcludedFieldAnnotations", excludedFieldAnnotations),
-        listOption("CustomInitializerAnnotations", customInitializerAnnotations),
-        listOption("ExternalInitAnnotations", externalInitAnnotations),
-        booleanOption("TreatGeneratedAsUnannotated", treatGeneratedAsUnannotated),
-        booleanOption("AcknowledgeRestrictiveAnnotations", acknowledgeRestrictiveAnnotations),
-        booleanOption("CheckOptionalEmptiness", checkOptionalEmptiness),
-        booleanOption("SuggestSuppressions", suggestSuppressions),
-        booleanOption("AssertsEnabled", isAssertsEnabled),
-        booleanOption("ExhaustiveOverride", isExhaustiveOverride),
-        stringOption("CastToNonNullMethod", castToNonNullMethod),
-        listOption("CheckOptionalEmptinessCustomClasses", checkOptionalEmptinessCustomClasses),
-        stringOption("AutoFixSuppressionComment", autoFixSuppressionComment),
-        booleanOption("HandleTestAssertionLibraries", handleTestAssertionLibraries),
-        booleanOption("AcknowledgeAndroidRecent", acknowledgeAndroidRecent),
-        booleanOption("CheckContracts", checkContracts),
-        listOption("CustomContractAnnotations", customContractAnnotations),
-        listOption("CustomNullableAnnotations", customNullableAnnotations),
-        listOption("CustomNonnullAnnotations", customNonnullAnnotations),
-        listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations),
-        booleanOption("JSpecifyMode", isJSpecifyMode),
-        listOption("ExtraFuturesClasses", extraFuturesClasses),
-    )
-        .filterNotNull()
-        .asIterable()
+    internal fun asArguments(): Iterable<String> =
+        sequenceOf(
+            "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
+            listOption("AnnotatedPackages", annotatedPackages),
+            listOption("UnannotatedSubPackages", unannotatedSubPackages),
+            listOption("UnannotatedClasses", unannotatedClasses),
+            listOption("KnownInitializers", knownInitializers),
+            listOption("ExcludedClassAnnotations", excludedClassAnnotations),
+            listOption("ExcludedClasses", excludedClasses),
+            listOption("ExcludedFieldAnnotations", excludedFieldAnnotations),
+            listOption("CustomInitializerAnnotations", customInitializerAnnotations),
+            listOption("ExternalInitAnnotations", externalInitAnnotations),
+            booleanOption("TreatGeneratedAsUnannotated", treatGeneratedAsUnannotated),
+            booleanOption("AcknowledgeRestrictiveAnnotations", acknowledgeRestrictiveAnnotations),
+            booleanOption("CheckOptionalEmptiness", checkOptionalEmptiness),
+            booleanOption("SuggestSuppressions", suggestSuppressions),
+            booleanOption("AssertsEnabled", isAssertsEnabled),
+            booleanOption("ExhaustiveOverride", isExhaustiveOverride),
+            stringOption("CastToNonNullMethod", castToNonNullMethod),
+            listOption("CheckOptionalEmptinessCustomClasses", checkOptionalEmptinessCustomClasses),
+            stringOption("AutoFixSuppressionComment", autoFixSuppressionComment),
+            booleanOption("HandleTestAssertionLibraries", handleTestAssertionLibraries),
+            booleanOption("AcknowledgeAndroidRecent", acknowledgeAndroidRecent),
+            booleanOption("CheckContracts", checkContracts),
+            listOption("CustomContractAnnotations", customContractAnnotations),
+            listOption("CustomNullableAnnotations", customNullableAnnotations),
+            listOption("CustomNonnullAnnotations", customNonnullAnnotations),
+            listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations),
+            booleanOption("JSpecifyMode", isJSpecifyMode),
+            listOption("ExtraFuturesClasses", extraFuturesClasses),
+        ).filterNotNull()
+            .asIterable()
 
-    private fun listOption(name: String, value: Provider<List<String>>) =
-        value.orNull.takeUnless { it.isNullOrEmpty() }?.let { "-XepOpt:NullAway:$name=${it.joinToString(separator = ",")}" }
+    private fun listOption(
+        name: String,
+        value: Provider<List<String>>,
+    ) = value.orNull.takeUnless { it.isNullOrEmpty() }?.let { "-XepOpt:NullAway:$name=${it.joinToString(separator = ",")}" }
 
-    private fun booleanOption(name: String, value: Provider<Boolean>): String? =
-        value.orNull?.let { "-XepOpt:NullAway:$name=$it" }
+    private fun booleanOption(
+        name: String,
+        value: Provider<Boolean>,
+    ): String? = value.orNull?.let { "-XepOpt:NullAway:$name=$it" }
 
-    private fun stringOption(name: String, value: Provider<String>): String? =
-        value.orNull?.let { "-XepOpt:NullAway:$name=$it" }
+    private fun stringOption(
+        name: String,
+        value: Provider<String>,
+    ): String? = value.orNull?.let { "-XepOpt:NullAway:$name=$it" }
 }
 
 private val CheckSeverity.asArg: String
-    get() = when (this) {
-        CheckSeverity.DEFAULT -> ""
-        else -> ":$name"
-    }
+    get() =
+        when (this) {
+            CheckSeverity.DEFAULT -> ""
+            else -> ":$name"
+        }

@@ -13,7 +13,7 @@ val testGradleVersion = System.getProperty("test.gradle-version")?.let(GradleVer
 
 val errorproneVersion = System.getProperty("errorprone.version")!!
 
-const val nullawayVersion = "0.10.23"
+val nullawayVersion = "0.10.23"
 
 const val FAILURE_SOURCE_COMPILATION_ERROR = "Failure.java:8: warning: [NullAway]"
 
@@ -70,24 +70,26 @@ fun File.buildWithArgsAndFail(vararg tasks: String): BuildResult =
         .buildAndFail()
 
 private fun File.prepareBuild(vararg tasks: String): GradleRunner =
-    GradleRunner.create()
+    GradleRunner
+        .create()
         .withGradleVersion(testGradleVersion.version)
         .withProjectDir(this)
         .withPluginClasspath()
         .withArguments(*tasks)
 
 // Based on https://docs.gradle.org/current/userguide/compatibility.html#java_runtime
-val COMPATIBLE_GRADLE_VERSIONS = mapOf(
+val COMPATIBLE_GRADLE_VERSIONS =
+    mapOf(
+        JavaVersion.VERSION_16 to GradleVersion.version("7.0"),
+        JavaVersion.VERSION_17 to GradleVersion.version("7.3"),
+        JavaVersion.VERSION_18 to GradleVersion.version("7.5"),
+        JavaVersion.VERSION_19 to GradleVersion.version("7.6"),
+        JavaVersion.VERSION_20 to GradleVersion.version("8.3"),
+        JavaVersion.VERSION_21 to GradleVersion.version("8.5"),
+        JavaVersion.VERSION_22 to GradleVersion.version("8.8"),
+        JavaVersion.VERSION_23 to GradleVersion.version("8.10"),
+    )
 
-    JavaVersion.VERSION_16 to GradleVersion.version("7.0"),
-    JavaVersion.VERSION_17 to GradleVersion.version("7.3"),
-    JavaVersion.VERSION_18 to GradleVersion.version("7.5"),
-    JavaVersion.VERSION_19 to GradleVersion.version("7.6"),
-    JavaVersion.VERSION_20 to GradleVersion.version("8.3"),
-    JavaVersion.VERSION_21 to GradleVersion.version("8.5"),
-    JavaVersion.VERSION_22 to GradleVersion.version("8.8"),
-    JavaVersion.VERSION_23 to GradleVersion.version("8.10"),
-)
 fun assumeCompatibleGradleAndJavaVersions() {
     assume().that(testGradleVersion >= COMPATIBLE_GRADLE_VERSIONS[testJavaVersion] ?: GradleVersion.version("6.8")).isTrue()
 }

@@ -1,7 +1,9 @@
+@file:Suppress("ktlint:standard:no-wildcard-imports")
+
 package net.ltgt.gradle.nullaway
 
 import org.gradle.api.model.ObjectFactory
-import org.gradle.kotlin.dsl.listProperty
+import org.gradle.kotlin.dsl.*
 
 open class NullAwayExtension internal constructor(
     objectFactory: ObjectFactory,

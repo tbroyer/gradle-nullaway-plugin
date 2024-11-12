@@ -18,45 +18,47 @@ import java.io.File
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class NullAwayOptionsTest {
-
     companion object {
-        private val ALL_NULLAWAY_OPTION_NAMES = setOf(
-            "NullAway:AnnotatedPackages",
-            "NullAway:UnannotatedSubPackages",
-            "NullAway:UnannotatedClasses",
-            "NullAway:UnannotatedClasses",
-            "NullAway:KnownInitializers",
-            "NullAway:ExcludedClassAnnotations",
-            "NullAway:ExcludedClasses",
-            "NullAway:ExcludedFieldAnnotations",
-            "NullAway:CustomInitializerAnnotations",
-            "NullAway:ExternalInitAnnotations",
-            "NullAway:TreatGeneratedAsUnannotated",
-            "NullAway:AcknowledgeRestrictiveAnnotations",
-            "NullAway:CheckOptionalEmptiness",
-            "NullAway:SuggestSuppressions",
-            "NullAway:AssertsEnabled",
-            "NullAway:ExhaustiveOverride",
-            "NullAway:CastToNonNullMethod",
-            "NullAway:CheckOptionalEmptinessCustomClasses",
-            "NullAway:AutoFixSuppressionComment",
-            "NullAway:HandleTestAssertionLibraries",
-            "NullAway:AcknowledgeAndroidRecent",
-            "NullAway:CheckContracts",
-            "NullAway:CustomContractAnnotations",
-            "NullAway:CustomNullableAnnotations",
-            "NullAway:CustomNonnullAnnotations",
-            "NullAway:CustomGeneratedCodeAnnotations",
-            "NullAway:JSpecifyMode",
-            "NullAway:ExtraFuturesClasses",
-        )
+        private val ALL_NULLAWAY_OPTION_NAMES =
+            setOf(
+                "NullAway:AnnotatedPackages",
+                "NullAway:UnannotatedSubPackages",
+                "NullAway:UnannotatedClasses",
+                "NullAway:UnannotatedClasses",
+                "NullAway:KnownInitializers",
+                "NullAway:ExcludedClassAnnotations",
+                "NullAway:ExcludedClasses",
+                "NullAway:ExcludedFieldAnnotations",
+                "NullAway:CustomInitializerAnnotations",
+                "NullAway:ExternalInitAnnotations",
+                "NullAway:TreatGeneratedAsUnannotated",
+                "NullAway:AcknowledgeRestrictiveAnnotations",
+                "NullAway:CheckOptionalEmptiness",
+                "NullAway:SuggestSuppressions",
+                "NullAway:AssertsEnabled",
+                "NullAway:ExhaustiveOverride",
+                "NullAway:CastToNonNullMethod",
+                "NullAway:CheckOptionalEmptinessCustomClasses",
+                "NullAway:AutoFixSuppressionComment",
+                "NullAway:HandleTestAssertionLibraries",
+                "NullAway:AcknowledgeAndroidRecent",
+                "NullAway:CheckContracts",
+                "NullAway:CustomContractAnnotations",
+                "NullAway:CustomNullableAnnotations",
+                "NullAway:CustomNonnullAnnotations",
+                "NullAway:CustomGeneratedCodeAnnotations",
+                "NullAway:JSpecifyMode",
+                "NullAway:ExtraFuturesClasses",
+            )
     }
 
     lateinit var objects: ObjectFactory
     lateinit var providers: ProviderFactory
 
     @BeforeAll
-    fun setup(@TempDir projectDir: File) {
+    fun setup(
+        @TempDir projectDir: File,
+    ) {
         ProjectBuilder.builder().withProjectDir(projectDir).build().let { project ->
             objects = project.objects
             providers = project.providers
@@ -191,10 +193,16 @@ class NullAwayOptionsTest {
         assertThat(parsedOptions.remainingArgs).isEmpty()
     }
 
-    private fun <T> assertDefault(parsedOptions: ErrorProneOptions, getter: ErrorProneOptions.() -> T) =
-        assertThat(parsedOptions.getter()).isEqualTo(ErrorProneOptions.empty().getter())
+    private fun <T> assertDefault(
+        parsedOptions: ErrorProneOptions,
+        getter: ErrorProneOptions.() -> T,
+    ) = assertThat(parsedOptions.getter()).isEqualTo(ErrorProneOptions.empty().getter())
 
-    private fun assertListOptionEqual(parsedOptions: ErrorProneOptions, flagName: String, listProperty: ListProperty<String>) {
+    private fun assertListOptionEqual(
+        parsedOptions: ErrorProneOptions,
+        flagName: String,
+        listProperty: ListProperty<String>,
+    ) {
         parsedOptions.flags.getList(flagName).also {
             if (listProperty.orNull.isNullOrEmpty()) {
                 assertThat(it).isEmpty()
@@ -205,7 +213,11 @@ class NullAwayOptionsTest {
         }
     }
 
-    private fun assertBooleanOptionEqual(parsedOptions: ErrorProneOptions, flagName: String, booleanProperty: Property<Boolean>) {
+    private fun assertBooleanOptionEqual(
+        parsedOptions: ErrorProneOptions,
+        flagName: String,
+        booleanProperty: Property<Boolean>,
+    ) {
         parsedOptions.flags.getBoolean(flagName).also {
             if (booleanProperty.isPresent) {
                 assertThat(it).hasValue(booleanProperty.get())
@@ -215,7 +227,11 @@ class NullAwayOptionsTest {
         }
     }
 
-    private fun assertStringOptionEqual(parsedOptions: ErrorProneOptions, flagName: String, stringProperty: Property<String>) {
+    private fun assertStringOptionEqual(
+        parsedOptions: ErrorProneOptions,
+        flagName: String,
+        stringProperty: Property<String>,
+    ) {
         parsedOptions.flags.get(flagName).also {
             if (stringProperty.isPresent) {
                 assertThat(it).hasValue(stringProperty.get())

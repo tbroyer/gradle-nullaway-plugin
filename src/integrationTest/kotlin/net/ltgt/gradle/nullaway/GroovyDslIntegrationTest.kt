@@ -24,38 +24,40 @@ class GroovyDslIntegrationTest {
                 store(it, null)
             }
         }
-        settingsFile = testProjectDir.resolve("settings.gradle").apply {
-            createNewFile()
-        }
-        buildFile = testProjectDir.resolve("build.gradle").apply {
-            writeText(
-                """
-                import net.ltgt.gradle.errorprone.CheckSeverity
+        settingsFile =
+            testProjectDir.resolve("settings.gradle").apply {
+                createNewFile()
+            }
+        buildFile =
+            testProjectDir.resolve("build.gradle").apply {
+                writeText(
+                    """
+                    import net.ltgt.gradle.errorprone.CheckSeverity
 
-                plugins {
-                    id("java-library")
-                    id("net.ltgt.errorprone")
-                    id("net.ltgt.nullaway")
-                }
+                    plugins {
+                        id("java-library")
+                        id("net.ltgt.errorprone")
+                        id("net.ltgt.nullaway")
+                    }
 
-                repositories {
-                    mavenCentral()
-                }
-                dependencies {
-                    errorprone "com.google.errorprone:error_prone_core:$errorproneVersion"
-                    errorprone "com.uber.nullaway:nullaway:$nullawayVersion"
-                }
+                    repositories {
+                        mavenCentral()
+                    }
+                    dependencies {
+                        errorprone "com.google.errorprone:error_prone_core:$errorproneVersion"
+                        errorprone "com.uber.nullaway:nullaway:$nullawayVersion"
+                    }
 
-                tasks.withType(JavaCompile).configureEach {
-                    options.compilerArgs.add("-Werror")
-                }
+                    tasks.withType(JavaCompile).configureEach {
+                        options.compilerArgs.add("-Werror")
+                    }
 
-                nullaway {
-                    annotatedPackages.add("test")
-                }
-                """.trimIndent(),
-            )
-        }
+                    nullaway {
+                        annotatedPackages.add("test")
+                    }
+                    """.trimIndent(),
+                )
+            }
     }
 
     @Test
