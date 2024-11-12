@@ -7,10 +7,10 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "1.2.0"
+    id("com.gradle.plugin-publish") version "1.3.0"
     id("com.diffplug.spotless") version "6.25.0"
-    id("com.android.lint") version "7.4.2"
-    id("org.nosphere.gradle.github.actions") version "1.3.2"
+    id("com.android.lint") version "8.7.2"
+    id("org.nosphere.gradle.github.actions") version "1.4.0"
 }
 
 group = "net.ltgt.gradle"
@@ -49,7 +49,7 @@ gradle.taskGraph.whenReady {
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
 
-val errorpronePluginVersion = "3.1.0"
+val errorpronePluginVersion = "4.1.0"
 val errorproneVersion = "2.10.0"
 
 repositories {
@@ -78,9 +78,9 @@ tasks {
 testing {
     suites {
         withType<JvmTestSuite>().configureEach {
-            useJUnitJupiter("5.9.3")
+            useJUnitJupiter("5.11.3")
             dependencies {
-                implementation("com.google.truth.extensions:truth-java8-extension:1.1.5") {
+                implementation("com.google.truth:truth:1.4.4") {
                     // See https://github.com/google/truth/issues/333
                     exclude(group = "junit", module = "junit")
                 }

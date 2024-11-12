@@ -1,7 +1,6 @@
 package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
-import com.google.common.truth.Truth8.assertThat
 import com.google.errorprone.ErrorProneOptions
 import com.google.errorprone.ErrorProneOptions.Severity
 import net.ltgt.gradle.errorprone.CheckSeverity
