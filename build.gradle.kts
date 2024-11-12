@@ -1,4 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -15,24 +17,30 @@ group = "net.ltgt.gradle"
 
 // Make sure Gradle Module Metadata targets the appropriate JVM version
 tasks.withType<JavaCompile>().configureEach {
-    options.release.set(kotlinDslPluginOptions.jvmTarget.map { JavaVersion.toVersion(it).majorVersion.toInt() })
+    options.release.set(8)
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.allWarningsAsErrors = true
-}
-// XXX: migrate to lazy properties when upgrading to Gradle 8.1+
-afterEvaluate {
-    tasks.withType<KotlinCompile>().configureEach {
-        // See https://jakewharton.com/kotlins-jdk-release-compatibility-flag/
-        kotlinOptions.freeCompilerArgs += "-Xjdk-release=${kotlinDslPluginOptions.jvmTarget.get()}"
-    }
+    // See https://jakewharton.com/kotlins-jdk-release-compatibility-flag/
+    compilerOptions.freeCompilerArgs.add("-Xjdk-release=1.8")
+    compilerOptions.jvmTarget = JvmTarget.JVM_1_8
+
+    // For Gradle 6.8 compatibility. Gradle 6.8 embeds Kotlin 1.4.
+    // https://docs.gradle.org/current/userguide/compatibility.html#kotlin
+    @Suppress("DEPRECATION")
+    compilerOptions.apiVersion = KotlinVersion.KOTLIN_1_4
+    @Suppress("DEPRECATION")
+    compilerOptions.languageVersion = KotlinVersion.KOTLIN_1_4
+
+    compilerOptions.allWarningsAsErrors = true
+    // Using Kotlin 1.4 above emits a warning that would then fail the build with allWarningsAsErrors
+    compilerOptions.freeCompilerArgs.add("-Xsuppress-version-warnings")
 }
 
 gradle.taskGraph.whenReady {
     if (hasTask(":publishPlugins")) {
-        check("git diff --quiet --exit-code".execute(null, rootDir).waitFor() == 0) { "Working tree is dirty" }
-        val process = "git describe --exact-match".execute(null, rootDir)
+        check(cmd("git diff --quiet --exit-code").waitFor() == 0) { "Working tree is dirty" }
+        val process = cmd("git describe --exact-match")
         check(process.waitFor() == 0) { "Version is not tagged" }
         version = process.text.trim().removePrefix("v")
     }
@@ -176,8 +184,8 @@ ktlint {
     enableExperimentalRules.set(true)
 }
 
-fun String.execute(envp: Array<String>?, workingDir: File?) =
-    Runtime.getRuntime().exec(this, envp, workingDir)
+fun cmd(vararg cmdarray: String) =
+    Runtime.getRuntime().exec(cmdarray, null, rootDir)
 
 val Process.text: String
     get() = inputStream.bufferedReader().readText()
