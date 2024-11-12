@@ -202,12 +202,11 @@ class NullAwayOptionsTest {
         flagName: String,
         listProperty: ListProperty<String>,
     ) {
-        parsedOptions.flags.getList(flagName).also {
+        parsedOptions.flags.getListOrEmpty(flagName).also {
             if (listProperty.orNull.isNullOrEmpty()) {
                 assertThat(it).isEmpty()
             } else {
-                assertThat(it).isPresent()
-                assertThat(it.get()).containsExactlyElementsIn(listProperty.get())
+                assertThat(it).containsExactlyElementsIn(listProperty.get())
             }
         }
     }

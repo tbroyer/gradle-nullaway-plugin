@@ -11,9 +11,18 @@ val testJavaVersion = JavaVersion.toVersion(System.getProperty("test.java-versio
 val testJavaHome = System.getProperty("test.java-home", System.getProperty("java.home"))
 val testGradleVersion = System.getProperty("test.gradle-version")?.let(GradleVersion::version) ?: GradleVersion.current()
 
-val errorproneVersion = System.getProperty("errorprone.version")!!
+val errorproneVersion =
+    when {
+        testJavaVersion < JavaVersion.VERSION_11 -> "2.10.0"
+        testJavaVersion < JavaVersion.VERSION_17 -> "2.31.0"
+        else -> System.getProperty("errorprone.version")!!
+    }
 
-val nullawayVersion = "0.10.23"
+val nullawayVersion =
+    when {
+        testJavaVersion < JavaVersion.VERSION_11 -> "0.10.26"
+        else -> "0.12.0"
+    }
 
 const val FAILURE_SOURCE_COMPILATION_ERROR = "Failure.java:8: warning: [NullAway]"
 
