@@ -2,9 +2,7 @@ package net.ltgt.gradle.nullaway
 
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.TruthJUnit.assume
-import org.gradle.api.JavaVersion
 import org.gradle.testkit.runner.TaskOutcome
-import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -20,6 +18,7 @@ class NullAwayPluginIntegrationTest {
 
     @BeforeEach
     fun setupProject() {
+        assumeCompatibleGradleAndJavaVersions()
         testProjectDir.resolve("gradle.properties").outputStream().use {
             Properties().apply {
                 setProperty("org.gradle.java.home", testJavaHome)
@@ -222,11 +221,6 @@ class NullAwayPluginIntegrationTest {
 
     @Test
     fun `is configuration-cache friendly`() {
-        assume().that(
-            testJavaVersion < JavaVersion.VERSION_16 ||
-                GradleVersion.version(testGradleVersion).baseVersion >= GradleVersion.version("7.0"),
-        ).isTrue()
-
         // given
         testProjectDir.writeSuccessSource()
 
