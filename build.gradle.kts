@@ -9,7 +9,7 @@ plugins {
     `maven-publish`
     id("com.gradle.plugin-publish") version "1.3.0"
     id("com.diffplug.spotless") version "6.25.0"
-    id("com.android.lint") version "8.7.2"
+    id("com.android.lint") version "8.7.3"
     id("org.nosphere.gradle.github.actions") version "1.4.0"
 }
 
@@ -50,7 +50,7 @@ gradle.taskGraph.whenReady {
 val additionalPluginClasspath by configurations.creating
 
 val errorpronePluginVersion = "4.1.0"
-val errorproneVersion = "2.35.1"
+val errorproneVersion = "2.36.0"
 
 repositories {
     mavenCentral()

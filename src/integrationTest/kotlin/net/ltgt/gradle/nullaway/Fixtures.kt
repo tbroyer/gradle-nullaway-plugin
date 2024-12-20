@@ -21,7 +21,7 @@ val errorproneVersion =
 val nullawayVersion =
     when {
         testJavaVersion < JavaVersion.VERSION_11 -> "0.10.26"
-        else -> "0.12.0"
+        else -> "0.12.2"
     }
 
 const val FAILURE_SOURCE_COMPILATION_ERROR = "Failure.java:8: warning: [NullAway]"
