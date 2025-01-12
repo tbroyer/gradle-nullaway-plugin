@@ -29,13 +29,24 @@ open class NullAwayOptions internal constructor(
     @get:Input val severity = objectFactory.property<CheckSeverity>().convention(CheckSeverity.DEFAULT)
 
     /**
+     * Indicates that the [annotatedPackages] flag has been deliberately omitted, and that NullAway can proceed with only treating `@NullMarked` code as annotated, in accordance with the JSpecify specification; maps to `-XepOpt:NullAway:OnlyNullMarked`.
+     *
+     * If this option is passed, then [annotatedPackages] must be empty. Note that even if this flag is omitted (and [annotatedPackages] is non-empty), any `@NullMarked` code will still be treated as annotated.
+     *
+     * Defaults to the [value configured at the project-level][NullAwayExtension.onlyNullMarked]
+     */
+    @get:Input @get:Optional
+    val onlyNullMarked = objectFactory.property<Boolean>().convention(nullawayExtension.onlyNullMarked)
+
+    /**
      * The list of packages that should be considered properly annotated according to the NullAway convention; maps to `-XepOpt:NullAway:AnnotatedPackages`.
      *
      * This can be used to add to or override the [`annotatedPackages`][NullAwayExtension.annotatedPackages] at the project level.
      *
      * Defaults to the [list configured at the project-level][NullAwayExtension.annotatedPackages].
      */
-    @get:Input val annotatedPackages = objectFactory.listProperty<String>().convention(nullawayExtension.annotatedPackages)
+    @get:Input @get:Optional
+    val annotatedPackages = objectFactory.listProperty<String>().convention(nullawayExtension.annotatedPackages)
 
     /** A list of subpackages to be excluded from the [annotatedPackages] list; maps to `-XepOpt:NullAway:UnannotatedSubPackages`. */
     @get:Input @get:Optional
@@ -213,6 +224,7 @@ open class NullAwayOptions internal constructor(
         sequenceOf(
             "-Xep:NullAway${severity.getOrElse(CheckSeverity.DEFAULT).asArg}",
             listOption("AnnotatedPackages", annotatedPackages),
+            booleanOption("OnlyNullMarked", onlyNullMarked),
             listOption("UnannotatedSubPackages", unannotatedSubPackages),
             listOption("UnannotatedClasses", unannotatedClasses),
             listOption("KnownInitializers", knownInitializers),

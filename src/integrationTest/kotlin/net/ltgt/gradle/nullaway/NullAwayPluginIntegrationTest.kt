@@ -92,7 +92,7 @@ class NullAwayPluginIntegrationTest {
 
         // then
         assertThat(result.task(":compileJava")?.outcome).isEqualTo(TaskOutcome.FAILED)
-        assertThat(result.output).contains("Must specify annotated packages, using the -XepOpt:NullAway:AnnotatedPackages=[...] flag.")
+        assertThat(result.output).contains(" specify annotated packages, using the -XepOpt:NullAway:AnnotatedPackages=[...] flag")
     }
 
     @Test
@@ -111,6 +111,65 @@ class NullAwayPluginIntegrationTest {
     fun `compilation fails`() {
         // given
         testProjectDir.writeFailureSource()
+
+        // when
+        val result = testProjectDir.buildWithArgsAndFail(":compileJava")
+
+        // then
+        assertThat(result.task(":compileJava")?.outcome).isEqualTo(TaskOutcome.FAILED)
+        assertThat(result.output).contains(FAILURE_SOURCE_COMPILATION_ERROR)
+    }
+
+    @Test
+    fun `only null-marked option, false positive if unannotated`() {
+        assume().that(nullawaySupportsOnlyNullMarked).isTrue()
+        // given
+        buildFile.appendText(
+            """
+
+            nullaway {
+                onlyNullMarked.set(true)
+                annotatedPackages.empty()
+            }
+            """.trimIndent(),
+        )
+        testProjectDir.writeFailureSource()
+
+        // when
+        val result = testProjectDir.buildWithArgs(":compileJava")
+
+        // then
+        assertThat(result.task(":compileJava")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+    }
+
+    @Test
+    fun `only null-marked option, compilation fails`() {
+        assume().that(nullawaySupportsOnlyNullMarked).isTrue()
+        // given
+        buildFile.appendText(
+            """
+
+            nullaway {
+                onlyNullMarked.set(true)
+                annotatedPackages.empty()
+            }
+            dependencies {
+                implementation("org.jspecify:jspecify:1.0.0")
+            }
+            """.trimIndent(),
+        )
+        testProjectDir.writeFailureSource()
+        File(testProjectDir.resolve("src/main/java/test").apply { mkdirs() }, "package-info.java").apply {
+            createNewFile()
+            writeText(
+                """
+                @NullMarked
+                package test;
+                
+                import org.jspecify.annotations.NullMarked;
+                """.trimIndent(),
+            )
+        }
 
         // when
         val result = testProjectDir.buildWithArgsAndFail(":compileJava")
@@ -149,6 +208,7 @@ class NullAwayPluginIntegrationTest {
             tasks.withType<JavaCompile>().configureEach {
                 options.errorprone.nullaway {
                     severity.set(CheckSeverity.DEFAULT)
+                    ${if (nullawaySupportsOnlyNullMarked) "onlyNullMarked.set(false)" else ""}
                     unannotatedSubPackages.add("test.dummy")
                     unannotatedClasses.add("test.Unannotated")
                     knownInitializers.add("com.foo.Bar.method")

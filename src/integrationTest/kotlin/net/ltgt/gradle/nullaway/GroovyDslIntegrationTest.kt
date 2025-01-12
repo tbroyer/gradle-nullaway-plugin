@@ -102,6 +102,7 @@ class GroovyDslIntegrationTest {
             tasks.withType(JavaCompile).configureEach {
                 options.errorprone.nullaway {
                     severity = CheckSeverity.DEFAULT
+                    ${if (nullawaySupportsOnlyNullMarked) "onlyNullMarked = false" else ""}
                     annotatedPackages = project.nullaway.annotatedPackages
                     unannotatedSubPackages = ["test.dummy"]
                     unannotatedClasses = ["test.Unannotated"]

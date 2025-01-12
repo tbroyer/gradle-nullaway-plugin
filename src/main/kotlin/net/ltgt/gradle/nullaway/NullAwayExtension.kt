@@ -9,6 +9,11 @@ open class NullAwayExtension internal constructor(
     objectFactory: ObjectFactory,
 ) {
     /**
+     * Indicates that the [annotatedPackages] flag has been deliberately omitted, and that NullAway can proceed with only treating `@NullMarked` code as annotated, in accordance with the JSpecify specification.
+     */
+    val onlyNullMarked = objectFactory.property<Boolean>()
+
+    /**
      * The list of packages that should be considered properly annotated according to the NullAway convention.
      */
     val annotatedPackages = objectFactory.listProperty<String>()

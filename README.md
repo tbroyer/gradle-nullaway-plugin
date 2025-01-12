@@ -33,6 +33,8 @@ and finally configure NullAway's annotated packages:
 ```gradle
 nullaway {
     annotatedPackages.add("net.ltgt")
+    // OR, starting with NullAway 0.12.3 and if you use JSpecify @NullMarked:
+    onlyNullMarked = true
 }
 ```
 
@@ -77,6 +79,7 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | Property | Description
 | :------- | :----------
 | `severity`               | The check severity. Almost equivalent to `options.errorprone.check("NullAway", severity)` (NullAway won't actually appear in `options.errorprone.checks`). Can be set to `CheckSeverity.OFF` to disable NullAway.
+| `onlyNullMarked`         | Indicates that the `annotatedPackages` flag has been deliberately omitted, and that NullAway can proceed with only treating `@NullMarked` code as annotated, in accordance with the JSpecify specification. 
 | `annotatedPackages`      | The list of packages that should be considered properly annotated according to the NullAway convention. This can be used to add to or override the `annotatedPackages` at the project level.
 | `unannotatedSubPackages` | A list of subpackages to be excluded from the AnnotatedPackages list.
 | `unannotatedClasses`     | A list of classes within annotated packages that should be treated as unannotated.
