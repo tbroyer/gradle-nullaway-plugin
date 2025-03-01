@@ -7,10 +7,10 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "1.3.1"
-    id("com.diffplug.spotless") version "7.0.2"
-    id("com.android.lint") version "8.8.2"
-    id("org.nosphere.gradle.github.actions") version "1.4.0"
+    alias(libs.plugins.gradlePluginPublish)
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.androidLint)
+    alias(libs.plugins.nosphereGithubActions)
 }
 
 group = "net.ltgt.gradle"
@@ -49,13 +49,10 @@ gradle.taskGraph.whenReady {
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
 
-val errorpronePluginVersion = "4.1.0"
-val errorproneVersion = "2.36.0"
-
 dependencies {
-    compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
+    compileOnly(libs.errorproneGradlePlugin)
 
-    additionalPluginClasspath("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
+    additionalPluginClasspath(libs.errorproneGradlePlugin)
 }
 
 tasks {
@@ -69,9 +66,9 @@ tasks {
 testing {
     suites {
         withType<JvmTestSuite>().configureEach {
-            useJUnitJupiter("5.12.0")
+            useJUnitJupiter(libs.versions.junitJupiter)
             dependencies {
-                implementation("com.google.truth:truth:1.4.4")
+                implementation(libs.truth)
             }
             targets.configureEach {
                 testTask {
@@ -86,8 +83,8 @@ testing {
         val test by getting(JvmTestSuite::class) {
             dependencies {
                 implementation(project())
-                implementation("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
-                implementation("com.google.errorprone:error_prone_check_api:$errorproneVersion") {
+                implementation(libs.errorproneGradlePlugin)
+                implementation(libs.errorprone.checkApi) {
                     exclude(group = "com.google.errorprone", module = "javac")
                 }
             }
@@ -116,7 +113,7 @@ testing {
                     val testGradleVersion = project.findProperty("test.gradle-version")
                     testGradleVersion?.also { systemProperty("test.gradle-version", testGradleVersion) }
 
-                    systemProperty("errorprone.version", errorproneVersion)
+                    systemProperty("errorprone.version", libs.versions.errorprone.get())
                 }
             }
         }
@@ -166,10 +163,10 @@ publishing {
 
 spotless {
     kotlinGradle {
-        ktlint("1.5.0")
+        ktlint(libs.versions.ktlint.get())
     }
     kotlin {
-        ktlint("1.5.0")
+        ktlint(libs.versions.ktlint.get())
     }
 }
 
