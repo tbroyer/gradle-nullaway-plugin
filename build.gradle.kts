@@ -7,9 +7,9 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "1.3.0"
-    id("com.diffplug.spotless") version "6.25.0"
-    id("com.android.lint") version "8.7.3"
+    id("com.gradle.plugin-publish") version "1.3.1"
+    id("com.diffplug.spotless") version "7.0.2"
+    id("com.android.lint") version "8.8.2"
     id("org.nosphere.gradle.github.actions") version "1.4.0"
 }
 
@@ -78,7 +78,7 @@ tasks {
 testing {
     suites {
         withType<JvmTestSuite>().configureEach {
-            useJUnitJupiter("5.11.3")
+            useJUnitJupiter("5.12.0")
             dependencies {
                 implementation("com.google.truth:truth:1.4.4") {
                     // See https://github.com/google/truth/issues/333
@@ -182,10 +182,10 @@ publishing {
 
 spotless {
     kotlinGradle {
-        ktlint("1.4.1")
+        ktlint("1.5.0")
     }
     kotlin {
-        ktlint("1.4.1")
+        ktlint("1.5.0")
     }
 }
 
