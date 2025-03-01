@@ -52,15 +52,6 @@ val additionalPluginClasspath by configurations.creating
 val errorpronePluginVersion = "4.1.0"
 val errorproneVersion = "2.36.0"
 
-repositories {
-    mavenCentral()
-    google()
-    gradlePluginPortal {
-        content {
-            includeGroupByRegex("""net\.ltgt\..*""")
-        }
-    }
-}
 dependencies {
     compileOnly("net.ltgt.gradle:gradle-errorprone-plugin:$errorpronePluginVersion")
 

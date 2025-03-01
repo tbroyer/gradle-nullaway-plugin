@@ -8,6 +8,16 @@ pluginManagement {
 rootProject.name = "gradle-nullaway-plugin"
 
 dependencyResolutionManagement {
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal {
+            content {
+                includeGroupAndSubgroups("net.ltgt")
+            }
+        }
+    }
     rulesMode = RulesMode.FAIL_ON_PROJECT_RULES
     components {
         withModule("com.google.truth:truth") {
