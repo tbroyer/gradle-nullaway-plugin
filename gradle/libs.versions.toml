@@ -3,6 +3,7 @@
 errorprone = "2.37.0"
 junitJupiter = "5.12.1"
 ktlint = "1.5.0"
+nullaway = "0.12.3"
 
 [libraries]
 errorprone-checkApi = { module = "com.google.errorprone:error_prone_check_api", version.ref = "errorprone" }
@@ -12,6 +13,7 @@ truth = "com.google.truth:truth:1.4.4"
 # Versions used in build script, libraries added here for Dependabot
 junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref="junitJupiter" }
 ktlint = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 
 [bundles]
 

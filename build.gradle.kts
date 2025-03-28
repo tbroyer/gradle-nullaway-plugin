@@ -114,6 +114,7 @@ testing {
                     testGradleVersion?.also { systemProperty("test.gradle-version", testGradleVersion) }
 
                     systemProperty("errorprone.version", libs.versions.errorprone.get())
+                    systemProperty("nullaway.version", libs.versions.nullaway.get())
                 }
             }
         }

@@ -21,7 +21,7 @@ val errorproneVersion =
 val nullawayVersion =
     when {
         testJavaVersion < JavaVersion.VERSION_11 -> "0.10.26"
-        else -> "0.12.3"
+        else -> System.getProperty("nullaway.version")!!
     }
 
 // XXX: same test (reversed) as in nullawayVersion above
