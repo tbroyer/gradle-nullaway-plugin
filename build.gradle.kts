@@ -1,3 +1,4 @@
+import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
@@ -48,6 +49,10 @@ gradle.taskGraph.whenReady {
 
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath by configurations.creating
+
+// The ErrorProne plugin is in the [plugins] section for better Dependabot integration
+val LibrariesForLibs.errorproneGradlePlugin
+    get() = plugins.errorprone.map { dependencies.create("${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}") }
 
 dependencies {
     compileOnly(libs.errorproneGradlePlugin)
