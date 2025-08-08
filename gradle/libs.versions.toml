@@ -3,7 +3,7 @@
 errorprone = "2.41.0"
 junitJupiter = "5.13.4"
 ktlint = "1.7.1"
-nullaway = "0.12.7"
+nullaway = "0.12.8"
 
 [libraries]
 errorprone-checkApi = { module = "com.google.errorprone:error_prone_check_api", version.ref = "errorprone" }
