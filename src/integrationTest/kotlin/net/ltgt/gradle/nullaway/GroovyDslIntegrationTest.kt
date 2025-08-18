@@ -130,6 +130,7 @@ class GroovyDslIntegrationTest {
                     customGeneratedCodeAnnotations = ["com.example.Generated"]
                     jspecifyMode = true
                     extraFuturesClasses = ["com.example.Future"]
+                    suppressionNameAliases = ["NullIssue"]
                 }
             }
             """.trimIndent(),

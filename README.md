@@ -107,6 +107,7 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `customGeneratedCodeAnnotations` | A list of annotations that should be considered equivalent to `@Generated` annotations, for the cases where NullAway cares about such annotations (see e.g. `treatGeneratedAsUnannotated`).
 | `jspecifyMode`                   | (`isJSpecifyMode` with Kotlin DSL) If set to true, enables new checks based on JSpecify (like checks for generic types).
 | `extraFuturesClasses`            | A list of classes to be treated equivalently to Guava `Futures` and `FluentFuture`; this special support will likely be removed once NullAway's JSpecify support is more complete.
+| `suppressionNameAliases`         | A list of names to suppress NullAway using a `@SuppressWarnings` annotation, similar to `@SuppressWarnings("NullAway")`.
 
 ### Methods
 

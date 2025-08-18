@@ -48,6 +48,7 @@ class NullAwayOptionsTest {
                 "NullAway:CustomGeneratedCodeAnnotations",
                 "NullAway:JSpecifyMode",
                 "NullAway:ExtraFuturesClasses",
+                "NullAway:SuppressionNameAliases",
             )
     }
 
@@ -98,6 +99,7 @@ class NullAwayOptionsTest {
         doTestOptions { customGeneratedCodeAnnotations.add("com.example.Generated") }
         doTestOptions { isJSpecifyMode.set(true) }
         doTestOptions { extraFuturesClasses.add("com.example.Future") }
+        doTestOptions { suppressionNameAliases.add("NullIssue") }
 
         doTestOptions {
             enable()
@@ -128,6 +130,7 @@ class NullAwayOptionsTest {
             customGeneratedCodeAnnotations.add("com.example.Generated")
             isJSpecifyMode.set(true)
             extraFuturesClasses.add("com.example.Future")
+            suppressionNameAliases.add("NullIssue")
         }
     }
 
@@ -187,6 +190,7 @@ class NullAwayOptionsTest {
         assertListOptionEqual(parsedOptions, "NullAway:CustomGeneratedCodeAnnotations", options.customGeneratedCodeAnnotations)
         assertBooleanOptionEqual(parsedOptions, "NullAway:JSpecifyMode", options.isJSpecifyMode)
         assertListOptionEqual(parsedOptions, "NullAway:ExtraFuturesClasses", options.extraFuturesClasses)
+        assertListOptionEqual(parsedOptions, "NullAway:SuppressionNameAliases", options.suppressionNameAliases)
 
         assertThat(parsedOptions.flags.flagsMap.keys - ALL_NULLAWAY_OPTION_NAMES).isEmpty()
         assertThat(parsedOptions.remainingArgs).isEmpty()

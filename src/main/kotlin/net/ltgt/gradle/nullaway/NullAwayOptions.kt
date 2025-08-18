@@ -193,6 +193,14 @@ open class NullAwayOptions internal constructor(
     val extraFuturesClasses = objectFactory.listProperty<String>()
 
     /**
+     * A list of names to suppress NullAway using a `@SuppressWarnings` annotation, similar to `@SuppressWarnings("NullAway")`; maps to `-XepOpt:NullAway:SuppressionNameAliases`.
+     *
+     * This is useful when other warnings are already suppressed in the codebase and NullAway should be suppressed as well, such as with JetBrains' [`DataFlowIssue`](https://www.jetbrains.com/help/inspectopedia/DataFlowIssue.html) inspection.
+     */
+    @get:Input @get:Optional
+    val suppressionNameAliases = objectFactory.listProperty<String>()
+
+    /**
      * Enable NullAway.
      *
      * Equivalent to setting [severity] to [CheckSeverity.DEFAULT].
@@ -251,6 +259,7 @@ open class NullAwayOptions internal constructor(
             listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations),
             booleanOption("JSpecifyMode", isJSpecifyMode),
             listOption("ExtraFuturesClasses", extraFuturesClasses),
+            listOption("SuppressionNameAliases", suppressionNameAliases),
         ).filterNotNull()
             .asIterable()
 
