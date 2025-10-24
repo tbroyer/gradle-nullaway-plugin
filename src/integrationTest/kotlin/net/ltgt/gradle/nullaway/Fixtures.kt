@@ -15,6 +15,7 @@ val errorproneVersion =
     when {
         testJavaVersion < JavaVersion.VERSION_11 -> "2.10.0"
         testJavaVersion < JavaVersion.VERSION_17 -> "2.31.0"
+        testJavaVersion < JavaVersion.VERSION_21 -> "2.42.0"
         else -> System.getProperty("errorprone.version")!!
     }
 
@@ -100,6 +101,8 @@ val COMPATIBLE_GRADLE_VERSIONS =
         JavaVersion.VERSION_21 to GradleVersion.version("8.5"),
         JavaVersion.VERSION_22 to GradleVersion.version("8.8"),
         JavaVersion.VERSION_23 to GradleVersion.version("8.10"),
+        JavaVersion.VERSION_24 to GradleVersion.version("8.14"),
+        JavaVersion.VERSION_25 to GradleVersion.version("9.1.0"),
     )
 
 fun assumeCompatibleGradleAndJavaVersions() {
