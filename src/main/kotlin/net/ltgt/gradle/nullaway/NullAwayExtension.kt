@@ -17,4 +17,7 @@ open class NullAwayExtension internal constructor(
      * The list of packages that should be considered properly annotated according to the NullAway convention.
      */
     val annotatedPackages = objectFactory.listProperty<String>()
+
+    /** If set to true, enables new checks based on JSpecify (like checks for generic types). */
+    val jspecifyMode = objectFactory.property<Boolean>()
 }

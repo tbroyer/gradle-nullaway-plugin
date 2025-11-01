@@ -38,6 +38,32 @@ nullaway {
 }
 ```
 
+and possibly enable the [JSpecify mode](https://github.com/uber/NullAway/wiki/JSpecify-Support):
+
+```kotlin
+nullaway {
+    isJSpecifyMode = true
+}
+// Don't forget to configure the compiler option if you're using JDK 21 or earlier
+// AND the net.ltgt.errorprone in a version lower than 4.4.0
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.add("-XDaddTypeAnnotationsToSymbol=true")
+}
+```
+
+or with the Groovy DSL:
+
+```gradle
+nullaway {
+    jspecifyMode = true
+}
+// Don't forget to configure the compiler option if you're using JDK 21 or earlier
+// AND the net.ltgt.errorprone in a version lower than 4.4.0
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-XDaddTypeAnnotationsToSymbol=true"
+}
+```
+
 ## Configuration
 
 Other [NullAway flags], as well as the check severity, can be configured on the `JavaCompile` tasks:
@@ -79,8 +105,9 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | Property | Description
 | :------- | :----------
 | `severity`               | The check severity. Almost equivalent to `options.errorprone.check("NullAway", severity)` (NullAway won't actually appear in `options.errorprone.checks`). Can be set to `CheckSeverity.OFF` to disable NullAway.
-| `onlyNullMarked`         | Indicates that the `annotatedPackages` flag has been deliberately omitted, and that NullAway can proceed with only treating `@NullMarked` code as annotated, in accordance with the JSpecify specification. 
-| `annotatedPackages`      | The list of packages that should be considered properly annotated according to the NullAway convention. This can be used to add to or override the `annotatedPackages` at the project level.
+| `isJSpecifyMode`         | (`jspecifyMode` with the Groovy DSL) If set to true, enables new checks based on JSpecify (like checks for generic types). Defaults to the project-level extension's configured value.
+| `onlyNullMarked`         | Indicates that the `annotatedPackages` flag has been deliberately omitted, and that NullAway can proceed with only treating `@NullMarked` code as annotated, in accordance with the JSpecify specification. Defaults to the project-level extension's configured value.
+| `annotatedPackages`      | The list of packages that should be considered properly annotated according to the NullAway convention. This can be used to add to or override the `annotatedPackages` at the project level. Defaults to the project-level extension's configured value.
 | `unannotatedSubPackages` | A list of subpackages to be excluded from the AnnotatedPackages list.
 | `unannotatedClasses`     | A list of classes within annotated packages that should be treated as unannotated.
 | `knownInitializers`      | The fully qualified name of those methods from third-party libraries that NullAway should treat as initializers.
@@ -105,7 +132,6 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `customNullableAnnotations`    | A list of annotations that should be considered equivalent to `@Nullable` annotations.
 | `customNonnullAnnotations`     | A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. `acknowledgeRestrictiveAnnotations`).
 | `customGeneratedCodeAnnotations` | A list of annotations that should be considered equivalent to `@Generated` annotations, for the cases where NullAway cares about such annotations (see e.g. `treatGeneratedAsUnannotated`).
-| `isJSpecifyMode`                 | (`jspecifyMode` with the Groovy DSL) If set to true, enables new checks based on JSpecify (like checks for generic types).
 | `extraFuturesClasses`            | A list of classes to be treated equivalently to Guava `Futures` and `FluentFuture`; this special support will likely be removed once NullAway's JSpecify support is more complete.
 | `suppressionNameAliases`         | A list of names to suppress NullAway using a `@SuppressWarnings` annotation, similar to `@SuppressWarnings("NullAway")`.
 | `warnOnGenericInferenceFailure`  | If set to true, NullAway will issue a warning when generic type inference fails to infer a type argument's nullability.

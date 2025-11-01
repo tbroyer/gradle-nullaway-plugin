@@ -145,6 +145,30 @@ class NullAwayOptionsTest {
         assertOptionsEqual(options, parsedOptions)
     }
 
+    @Test
+    fun `configures conventions from extension`() {
+        doTestOptions({ annotatedPackages.add("test") }, { annotatedPackages.add("test") })
+        doTestOptions({ onlyNullMarked.set(true) }, { onlyNullMarked.set(true) })
+        doTestOptions({ jspecifyMode.set(true) }, { jspecifyMode.set(true) })
+    }
+
+    private fun doTestOptions(
+        configureExtension: NullAwayExtension.() -> Unit,
+        configureOptions: NullAwayOptions.() -> Unit,
+    ) {
+        val options = NullAwayOptions(objects, NullAwayExtension(objects).apply(configureExtension))
+
+        val expectedOptions = NullAwayOptions(objects, NullAwayExtension(objects)).apply(configureOptions)
+        assertThat(
+            options.annotatedPackages.orNull ?: emptyList<String>(),
+        ).containsExactlyElementsIn(expectedOptions.annotatedPackages.orNull ?: emptyList<String>())
+        assertThat(options.onlyNullMarked.orNull).isEqualTo(expectedOptions.onlyNullMarked.orNull)
+        assertThat(options.jspecifyMode.orNull).isEqualTo(expectedOptions.jspecifyMode.orNull)
+
+        val parsedOptions = parseOptions(options)
+        assertOptionsEqual(options, parsedOptions)
+    }
+
     private fun parseOptions(options: NullAwayOptions) =
         ErrorProneOptions.processArgs(splitArgs(options.asArguments().joinToString(separator = " ")))
 

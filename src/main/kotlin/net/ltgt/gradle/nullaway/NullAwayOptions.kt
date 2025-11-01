@@ -179,7 +179,7 @@ open class NullAwayOptions internal constructor(
     /** If set to true, enables new checks based on JSpecify (like checks for generic types); maps to `-XepOpt:NullAway:JSpecifyMode`. */
     @get:Input
     @get:Optional
-    val jspecifyMode = objectFactory.property<Boolean>()
+    val jspecifyMode = objectFactory.property<Boolean>().convention(nullawayExtension.jspecifyMode)
 
     /**
      * A list of classes to be treated equivalently to Guava `Futures` and `FluentFuture`; maps to `-XepOpt:NullAway:ExtraFuturesClasses`.
