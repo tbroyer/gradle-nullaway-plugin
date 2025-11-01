@@ -13,7 +13,7 @@ and applying the `net.ltgt.errorprone` plugin (it won't do anything otherwise).
 
 ## Usage
 
-```gradle
+```kotlin
 plugins {
     id("net.ltgt.errorprone") version "<error prone plugin version>"
     id("net.ltgt.nullaway") version "<plugin version>"
@@ -22,7 +22,7 @@ plugins {
 
 then add the NullAway dependency to the `errorprone` configuration:
 
-```gradle
+```kotlin
 dependencies {
     errorprone("com.uber.nullaway:nullaway:$nullawayVersion")
 }
@@ -30,7 +30,7 @@ dependencies {
 
 and finally configure NullAway's annotated packages:
 
-```gradle
+```kotlin
 nullaway {
     annotatedPackages.add("net.ltgt")
     // OR, starting with NullAway 0.12.3 and if you use JSpecify @NullMarked:
@@ -44,8 +44,11 @@ Other [NullAway flags], as well as the check severity, can be configured on the 
 
 [NullAway flags]: https://github.com/uber/NullAway/wiki/Configuration
 
-```gradle
-tasks.withType(JavaCompile).configureEach {
+```kotlin
+import net.ltgt.gradle.errorprone.errorprone
+import net.ltgt.gradle.nullaway.nullaway
+
+tasks.withType<JavaCompile>().configureEach {
     options.errorprone.nullaway {
         error()
         unannotatedSubPackages.add("com.foo.baz")
@@ -53,13 +56,10 @@ tasks.withType(JavaCompile).configureEach {
 }
 ```
 
-or with Kotlin DSL:
+or with the Groovy DSL:
 
-```kotlin
-import net.ltgt.gradle.errorprone.errorprone
-import net.ltgt.gradle.nullaway.nullaway
-
-tasks.withType<JavaCompile>().configureEach {
+```gradle
+tasks.withType(JavaCompile).configureEach {
     options.errorprone.nullaway {
         error()
         unannotatedSubPackages.add("com.foo.baz")
@@ -96,16 +96,16 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `suggestSuppressions`          | If set to true, NullAway will use Error Prone's suggested fix functionality to suggest suppressing any warning that it finds.
 | `autoFixSuppressionComment`    | A comment that will be added alongside the `@SuppressWarnings("NullAway")` annotation when `isSuggestSuppressions` is set to true.
 | `castToNonNullMethod`          | The fully qualified name of a method to be used for downcasting to a non-null value rather than standard suppressions in some instances.
-| `assertsEnabled`               | (`isAssertsEnabled` with Kotlin DSL) If set to true, NullAway will handle assertions, and use that to reason about the possibility of null dereferences in the code that follows these assertions. This assumes that assertions will always be enabled at runtime.
+| `isAssertsEnabled`             | (`assertsEnabled` with the Groovy DSL) If set to true, NullAway will handle assertions, and use that to reason about the possibility of null dereferences in the code that follows these assertions. This assumes that assertions will always be enabled at runtime.
 | `handleTestAssertionLibraries` | If set to true, NullAway will handle assertions from test libraries, like `assertThat(...).isNotNull()`, and use that to reason about the possibility of null dereferences in the code that follows these assertions.
-| `exhaustiveOverride`           | (`isExhaustiveOverride` with Kotlin DSL) If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation.
+| `isExhaustiveOverride`         | (`exhaustiveOverride` with the Groovy DSL) If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation.
 | `acknowledgeAndroidRecent`     | If set to true, treats `@RecentlyNullable` as `@Nullable`, and `@RecentlyNonNull` as `@NonNull`; requires that `acknowledgeRestrictiveAnnotations` is also set to true.
 | `checkContracts`               | If set to true, NullAway will check `@Contract` annotations.
 | `customContractAnnotations`    | A list of annotations that should be considered equivalent to `@Contract` annotations.
 | `customNullableAnnotations`    | A list of annotations that should be considered equivalent to `@Nullable` annotations.
 | `customNonnullAnnotations`     | A list of annotations that should be considered equivalent to `@NonNull` annotations, for the cases where NullAway cares about such annotations (see e.g. `acknowledgeRestrictiveAnnotations`).
 | `customGeneratedCodeAnnotations` | A list of annotations that should be considered equivalent to `@Generated` annotations, for the cases where NullAway cares about such annotations (see e.g. `treatGeneratedAsUnannotated`).
-| `jspecifyMode`                   | (`isJSpecifyMode` with Kotlin DSL) If set to true, enables new checks based on JSpecify (like checks for generic types).
+| `isJSpecifyMode`                 | (`jspecifyMode` with the Groovy DSL) If set to true, enables new checks based on JSpecify (like checks for generic types).
 | `extraFuturesClasses`            | A list of classes to be treated equivalently to Guava `Futures` and `FluentFuture`; this special support will likely be removed once NullAway's JSpecify support is more complete.
 | `suppressionNameAliases`         | A list of names to suppress NullAway using a `@SuppressWarnings` annotation, similar to `@SuppressWarnings("NullAway")`.
 
