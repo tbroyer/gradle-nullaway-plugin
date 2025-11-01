@@ -132,6 +132,8 @@ class GroovyDslIntegrationTest {
                     extraFuturesClasses = ["com.example.Future"]
                     suppressionNameAliases = ["NullIssue"]
                 }
+                // see https://github.com/uber/NullAway/wiki/JSpecify-Support#supported-jdk-versions
+                options.compilerArgs << "-XDaddTypeAnnotationsToSymbol=true"
             }
             """.trimIndent(),
         )

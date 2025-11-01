@@ -236,6 +236,8 @@ class NullAwayPluginIntegrationTest {
                     extraFuturesClasses.add("com.example.Future")
                     suppressionNameAliases.add("NullIssue")
                 }
+                // see https://github.com/uber/NullAway/wiki/JSpecify-Support#supported-jdk-versions
+                options.compilerArgs.add("-XDaddTypeAnnotationsToSymbol=true")
             }
             """.trimIndent(),
         )
