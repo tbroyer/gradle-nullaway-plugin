@@ -20,6 +20,7 @@ class NullAwayOptionsTest {
     companion object {
         private val ALL_NULLAWAY_OPTION_NAMES =
             setOf(
+                "NullAway:OnlyNullMarked",
                 "NullAway:AnnotatedPackages",
                 "NullAway:UnannotatedSubPackages",
                 "NullAway:UnannotatedClasses",
@@ -72,6 +73,7 @@ class NullAwayOptionsTest {
         doTestOptions { disable() }
         doTestOptions { warn() }
         doTestOptions { error() }
+        doTestOptions { onlyNullMarked.set(true) }
         doTestOptions { annotatedPackages.add("test") }
         doTestOptions { unannotatedSubPackages.add("test.dummy") }
         doTestOptions { unannotatedClasses.add("test.Unannotated") }
@@ -163,6 +165,7 @@ class NullAwayOptionsTest {
         assertDefault(parsedOptions, ErrorProneOptions::getExcludedPattern)
 
         assertThat(parsedOptions.severityMap).containsExactly("NullAway", options.severity.get().toSeverity())
+        assertBooleanOptionEqual(parsedOptions, "NullAway:OnlyNullMarked", options.onlyNullMarked)
         assertListOptionEqual(parsedOptions, "NullAway:AnnotatedPackages", options.annotatedPackages)
         assertListOptionEqual(parsedOptions, "NullAway:UnannotatedSubPackages", options.unannotatedSubPackages)
         assertListOptionEqual(parsedOptions, "NullAway:UnannotatedClasses", options.unannotatedClasses)
