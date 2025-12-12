@@ -17,7 +17,7 @@ nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 [bundles]
 
 [plugins]
-androidLint = "com.android.lint:8.13.1"
+androidLint = "com.android.lint:8.13.2"
 errorprone = "net.ltgt.errorprone:4.3.0"
 gradlePluginPublish = "com.gradle.plugin-publish:2.0.0"
 nosphereGithubActions = "org.nosphere.gradle.github.actions:1.4.0"
