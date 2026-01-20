@@ -131,6 +131,7 @@ class GroovyDslIntegrationTest {
                     jspecifyMode = true
                     extraFuturesClasses = ["com.example.Future"]
                     suppressionNameAliases = ["NullIssue"]
+                    warnOnGenericInferenceFailure = true
                 }
             }
             """.trimIndent(),

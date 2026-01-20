@@ -235,6 +235,7 @@ class NullAwayPluginIntegrationTest {
                     isJSpecifyMode.set(true)
                     extraFuturesClasses.add("com.example.Future")
                     suppressionNameAliases.add("NullIssue")
+                    warnOnGenericInferenceFailure.set(true)
                 }
             }
             """.trimIndent(),

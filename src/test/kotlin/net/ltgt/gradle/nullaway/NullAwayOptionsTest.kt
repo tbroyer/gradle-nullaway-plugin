@@ -50,6 +50,7 @@ class NullAwayOptionsTest {
                 "NullAway:JSpecifyMode",
                 "NullAway:ExtraFuturesClasses",
                 "NullAway:SuppressionNameAliases",
+                "NullAway:WarnOnGenericInferenceFailure",
             )
     }
 
@@ -102,6 +103,7 @@ class NullAwayOptionsTest {
         doTestOptions { isJSpecifyMode.set(true) }
         doTestOptions { extraFuturesClasses.add("com.example.Future") }
         doTestOptions { suppressionNameAliases.add("NullIssue") }
+        doTestOptions { warnOnGenericInferenceFailure.set(true) }
 
         doTestOptions {
             enable()
@@ -133,6 +135,7 @@ class NullAwayOptionsTest {
             isJSpecifyMode.set(true)
             extraFuturesClasses.add("com.example.Future")
             suppressionNameAliases.add("NullIssue")
+            warnOnGenericInferenceFailure.set(true)
         }
     }
 
@@ -194,6 +197,7 @@ class NullAwayOptionsTest {
         assertBooleanOptionEqual(parsedOptions, "NullAway:JSpecifyMode", options.isJSpecifyMode)
         assertListOptionEqual(parsedOptions, "NullAway:ExtraFuturesClasses", options.extraFuturesClasses)
         assertListOptionEqual(parsedOptions, "NullAway:SuppressionNameAliases", options.suppressionNameAliases)
+        assertBooleanOptionEqual(parsedOptions, "NullAway:WarnOnGenericInferenceFailure", options.warnOnGenericInferenceFailure)
 
         assertThat(parsedOptions.flags.flagsMap.keys - ALL_NULLAWAY_OPTION_NAMES).isEmpty()
         assertThat(parsedOptions.remainingArgs).isEmpty()

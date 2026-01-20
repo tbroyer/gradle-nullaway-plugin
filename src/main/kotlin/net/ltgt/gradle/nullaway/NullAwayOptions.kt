@@ -201,6 +201,12 @@ open class NullAwayOptions internal constructor(
     val suppressionNameAliases = objectFactory.listProperty<String>()
 
     /**
+     * If set to true, NullAway will issue a warning when generic type inference fails to infer a type argument's nullability; maps to `-XepOpt:NullAway:WarnOnGenericInferenceFailure`.
+     */
+    @get:Input @get:Optional
+    val warnOnGenericInferenceFailure = objectFactory.property<Boolean>().convention(false)
+
+    /**
      * Enable NullAway.
      *
      * Equivalent to setting [severity] to [CheckSeverity.DEFAULT].
@@ -260,6 +266,7 @@ open class NullAwayOptions internal constructor(
             booleanOption("JSpecifyMode", isJSpecifyMode),
             listOption("ExtraFuturesClasses", extraFuturesClasses),
             listOption("SuppressionNameAliases", suppressionNameAliases),
+            booleanOption("WarnOnGenericInferenceFailure", warnOnGenericInferenceFailure),
         ).filterNotNull()
             .asIterable()
 
