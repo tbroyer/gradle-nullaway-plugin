@@ -141,9 +141,35 @@ class BinaryCompatibilityIntegrationTest {
 
                 tasks.withType<JavaCompile>().configureEach {
                     options.errorprone.nullaway {
+                        severity.set(CheckSeverity.DEFAULT)
+                        ${if (nullawaySupportsOnlyNullMarked) "onlyNullMarked.set(false)" else ""}
+                        unannotatedSubPackages.add("test.dummy")
+                        unannotatedClasses.add("test.Unannotated")
+                        knownInitializers.add("com.foo.Bar.method")
+                        excludedClassAnnotations.add("com.example.NullAwayExcluded")
+                        excludedClasses.add("test.Excluded")
+                        excludedFieldAnnotations.add("javax.ws.rs.core.Context")
+                        customInitializerAnnotations.add("com.foo.Initializer")
+                        externalInitAnnotations.add("com.example.ExternalInit")
+                        treatGeneratedAsUnannotated.set(true)
+                        acknowledgeRestrictiveAnnotations.set(true)
+                        checkOptionalEmptiness.set(true)
+                        suggestSuppressions.set(true)
                         isAssertsEnabled.set(true)
                         isExhaustiveOverride.set(true)
+                        castToNonNullMethod.set("com.foo.Bar.castToNonNull")
+                        checkOptionalEmptinessCustomClasses.add("com.foo.Optional")
+                        autoFixSuppressionComment.set("Auto-fix\\u0020suppression")
+                        handleTestAssertionLibraries.set(true)
+                        acknowledgeAndroidRecent.set(true)
+                        checkContracts.set(true)
+                        customContractAnnotations.add("com.example.Contract")
+                        customNullableAnnotations.add("com.example.CouldBeNull")
+                        customNonnullAnnotations.add("com.example.MustNotBeNull")
                         isJSpecifyMode.set(true)
+                        extraFuturesClasses.add("com.example.Future")
+                        suppressionNameAliases.add("NullIssue")
+                        warnOnGenericInferenceFailure.set(true)
                     }
                 }
                 """.trimIndent(),
@@ -228,9 +254,35 @@ class BinaryCompatibilityIntegrationTest {
                                   ((ExtensionAware) errorproneOptions)
                                       .getExtensions()
                                       .getByType(NullAwayOptions.class);
+                              nullawayOptions.getSeverity().set(CheckSeverity.DEFAULT);
+                              ${if (nullawaySupportsOnlyNullMarked) "nullawayOptions.getOnlyNullMarked().set(false);" else ""}
+                              nullawayOptions.getUnannotatedSubPackages().add("test.dummy");
+                              nullawayOptions.getUnannotatedClasses().add("test.Unannotated");
+                              nullawayOptions.getKnownInitializers().add("com.foo.Bar.method");
+                              nullawayOptions.getExcludedClassAnnotations().add("com.example.NullAwayExcluded");
+                              nullawayOptions.getExcludedClasses().add("test.Excluded");
+                              nullawayOptions.getExcludedFieldAnnotations().add("javax.ws.rs.core.Context");
+                              nullawayOptions.getCustomInitializerAnnotations().add("com.foo.Initializer");
+                              nullawayOptions.getExternalInitAnnotations().add("com.example.ExternalInit");
+                              nullawayOptions.getTreatGeneratedAsUnannotated().set(true);
+                              nullawayOptions.getAcknowledgeRestrictiveAnnotations().set(true);
+                              nullawayOptions.getCheckOptionalEmptiness().set(true);
+                              nullawayOptions.getSuggestSuppressions().set(true);
                               nullawayOptions.getAssertsEnabled().set(true);
                               nullawayOptions.getExhaustiveOverride().set(true);
+                              nullawayOptions.getCastToNonNullMethod().set("com.foo.Bar.castToNonNull");
+                              nullawayOptions.getCheckOptionalEmptinessCustomClasses().add("com.foo.Optional");
+                              nullawayOptions.getAutoFixSuppressionComment().set("Auto-fix\\u0020suppression");
+                              nullawayOptions.getHandleTestAssertionLibraries().set(true);
+                              nullawayOptions.getAcknowledgeAndroidRecent().set(true);
+                              nullawayOptions.getCheckContracts().set(true);
+                              nullawayOptions.getCustomContractAnnotations().add("com.example.Contract");
+                              nullawayOptions.getCustomNullableAnnotations().add("com.example.CouldBeNull");
+                              nullawayOptions.getCustomNonnullAnnotations().add("com.example.MustNotBeNull");
                               nullawayOptions.getJspecifyMode().set(true);
+                              nullawayOptions.getExtraFuturesClasses().add("com.example.Future");
+                              nullawayOptions.getSuppressionNameAliases().add("NullIssue");
+                              nullawayOptions.getWarnOnGenericInferenceFailure().set(true);
                             });
                   }
                 }

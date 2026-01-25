@@ -1,3 +1,4 @@
+import net.ltgt.gradle.errorprone.errorprone
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -7,19 +8,45 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
+    alias(libs.plugins.errorprone)
+    alias(libs.plugins.nullaway)
     alias(libs.plugins.gradlePluginPublish)
     alias(libs.plugins.spotless)
-    alias(libs.plugins.androidLint)
     alias(libs.plugins.nosphereGithubActions)
 }
 
 group = "net.ltgt.gradle"
 
-// Make sure Gradle Module Metadata targets the appropriate JVM version
-tasks.compileJava {
-    options.release.set(8)
+dependencies {
+    errorprone(libs.errorprone.core)
+    errorprone(libs.nullaway)
 }
 
+nullaway {
+    annotatedPackages.add("net.ltgt.gradle.nullaway")
+}
+tasks {
+    withType<JavaCompile>().configureEach {
+        options.release = 21
+        options.compilerArgs.addAll(listOf("-Werror", "-Xlint:all"))
+    }
+    javadoc {
+        (options as StandardJavadocDocletOptions).apply {
+            noTimestamp()
+            quiet()
+            addBooleanOption("Xdoclint:-missing", true)
+        }
+    }
+}
+
+tasks.compileJava {
+    options.release = 8
+    options.compilerArgs.add("-Xlint:-options")
+    options.errorprone {
+        // Gradle uses javax.inject in a specific way
+        disable("InjectOnConstructorOfAbstractClass")
+    }
+}
 tasks.compileKotlin {
     // See https://jakewharton.com/kotlins-jdk-release-compatibility-flag/
     compilerOptions.freeCompilerArgs.add("-Xjdk-release=1.8")
@@ -172,6 +199,9 @@ spotless {
     }
     kotlin {
         ktlint(libs.versions.ktlint.get())
+    }
+    java {
+        googleJavaFormat(libs.versions.googleJavaFormat.get())
     }
 }
 
