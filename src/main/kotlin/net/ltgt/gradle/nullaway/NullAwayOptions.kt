@@ -113,16 +113,14 @@ open class NullAwayOptions internal constructor(
      *
      * This assumes that assertions will always be enabled at runtime (`java` run with `-ea` JVM argument).
      */
-    @get:JvmName("getAssertsEnabled")
     @get:Input
     @get:Optional
-    val isAssertsEnabled = objectFactory.property<Boolean>()
+    val assertsEnabled = objectFactory.property<Boolean>()
 
     /** If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation; maps to `-XepOpt:NullAway:ExhaustiveOverride`. */
-    @get:JvmName("getExhaustiveOverride")
     @get:Input
     @get:Optional
-    val isExhaustiveOverride = objectFactory.property<Boolean>()
+    val exhaustiveOverride = objectFactory.property<Boolean>()
 
     /** The fully qualified name of a method to be used for downcasting to a non-null value rather than standard suppressions in some instances; maps to `-XepOpt:NullAway:CastToNonNullMethod`. */
     @get:Input @get:Optional
@@ -179,10 +177,9 @@ open class NullAwayOptions internal constructor(
     val customGeneratedCodeAnnotations = objectFactory.listProperty<String>()
 
     /** If set to true, enables new checks based on JSpecify (like checks for generic types); maps to `-XepOpt:NullAway:JSpecifyMode`. */
-    @get:JvmName("getJspecifyMode") // Note the differing case, for Groovy DSL, so it's exposed as `jspecifyMode`
     @get:Input
     @get:Optional
-    val isJSpecifyMode = objectFactory.property<Boolean>()
+    val jspecifyMode = objectFactory.property<Boolean>()
 
     /**
      * A list of classes to be treated equivalently to Guava `Futures` and `FluentFuture`; maps to `-XepOpt:NullAway:ExtraFuturesClasses`.
@@ -251,8 +248,8 @@ open class NullAwayOptions internal constructor(
             booleanOption("AcknowledgeRestrictiveAnnotations", acknowledgeRestrictiveAnnotations),
             booleanOption("CheckOptionalEmptiness", checkOptionalEmptiness),
             booleanOption("SuggestSuppressions", suggestSuppressions),
-            booleanOption("AssertsEnabled", isAssertsEnabled),
-            booleanOption("ExhaustiveOverride", isExhaustiveOverride),
+            booleanOption("AssertsEnabled", assertsEnabled),
+            booleanOption("ExhaustiveOverride", exhaustiveOverride),
             stringOption("CastToNonNullMethod", castToNonNullMethod),
             listOption("CheckOptionalEmptinessCustomClasses", checkOptionalEmptinessCustomClasses),
             stringOption("AutoFixSuppressionComment", autoFixSuppressionComment),
@@ -263,7 +260,7 @@ open class NullAwayOptions internal constructor(
             listOption("CustomNullableAnnotations", customNullableAnnotations),
             listOption("CustomNonnullAnnotations", customNonnullAnnotations),
             listOption("CustomGeneratedCodeAnnotations", customGeneratedCodeAnnotations),
-            booleanOption("JSpecifyMode", isJSpecifyMode),
+            booleanOption("JSpecifyMode", jspecifyMode),
             listOption("ExtraFuturesClasses", extraFuturesClasses),
             listOption("SuppressionNameAliases", suppressionNameAliases),
             booleanOption("WarnOnGenericInferenceFailure", warnOnGenericInferenceFailure),

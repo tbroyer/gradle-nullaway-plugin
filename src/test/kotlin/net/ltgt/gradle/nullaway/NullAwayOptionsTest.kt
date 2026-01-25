@@ -88,8 +88,8 @@ class NullAwayOptionsTest {
         doTestOptions { acknowledgeRestrictiveAnnotations.set(true) }
         doTestOptions { checkOptionalEmptiness.set(true) }
         doTestOptions { suggestSuppressions.set(true) }
-        doTestOptions { isAssertsEnabled.set(true) }
-        doTestOptions { isExhaustiveOverride.set(true) }
+        doTestOptions { assertsEnabled.set(true) }
+        doTestOptions { exhaustiveOverride.set(true) }
         doTestOptions { castToNonNullMethod.set("com.foo.Bar.castToNonNull") }
         doTestOptions { checkOptionalEmptinessCustomClasses.add("com.foo.Optional") }
         doTestOptions { autoFixSuppressionComment.set("Auto-fix\\u0020suppression") }
@@ -100,7 +100,7 @@ class NullAwayOptionsTest {
         doTestOptions { customNullableAnnotations.add("com.example.CouldBeNull") }
         doTestOptions { customNonnullAnnotations.add("com.example.MustNotBeNull") }
         doTestOptions { customGeneratedCodeAnnotations.add("com.example.Generated") }
-        doTestOptions { isJSpecifyMode.set(true) }
+        doTestOptions { jspecifyMode.set(true) }
         doTestOptions { extraFuturesClasses.add("com.example.Future") }
         doTestOptions { suppressionNameAliases.add("NullIssue") }
         doTestOptions { warnOnGenericInferenceFailure.set(true) }
@@ -120,8 +120,8 @@ class NullAwayOptionsTest {
             acknowledgeRestrictiveAnnotations.set(true)
             checkOptionalEmptiness.set(true)
             suggestSuppressions.set(true)
-            isAssertsEnabled.set(true)
-            isExhaustiveOverride.set(true)
+            assertsEnabled.set(true)
+            exhaustiveOverride.set(true)
             castToNonNullMethod.set("com.foo.Bar.castToNonNull")
             checkOptionalEmptinessCustomClasses.add("com.foo.Optional")
             autoFixSuppressionComment.set("Auto-fix\\u0020suppression")
@@ -132,7 +132,7 @@ class NullAwayOptionsTest {
             customNullableAnnotations.add("com.example.CouldBeNull")
             customNonnullAnnotations.add("com.example.MustNotBeNull")
             customGeneratedCodeAnnotations.add("com.example.Generated")
-            isJSpecifyMode.set(true)
+            jspecifyMode.set(true)
             extraFuturesClasses.add("com.example.Future")
             suppressionNameAliases.add("NullIssue")
             warnOnGenericInferenceFailure.set(true)
@@ -182,8 +182,8 @@ class NullAwayOptionsTest {
         assertBooleanOptionEqual(parsedOptions, "NullAway:AcknowledgeRestrictiveAnnotations", options.acknowledgeRestrictiveAnnotations)
         assertBooleanOptionEqual(parsedOptions, "NullAway:CheckOptionalEmptiness", options.checkOptionalEmptiness)
         assertBooleanOptionEqual(parsedOptions, "NullAway:SuggestSuppressions", options.suggestSuppressions)
-        assertBooleanOptionEqual(parsedOptions, "NullAway:AssertsEnabled", options.isAssertsEnabled)
-        assertBooleanOptionEqual(parsedOptions, "NullAway:ExhaustiveOverride", options.isExhaustiveOverride)
+        assertBooleanOptionEqual(parsedOptions, "NullAway:AssertsEnabled", options.assertsEnabled)
+        assertBooleanOptionEqual(parsedOptions, "NullAway:ExhaustiveOverride", options.exhaustiveOverride)
         assertStringOptionEqual(parsedOptions, "NullAway:CastToNonNullMethod", options.castToNonNullMethod)
         assertListOptionEqual(parsedOptions, "NullAway:CheckOptionalEmptinessCustomClasses", options.checkOptionalEmptinessCustomClasses)
         assertStringOptionEqual(parsedOptions, "NullAway:AutoFixSuppressionComment", options.autoFixSuppressionComment)
@@ -194,7 +194,7 @@ class NullAwayOptionsTest {
         assertListOptionEqual(parsedOptions, "NullAway:CustomNullableAnnotations", options.customNullableAnnotations)
         assertListOptionEqual(parsedOptions, "NullAway:CustomNonnullAnnotations", options.customNonnullAnnotations)
         assertListOptionEqual(parsedOptions, "NullAway:CustomGeneratedCodeAnnotations", options.customGeneratedCodeAnnotations)
-        assertBooleanOptionEqual(parsedOptions, "NullAway:JSpecifyMode", options.isJSpecifyMode)
+        assertBooleanOptionEqual(parsedOptions, "NullAway:JSpecifyMode", options.jspecifyMode)
         assertListOptionEqual(parsedOptions, "NullAway:ExtraFuturesClasses", options.extraFuturesClasses)
         assertListOptionEqual(parsedOptions, "NullAway:SuppressionNameAliases", options.suppressionNameAliases)
         assertBooleanOptionEqual(parsedOptions, "NullAway:WarnOnGenericInferenceFailure", options.warnOnGenericInferenceFailure)
