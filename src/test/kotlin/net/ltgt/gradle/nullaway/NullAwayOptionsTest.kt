@@ -140,7 +140,7 @@ class NullAwayOptionsTest {
     }
 
     private fun doTestOptions(configure: NullAwayOptions.() -> Unit) {
-        val options = NullAwayOptions(objects, NullAwayExtension(objects)).apply(configure)
+        val options = objects.newInstance(NullAwayOptions::class.java, objects.newInstance(NullAwayExtension::class.java)).apply(configure)
         val parsedOptions = parseOptions(options)
         assertOptionsEqual(options, parsedOptions)
     }
@@ -156,9 +156,18 @@ class NullAwayOptionsTest {
         configureExtension: NullAwayExtension.() -> Unit,
         configureOptions: NullAwayOptions.() -> Unit,
     ) {
-        val options = NullAwayOptions(objects, NullAwayExtension(objects).apply(configureExtension))
+        val options =
+            objects.newInstance(
+                NullAwayOptions::class.java,
+                objects.newInstance(NullAwayExtension::class.java).apply(configureExtension),
+            )
 
-        val expectedOptions = NullAwayOptions(objects, NullAwayExtension(objects)).apply(configureOptions)
+        val expectedOptions =
+            objects
+                .newInstance(
+                    NullAwayOptions::class.java,
+                    objects.newInstance(NullAwayExtension::class.java),
+                ).apply(configureOptions)
         assertThat(
             options.annotatedPackages.orNull ?: emptyList<String>(),
         ).containsExactlyElementsIn(expectedOptions.annotatedPackages.orNull ?: emptyList<String>())
