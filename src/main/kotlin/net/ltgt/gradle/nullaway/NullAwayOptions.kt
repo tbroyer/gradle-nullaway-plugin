@@ -204,7 +204,7 @@ open class NullAwayOptions internal constructor(
      * If set to true, NullAway will issue a warning when generic type inference fails to infer a type argument's nullability; maps to `-XepOpt:NullAway:WarnOnGenericInferenceFailure`.
      */
     @get:Input @get:Optional
-    val warnOnGenericInferenceFailure = objectFactory.property<Boolean>().convention(false)
+    val warnOnGenericInferenceFailure = objectFactory.property<Boolean>()
 
     /**
      * Enable NullAway.
