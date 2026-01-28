@@ -13,7 +13,7 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.process.CommandLineArgumentProvider;
 import org.gradle.util.GradleVersion;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class NullAwayPlugin implements Plugin<Project> {
   static final String PLUGIN_ID = "net.ltgt.nullaway";
@@ -70,8 +70,7 @@ public class NullAwayPlugin implements Plugin<Project> {
     @SuppressWarnings("unused")
     @Nested
     @Optional
-    @Nullable
-    NullAwayOptions getNullAwayOptions() {
+    @Nullable NullAwayOptions getNullAwayOptions() {
       return nullawayOptions.getSeverity().getOrElse(CheckSeverity.DEFAULT) == CheckSeverity.OFF
           ? null
           : nullawayOptions;
