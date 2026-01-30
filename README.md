@@ -42,7 +42,7 @@ and possibly enable the [JSpecify mode](https://github.com/uber/NullAway/wiki/JS
 
 ```kotlin
 nullaway {
-    isJSpecifyMode = true
+    jspecifyMode = true
 }
 // Don't forget to configure the compiler option if you're using JDK 21 or earlier
 // AND the net.ltgt.errorprone in a version lower than 4.4.0
@@ -97,15 +97,15 @@ tasks.withType(JavaCompile).configureEach {
 ### Properties
 
 _Please note that all properties are [lazy](https://docs.gradle.org/current/userguide/lazy_configuration.html#lazy_properties),
-so while you can use `=` in place of `.set(…)` in the Groovy DSL,
-you cannot use `<<` or `+=` to add to lists for instance._
+so while you can use `=` in place of `.set(…)`,
+you cannot use `<<` (in the Groovy DSL) or `+=` to add to lists for instance._
 
 Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName]=[value]` Error Prone argument.
 
 | Property | Description
 | :------- | :----------
 | `severity`               | The check severity. Almost equivalent to `options.errorprone.check("NullAway", severity)` (NullAway won't actually appear in `options.errorprone.checks`). Can be set to `CheckSeverity.OFF` to disable NullAway.
-| `isJSpecifyMode`         | (`jspecifyMode` with the Groovy DSL) If set to true, enables new checks based on JSpecify (like checks for generic types). Defaults to the project-level extension's configured value.
+| `jspecifyMode`           | If set to true, enables new checks based on JSpecify (like checks for generic types). Defaults to the project-level extension's configured value.
 | `onlyNullMarked`         | Indicates that the `annotatedPackages` flag has been deliberately omitted, and that NullAway can proceed with only treating `@NullMarked` code as annotated, in accordance with the JSpecify specification. Defaults to the project-level extension's configured value.
 | `annotatedPackages`      | The list of packages that should be considered properly annotated according to the NullAway convention. This can be used to add to or override the `annotatedPackages` at the project level. Defaults to the project-level extension's configured value.
 | `unannotatedSubPackages` | A list of subpackages to be excluded from the AnnotatedPackages list.
@@ -121,11 +121,11 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `checkOptionalEmptiness`            | If set to true, NullAway will check for `.get()` accesses to potentially empty `Optional` values, analogously to how it handles dereferences to `@Nullable` values.
 | `checkOptionalEmptinessCustomClasses` | A list of classes to be treated as `Optional` implementations (e.g. Guava's `com.google.common.base.Optional`).
 | `suggestSuppressions`          | If set to true, NullAway will use Error Prone's suggested fix functionality to suggest suppressing any warning that it finds.
-| `autoFixSuppressionComment`    | A comment that will be added alongside the `@SuppressWarnings("NullAway")` annotation when `isSuggestSuppressions` is set to true.
+| `autoFixSuppressionComment`    | A comment that will be added alongside the `@SuppressWarnings("NullAway")` annotation when `suggestSuppressions` is set to true.
 | `castToNonNullMethod`          | The fully qualified name of a method to be used for downcasting to a non-null value rather than standard suppressions in some instances.
-| `isAssertsEnabled`             | (`assertsEnabled` with the Groovy DSL) If set to true, NullAway will handle assertions, and use that to reason about the possibility of null dereferences in the code that follows these assertions. This assumes that assertions will always be enabled at runtime.
+| `assertsEnabled`               | If set to true, NullAway will handle assertions, and use that to reason about the possibility of null dereferences in the code that follows these assertions. This assumes that assertions will always be enabled at runtime.
 | `handleTestAssertionLibraries` | If set to true, NullAway will handle assertions from test libraries, like `assertThat(...).isNotNull()`, and use that to reason about the possibility of null dereferences in the code that follows these assertions.
-| `isExhaustiveOverride`         | (`exhaustiveOverride` with the Groovy DSL) If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation.
+| `exhaustiveOverride`           | If set to true, NullAway will check every method to see whether or not it overrides a method of a super-type, rather than relying only on the `@Override` annotation.
 | `acknowledgeAndroidRecent`     | If set to true, treats `@RecentlyNullable` as `@Nullable`, and `@RecentlyNonNull` as `@NonNull`; requires that `acknowledgeRestrictiveAnnotations` is also set to true.
 | `checkContracts`               | If set to true, NullAway will check `@Contract` annotations.
 | `customContractAnnotations`    | A list of annotations that should be considered equivalent to `@Contract` annotations.
