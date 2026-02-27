@@ -33,7 +33,7 @@ jobs:
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: linux-reports
           path: build/reports/
@@ -72,7 +72,7 @@ jobs:
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: gradle-${{ matrix.gradle }}-tests
           path: build/reports/tests/test/
@@ -115,7 +115,7 @@ jobs:
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: jdk-${{ matrix.java }}-tests
           path: build/reports/tests/test/
@@ -146,7 +146,7 @@ jobs:
 
       - name: Store reports
         if: always() && (steps.gradle-build.outcome == 'success' || steps.gradle-build.outcome == 'failure')
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: gradle-${{ matrix.gradle }}-tests
           path: build/reports/tests/integrationTest/
