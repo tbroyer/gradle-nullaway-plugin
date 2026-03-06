@@ -1,6 +1,7 @@
 import net.ltgt.gradle.errorprone.errorprone
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.plugin.compatibility.compatibility
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
@@ -164,6 +165,11 @@ gradlePlugin {
             description = "Adds NullAway DSL to Gradle Error Prone plugin"
             implementationClass = "net.ltgt.gradle.nullaway.NullAwayPlugin"
             tags.addAll("javac", "error-prone", "nullaway", "nullability")
+            compatibility {
+                features {
+                    configurationCache = true
+                }
+            }
         }
     }
 }
