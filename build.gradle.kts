@@ -54,16 +54,16 @@ tasks.compileKotlin {
     compilerOptions.freeCompilerArgs.add("-Xjdk-release=1.8")
     compilerOptions.jvmTarget = JvmTarget.JVM_1_8
 
-    // For Gradle 6.8 compatibility. Gradle 6.8 embeds Kotlin 1.4, but 1.8 is the earliest we can target,
+    // For Gradle 6.8 compatibility. Gradle 6.8 embeds Kotlin 1.4, but 1.9 is the earliest we can target,
     // and there are enough tests to assert compatibility (particularly given the narrow scope of Kotlin use).
     // https://docs.gradle.org/current/userguide/compatibility.html#kotlin
     @Suppress("DEPRECATION")
-    compilerOptions.apiVersion = KotlinVersion.KOTLIN_1_8
+    compilerOptions.apiVersion = KotlinVersion.KOTLIN_1_9
     @Suppress("DEPRECATION")
-    compilerOptions.languageVersion = KotlinVersion.KOTLIN_1_8
+    compilerOptions.languageVersion = KotlinVersion.KOTLIN_1_9
 
     compilerOptions.allWarningsAsErrors = true
-    // Using Kotlin 1.8 above emits a warning that would then fail the build with allWarningsAsErrors
+    // Using Kotlin 1.9 above emits a warning that would then fail the build with allWarningsAsErrors
     compilerOptions.freeCompilerArgs.add("-Xsuppress-version-warnings")
 }
 
