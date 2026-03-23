@@ -50,14 +50,6 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
         nullaway {
             annotatedPackages.add("test")
         }
-
-        if (GradleVersion.current() < GradleVersion.version("7.0")) {
-            allprojects {
-                configurations.all {
-                    attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-                }
-            }
-        }
         """
             .formatted(errorproneVersion, nullawayVersion));
   }

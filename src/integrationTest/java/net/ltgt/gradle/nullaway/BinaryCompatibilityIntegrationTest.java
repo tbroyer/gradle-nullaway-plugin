@@ -42,14 +42,6 @@ public class BinaryCompatibilityIntegrationTest extends BaseIntegrationTest {
         tasks.withType<JavaCompile>().configureEach {
             options.compilerArgs.add("-Werror")
         }
-
-        if (GradleVersion.current() < GradleVersion.version("7.0")) {
-            allprojects {
-                configurations.all {
-                    attributes.attribute(Attribute.of("org.gradle.jvm.environment", String::class.java), "standard-jvm")
-                }
-            }
-        }
         """
             .formatted(errorproneVersion, nullawayVersion));
     Files.copy(

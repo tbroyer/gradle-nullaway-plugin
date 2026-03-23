@@ -146,7 +146,6 @@ public abstract class BaseIntegrationTest {
   // Based on https://docs.gradle.org/current/userguide/compatibility.html#java_runtime
   private static final Map<JavaVersion, GradleVersion> COMPATIBLE_GRADLE_VERSIONS =
       Map.of(
-          JavaVersion.VERSION_16, GradleVersion.version("7.0"),
           JavaVersion.VERSION_17, GradleVersion.version("7.3"),
           JavaVersion.VERSION_18, GradleVersion.version("7.5"),
           JavaVersion.VERSION_19, GradleVersion.version("7.6"),
@@ -160,6 +159,6 @@ public abstract class BaseIntegrationTest {
     assume()
         .that(testGradleVersion)
         .isAtLeast(
-            COMPATIBLE_GRADLE_VERSIONS.getOrDefault(testJavaVersion, GradleVersion.version("6.8")));
+            COMPATIBLE_GRADLE_VERSIONS.getOrDefault(testJavaVersion, GradleVersion.version("7.1")));
   }
 }
