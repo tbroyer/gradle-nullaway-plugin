@@ -5,10 +5,15 @@ import static com.google.common.truth.TruthJUnit.assume;
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.api.io.TempDir;
 
 public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
   @BeforeEach
@@ -306,5 +311,45 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
 
     // then
     assertThat(result.getOutput()).contains("Reusing configuration cache.");
+  }
+
+  // Inspired by
+  // https://docs.gradle.org/current/userguide/build_cache.html#sec:task_output_caching_example
+  @Test
+  @DisabledOnOs(OS.WINDOWS) // See https://github.com/gradle/gradle/issues/12535
+  void isBuildCacheFriendly(@TempDir Path testKitDir, @TempDir Path otherDir) throws Exception {
+    // given
+    writeSuccessSource();
+
+    // Prime the build cache
+    var result =
+        prepareBuild("--build-cache", "compileJava").withTestKitDir(testKitDir.toFile()).build();
+    assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
+        .isEqualTo(TaskOutcome.SUCCESS);
+
+    // Delete the local state
+    prepareBuild("clean").withTestKitDir(testKitDir.toFile()).build();
+
+    // when
+    result =
+        prepareBuild("--build-cache", "compileJava").withTestKitDir(testKitDir.toFile()).build();
+
+    // then
+    assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
+        .isEqualTo(TaskOutcome.FROM_CACHE);
+
+    // Test "relocatability"
+    Files.move(projectDir, otherDir, StandardCopyOption.REPLACE_EXISTING);
+
+    // when
+    result =
+        prepareBuild("--build-cache", "compileJava")
+            .withTestKitDir(testKitDir.toFile())
+            .withProjectDir(otherDir.toFile())
+            .build();
+
+    // then
+    assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
+        .isEqualTo(TaskOutcome.FROM_CACHE);
   }
 }
