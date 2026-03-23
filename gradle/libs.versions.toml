@@ -19,7 +19,7 @@ ktlint = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
 [bundles]
 
 [plugins]
-errorprone = "net.ltgt.errorprone:4.4.0"
+errorprone = "net.ltgt.errorprone:5.1.0"
 gradlePluginPublish = "com.gradle.plugin-publish:2.1.1"
 nosphereGithubActions = "org.nosphere.gradle.github.actions:1.4.0"
 nullaway = "net.ltgt.nullaway:3.0.0"
