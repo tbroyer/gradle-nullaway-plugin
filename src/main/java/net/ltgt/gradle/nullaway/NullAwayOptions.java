@@ -7,12 +7,17 @@ import java.util.List;
 import javax.inject.Inject;
 import net.ltgt.gradle.errorprone.CheckSeverity;
 import net.ltgt.gradle.errorprone.ErrorProneOptions;
+import net.ltgt.gradle.kotlin.accessors.generator.GenerateKotlinAccessors;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 
+@GenerateKotlinAccessors(
+    generatedClassName = "NullAwayPluginKt",
+    name = NullAwayPlugin.EXTENSION_NAME,
+    receivers = ErrorProneOptions.class)
 public abstract class NullAwayOptions {
   @Inject
   @SuppressWarnings("this-escape")
