@@ -3,6 +3,8 @@ package net.ltgt.gradle.nullaway;
 import net.ltgt.gradle.errorprone.CheckSeverity;
 import net.ltgt.gradle.errorprone.ErrorProneOptions;
 import net.ltgt.gradle.errorprone.ErrorPronePlugin;
+import net.ltgt.gradle.kotlin.accessors.generator.GenerateKotlinAccessors;
+import net.ltgt.gradle.kotlin.accessors.generator.GenerateKotlinAccessors.Extension;
 import org.gradle.api.Named;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -15,6 +17,13 @@ import org.gradle.process.CommandLineArgumentProvider;
 import org.gradle.util.GradleVersion;
 import org.jspecify.annotations.Nullable;
 
+@GenerateKotlinAccessors(
+    className = "NullAwayPluginKt",
+    extensions =
+        @Extension(
+            name = NullAwayPlugin.EXTENSION_NAME,
+            extension = NullAwayOptions.class,
+            extended = ErrorProneOptions.class))
 public class NullAwayPlugin implements Plugin<Project> {
   static final String PLUGIN_ID = "net.ltgt.nullaway";
   static final String EXTENSION_NAME = "nullaway";

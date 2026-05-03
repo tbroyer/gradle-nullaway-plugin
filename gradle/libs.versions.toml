@@ -3,7 +3,7 @@
 errorprone = "2.50.0"
 googleJavaFormat = "1.33.0"
 junitJupiter = "6.1.2"
-kotlinAccessorsGenerator = "0.1.0"
+kotlinAccessorsGenerator = "0.2.0"
 ktlint = "1.8.0"
 nullaway = "0.13.8"
 
