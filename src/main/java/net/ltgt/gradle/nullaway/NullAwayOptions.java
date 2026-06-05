@@ -338,6 +338,14 @@ public abstract class NullAwayOptions {
   public abstract Property<Boolean> getWarnOnGenericInferenceFailure();
 
   /**
+   * Should wildcard-aware generic nullability checks be enabled? maps to {@code
+   * -XepOpt:NullAway:HandleWildcardGenerics}.
+   */
+  @Input
+  @Optional
+  public abstract Property<Boolean> getHandleWildcardGenerics();
+
+  /**
    * Enable NullAway.
    *
    * <p>Equivalent to setting {@link #getSeverity() severity} to {@link CheckSeverity#DEFAULT}.
@@ -409,6 +417,7 @@ public abstract class NullAwayOptions {
     maybeAddListOption(args, "SuppressionNameAliases", getSuppressionNameAliases());
     maybeAddBooleanOption(
         args, "WarnOnGenericInferenceFailure", getWarnOnGenericInferenceFailure());
+    maybeAddBooleanOption(args, "HandleWildcardGenerics", getHandleWildcardGenerics());
     return args;
   }
 

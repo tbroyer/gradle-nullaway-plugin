@@ -236,6 +236,7 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
                 extraFuturesClasses.add("com.example.Future")
                 suppressionNameAliases.add("NullIssue")
                 warnOnGenericInferenceFailure.set(true)
+                handleWildcardGenerics.set(true)
             }
         }
         """,

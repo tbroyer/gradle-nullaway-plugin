@@ -126,6 +126,7 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
                 extraFuturesClasses = ["com.example.Future"]
                 suppressionNameAliases = ["NullIssue"]
                 warnOnGenericInferenceFailure = true
+                handleWildcardGenerics = true
             }
         }
         """,

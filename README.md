@@ -135,6 +135,7 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `extraFuturesClasses`            | A list of classes to be treated equivalently to Guava `Futures` and `FluentFuture`; this special support will likely be removed once NullAway's JSpecify support is more complete.
 | `suppressionNameAliases`         | A list of names to suppress NullAway using a `@SuppressWarnings` annotation, similar to `@SuppressWarnings("NullAway")`.
 | `warnOnGenericInferenceFailure`  | If set to true, NullAway will issue a warning when generic type inference fails to infer a type argument's nullability.
+| `handleWildcardGenerics`         | Should wildcard-aware generic nullability checks be enabled?
 
 ### Methods
 

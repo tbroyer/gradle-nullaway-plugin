@@ -53,7 +53,8 @@ public class NullAwayOptionsTest {
           "NullAway:JSpecifyMode",
           "NullAway:ExtraFuturesClasses",
           "NullAway:SuppressionNameAliases",
-          "NullAway:WarnOnGenericInferenceFailure");
+          "NullAway:WarnOnGenericInferenceFailure",
+          "NullAway:HandleWildcardGenerics");
 
   ObjectFactory objects;
   ProviderFactory providers;
@@ -107,6 +108,7 @@ public class NullAwayOptionsTest {
     doTestOptions(options -> options.getExtraFuturesClasses().add("com.example.Future"));
     doTestOptions(options -> options.getSuppressionNameAliases().add("NullIssue"));
     doTestOptions(options -> options.getWarnOnGenericInferenceFailure().set(true));
+    doTestOptions(options -> options.getHandleWildcardGenerics().set(true));
 
     doTestOptions(
         options -> {
@@ -140,6 +142,7 @@ public class NullAwayOptionsTest {
           options.getExtraFuturesClasses().add("com.example.Future");
           options.getSuppressionNameAliases().add("NullIssue");
           options.getWarnOnGenericInferenceFailure().set(true);
+          options.getHandleWildcardGenerics().set(true);
         });
   }
 
@@ -279,6 +282,8 @@ public class NullAwayOptionsTest {
         parsedOptions,
         "NullAway:WarnOnGenericInferenceFailure",
         options.getWarnOnGenericInferenceFailure());
+    assertBooleanOptionEqual(
+        parsedOptions, "NullAway:HandleWildcardGenerics", options.getHandleWildcardGenerics());
 
     assertThat(
             Sets.difference(
