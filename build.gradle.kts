@@ -77,7 +77,7 @@ gradle.taskGraph.whenReady {
 }
 
 // See https://github.com/gradle/gradle/issues/7974
-val additionalPluginClasspath by configurations.creating
+val additionalPluginClasspath = configurations.create("additionalPluginClasspath")
 
 // The ErrorProne plugin is in the [plugins] section for better Dependabot integration
 val LibrariesForLibs.errorproneGradlePlugin
@@ -114,15 +114,16 @@ testing {
                 }
             }
         }
-        val test by getting(JvmTestSuite::class) {
-            dependencies {
-                implementation(project())
-                implementation(libs.errorproneGradlePlugin)
-                implementation(libs.errorprone.checkApi) {
-                    exclude(group = "com.google.errorprone", module = "javac")
+        val test =
+            named<JvmTestSuite>("test") {
+                dependencies {
+                    implementation(project())
+                    implementation(libs.errorproneGradlePlugin)
+                    implementation(libs.errorprone.checkApi) {
+                        exclude(group = "com.google.errorprone", module = "javac")
+                    }
                 }
             }
-        }
         register<JvmTestSuite>("integrationTest") {
             dependencies {
                 implementation(gradleTestKit())
