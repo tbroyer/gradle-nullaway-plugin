@@ -4,7 +4,7 @@ errorprone = "2.50.0"
 googleJavaFormat = "1.33.0"
 junitJupiter = "6.1.2"
 ktlint = "1.8.0"
-nullaway = "0.13.7"
+nullaway = "0.13.8"
 
 [libraries]
 errorprone-checkApi = { module = "com.google.errorprone:error_prone_check_api", version.ref = "errorprone" }
