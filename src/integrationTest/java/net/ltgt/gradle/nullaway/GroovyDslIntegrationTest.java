@@ -127,6 +127,8 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
                 suppressionNameAliases = ["NullIssue"]
                 warnOnGenericInferenceFailure = true
                 handleWildcardGenerics = true
+                jspecifyExperimental = true
+                jspecifyJdkModels = true
             }
         }
         """,

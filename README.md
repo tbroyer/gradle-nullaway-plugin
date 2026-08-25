@@ -43,6 +43,8 @@ and possibly enable the [JSpecify mode](https://github.com/uber/NullAway/wiki/JS
 ```kotlin
 nullaway {
     jspecifyMode = true
+    // Possibly enable JSpecify experimental features
+    jspecifyExperimental = true
 }
 // Don't forget to configure the compiler option if you're using JDK 21 or earlier
 // AND the net.ltgt.errorprone in a version lower than 4.4.0
@@ -56,6 +58,8 @@ or with the Groovy DSL:
 ```gradle
 nullaway {
     jspecifyMode = true
+    // Possibly enable JSpecify experimental features
+    jspecifyExperimental = true
 }
 // Don't forget to configure the compiler option if you're using JDK 21 or earlier
 // AND the net.ltgt.errorprone in a version lower than 4.4.0
@@ -136,6 +140,8 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `suppressionNameAliases`         | A list of names to suppress NullAway using a `@SuppressWarnings` annotation, similar to `@SuppressWarnings("NullAway")`.
 | `warnOnGenericInferenceFailure`  | If set to true, NullAway will issue a warning when generic type inference fails to infer a type argument's nullability.
 | `handleWildcardGenerics`         | Should wildcard-aware generic nullability checks be enabled?
+| `jspecifyExperimental`           | Convenience option that enables the experimental `HandleWildcardGenerics`, `JSpecifyJDKModels`, and `WarnOnGenericInferenceFailure` features. This option must be used with `jspecifyMode=true`.
+| `jspecifyJdkModels`              | Enables NullAway's built-in [JSpecify nullness models for JDK APIs](https://github.com/jspecify/jdk). This option may only be enabled in JSpecify mode.
 
 ### Methods
 

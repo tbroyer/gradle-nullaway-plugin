@@ -237,6 +237,8 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
                 suppressionNameAliases.add("NullIssue")
                 warnOnGenericInferenceFailure.set(true)
                 handleWildcardGenerics.set(true)
+                jspecifyExperimental.set(true)
+                jspecifyJdkModels.set(true)
             }
         }
         """,

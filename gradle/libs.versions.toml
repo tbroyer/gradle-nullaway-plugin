@@ -5,7 +5,7 @@ googleJavaFormat = "1.33.0"
 junitJupiter = "6.1.2"
 kotlinAccessorsGenerator = "0.2.0"
 ktlint = "1.8.0"
-nullaway = "0.13.8"
+nullaway = "0.14.0"
 
 [libraries]
 errorprone-checkApi = { module = "com.google.errorprone:error_prone_check_api", version.ref = "errorprone" }

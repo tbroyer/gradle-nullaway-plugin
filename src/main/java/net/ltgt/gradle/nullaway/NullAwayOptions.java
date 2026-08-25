@@ -21,6 +21,7 @@ public abstract class NullAwayOptions {
     getOnlyNullMarked().convention(nullawayExtension.getOnlyNullMarked());
     getAnnotatedPackages().convention(nullawayExtension.getAnnotatedPackages());
     getJspecifyMode().convention(nullawayExtension.getJspecifyMode());
+    getJspecifyExperimental().convention(nullawayExtension.getJspecifyExperimental());
   }
 
   /**
@@ -346,6 +347,29 @@ public abstract class NullAwayOptions {
   public abstract Property<Boolean> getHandleWildcardGenerics();
 
   /**
+   * Convenience option that enables the experimental {@link #getHandleWildcardGenerics()
+   * HandleWildcardGenerics}, {@link #getJspecifyJdkModels() JSpecifyJDKModels}, and {@link
+   * #getWarnOnGenericInferenceFailure() WarnOnGenericInferenceFailure} features; maps to {@code
+   * -XepOpt:NullAwway:JSpecifyExperimental}.
+   *
+   * <p>This option must be used with {@link #getJspecifyMode() jspecifyMode = true}. An explicit
+   * value for any of the individual feature flags overrides the value supplied by this option.
+   */
+  @Input
+  @Optional
+  public abstract Property<Boolean> getJspecifyExperimental();
+
+  /**
+   * Enables NullAway's built-in <a href="https://github.com/jspecify/jdk">JSpecify nullness models
+   * for JDK APIs</a>; maps to {@code -XepOpt:NullAway:JSpecifyJDKModels}.
+   *
+   * <p>This option may only be enabled in {@linkplain #getJspecifyMode() JSpecify mode}.
+   */
+  @Input
+  @Optional
+  public abstract Property<Boolean> getJspecifyJdkModels();
+
+  /**
    * Enable NullAway.
    *
    * <p>Equivalent to setting {@link #getSeverity() severity} to {@link CheckSeverity#DEFAULT}.
@@ -418,6 +442,8 @@ public abstract class NullAwayOptions {
     maybeAddBooleanOption(
         args, "WarnOnGenericInferenceFailure", getWarnOnGenericInferenceFailure());
     maybeAddBooleanOption(args, "HandleWildcardGenerics", getHandleWildcardGenerics());
+    maybeAddBooleanOption(args, "JSpecifyExperimental", getJspecifyExperimental());
+    maybeAddBooleanOption(args, "JSpecifyJDKModels", getJspecifyJdkModels());
     return args;
   }
 

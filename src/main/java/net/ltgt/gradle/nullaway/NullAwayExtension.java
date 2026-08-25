@@ -19,4 +19,11 @@ public abstract class NullAwayExtension {
 
   /** If set to true, enables new checks based on JSpecify (like checks for generic types) */
   public abstract Property<Boolean> getJspecifyMode();
+
+  /**
+   * Convenience option that enables the experimental {@code HandleWildcardGenerics}, {@code
+   * JSpecifyJDKModels}, and {@code WarnOnGenericInferenceFailure} features. This option must be
+   * used with {@link #getJspecifyMode() jspecifyMode = true}.
+   */
+  public abstract Property<Boolean> getJspecifyExperimental();
 }

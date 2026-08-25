@@ -54,7 +54,9 @@ public class NullAwayOptionsTest {
           "NullAway:ExtraFuturesClasses",
           "NullAway:SuppressionNameAliases",
           "NullAway:WarnOnGenericInferenceFailure",
-          "NullAway:HandleWildcardGenerics");
+          "NullAway:HandleWildcardGenerics",
+          "NullAway:JSpecifyExperimental",
+          "NullAway:JSpecifyJDKModels");
 
   ObjectFactory objects;
   ProviderFactory providers;
@@ -109,6 +111,8 @@ public class NullAwayOptionsTest {
     doTestOptions(options -> options.getSuppressionNameAliases().add("NullIssue"));
     doTestOptions(options -> options.getWarnOnGenericInferenceFailure().set(true));
     doTestOptions(options -> options.getHandleWildcardGenerics().set(true));
+    doTestOptions(options -> options.getJspecifyExperimental().set(true));
+    doTestOptions(options -> options.getJspecifyJdkModels().set(true));
 
     doTestOptions(
         options -> {
@@ -143,6 +147,8 @@ public class NullAwayOptionsTest {
           options.getSuppressionNameAliases().add("NullIssue");
           options.getWarnOnGenericInferenceFailure().set(true);
           options.getHandleWildcardGenerics().set(true);
+          options.getJspecifyExperimental().set(true);
+          options.getJspecifyJdkModels().set(true);
         });
   }
 
@@ -284,6 +290,10 @@ public class NullAwayOptionsTest {
         options.getWarnOnGenericInferenceFailure());
     assertBooleanOptionEqual(
         parsedOptions, "NullAway:HandleWildcardGenerics", options.getHandleWildcardGenerics());
+    assertBooleanOptionEqual(
+        parsedOptions, "NullAway:JSpecifyExperimental", options.getJspecifyExperimental());
+    assertBooleanOptionEqual(
+        parsedOptions, "NullAway:JSpecifyJDKModels", options.getJspecifyJdkModels());
 
     assertThat(
             Sets.difference(
