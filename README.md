@@ -11,6 +11,9 @@ that adds a Gradle DSL to configure [NullAway]
 This plugin requires using at least Gradle 6.8,
 and applying the `net.ltgt.errorprone` plugin (it won't do anything otherwise).
 
+This is at least the theory, in practice the plugin is only tested against the Gradle versions covered by the [Gradle Security Subscription](https://gradle.org/security-subscription/)
+(versions of the plugin up to 3.2.0 included used to actually be tested against all Gradle minor versions since 6.8 though).
+
 ## Usage
 
 ```kotlin
