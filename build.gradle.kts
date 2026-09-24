@@ -52,15 +52,6 @@ tasks.compileJava {
     }
 }
 
-gradle.taskGraph.whenReady {
-    if (hasTask(":publishPlugins")) {
-        check(cmd("git", "diff", "--quiet", "--exit-code").waitFor() == 0) { "Working tree is dirty" }
-        val process = cmd("git", "describe", "--exact-match")
-        check(process.waitFor() == 0) { "Version is not tagged" }
-        version = process.text.trim().removePrefix("v")
-    }
-}
-
 // See https://github.com/gradle/gradle/issues/7974
 val additionalPluginClasspath = configurations.create("additionalPluginClasspath")
 
@@ -199,8 +190,3 @@ spotless {
         googleJavaFormat(libs.versions.googleJavaFormat.get())
     }
 }
-
-fun cmd(vararg cmdarray: String) = Runtime.getRuntime().exec(cmdarray, null, rootDir)
-
-val Process.text: String
-    get() = inputStream.bufferedReader().readText()
