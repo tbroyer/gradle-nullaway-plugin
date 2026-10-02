@@ -37,6 +37,8 @@ public class BinaryCompatibilityIntegrationTest extends BaseIntegrationTest {
         dependencies {
             errorprone("com.google.errorprone:error_prone_core:%s")
             errorprone("com.uber.nullaway:nullaway:%s")
+
+            compileOnlyApi("org.jspecify:jspecify:1.0.1")
         }
 
         tasks.withType<JavaCompile>().configureEach {

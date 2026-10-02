@@ -37,6 +37,8 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
         dependencies {
             errorprone("com.google.errorprone:error_prone_core:%s")
             errorprone("com.uber.nullaway:nullaway:%s")
+
+            compileOnlyApi("org.jspecify:jspecify:1.0.1")
         }
 
         tasks.withType<JavaCompile>().configureEach {
@@ -142,7 +144,7 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
             annotatedPackages.empty()
         }
         dependencies {
-            implementation("org.jspecify:jspecify:1.0.0")
+            implementation("org.jspecify:jspecify:1.0.1")
         }
         """,
         StandardOpenOption.APPEND);

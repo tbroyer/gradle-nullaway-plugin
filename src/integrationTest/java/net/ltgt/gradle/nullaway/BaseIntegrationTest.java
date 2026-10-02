@@ -94,6 +94,8 @@ public abstract class BaseIntegrationTest {
         """
         package test;
 
+        import org.jspecify.annotations.Nullable;
+
         public class Success {
             static void log(@Nullable Object x) {
                 if (x != null) {
@@ -104,8 +106,6 @@ public abstract class BaseIntegrationTest {
                 log(null);
             }
         }
-
-        @interface Nullable {}
         """);
   }
 
