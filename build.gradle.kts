@@ -28,6 +28,10 @@ tasks {
     withType<JavaCompile>().configureEach {
         options.release = 21
         options.compilerArgs.addAll(listOf("-Werror", "-Xlint:all"))
+        options.errorprone {
+            error("RequireExplicitNullMarking")
+            error("JSpecifyUnrecognizedAnnotationLocation")
+        }
     }
     javadoc {
         (options as StandardJavadocDocletOptions).apply {
