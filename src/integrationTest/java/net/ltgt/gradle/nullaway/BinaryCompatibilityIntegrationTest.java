@@ -44,8 +44,8 @@ public class BinaryCompatibilityIntegrationTest extends BaseIntegrationTest {
             compileOnlyApi("org.jspecify:jspecify:1.0.1")
         }
 
-        tasks.withType<JavaCompile>().configureEach {
-            options.errorprone.nullaway.error()
+        nullaway {
+            error()
         }
         """
             .formatted(errorproneVersion, nullawayVersion));

@@ -19,11 +19,17 @@ public abstract class NullAwayOptions {
   @Inject
   @SuppressWarnings("this-escape")
   public NullAwayOptions(NullAwayExtension nullawayExtension) {
-    getSeverity().convention(CheckSeverity.DEFAULT);
+    getSeverity().convention(nullawayExtension.getSeverity());
     getOnlyNullMarked().convention(nullawayExtension.getOnlyNullMarked());
     getAnnotatedPackages().convention(nullawayExtension.getAnnotatedPackages());
     getJspecifyMode().convention(nullawayExtension.getJspecifyMode());
     getJspecifyExperimental().convention(nullawayExtension.getJspecifyExperimental());
+    getRequireExplicitNullMarking()
+        .getSeverity()
+        .convention(nullawayExtension.getRequireExplicitNullMarking().getSeverity());
+    getJspecifyUnrecognizedAnnotationLocation()
+        .getSeverity()
+        .convention(nullawayExtension.getJspecifyUnrecognizedAnnotationLocation().getSeverity());
   }
 
   /**
@@ -32,6 +38,9 @@ public abstract class NullAwayOptions {
    * <p>Almost equivalent to {@code options.errorprone.check("NullAway", severity)} (NullAway won't
    * actually appear in {@code options.errorprone.checks}). Can be set to {@link CheckSeverity#OFF}
    * to disable NullAway.
+   *
+   * <p>Defaults to the {@linkplain NullAwayExtension#getSeverity() value configured at the
+   * project-level}.
    *
    * @see ErrorProneOptions#check(String, CheckSeverity)
    * @see ErrorProneOptions#check(String, Provider)
@@ -372,20 +381,40 @@ public abstract class NullAwayOptions {
   @Optional
   public abstract Property<Boolean> getJspecifyJdkModels();
 
-  /** Configures the RequireExplicitNullMarking check's severity. */
+  /**
+   * Configures the RequireExplicitNullMarking check's severity.
+   *
+   * <p>Defaults to the {@linkplain NullAwayExtension#getRequireExplicitNullMarking() value
+   * configured at the project-level}.
+   */
   @Nested
   public abstract ConfigurableSeverity getRequireExplicitNullMarking();
 
-  /** Configures the RequireExplicitNullMarking check's severity. */
+  /**
+   * Configures the RequireExplicitNullMarking check's severity.
+   *
+   * <p>Defaults to the {@linkplain NullAwayExtension#getRequireExplicitNullMarking() value
+   * configured at the project-level}.
+   */
   public void requireExplicitNullMarking(Action<? super ConfigurableSeverity> configure) {
     configure.execute(getRequireExplicitNullMarking());
   }
 
-  /** Configures the JSpecifyUnrecognizedAnnotationLocation check's severity. */
+  /**
+   * Configures the JSpecifyUnrecognizedAnnotationLocation check's severity.
+   *
+   * <p>Defaults to the {@linkplain NullAwayExtension#getJspecifyUnrecognizedAnnotationLocation()
+   * value configured at the project-level}.
+   */
   @Nested
   public abstract ConfigurableSeverity getJspecifyUnrecognizedAnnotationLocation();
 
-  /** Configures the RequireExplicitNullMarking check's severity. */
+  /**
+   * Configures the RequireExplicitNullMarking check's severity.
+   *
+   * <p>Defaults to the {@linkplain NullAwayExtension#getJspecifyUnrecognizedAnnotationLocation()
+   * value configured at the project-level}.
+   */
   public void jspecifyUnrecognizedAnnotationLocation(
       Action<? super ConfigurableSeverity> configure) {
     configure.execute(getJspecifyUnrecognizedAnnotationLocation());
@@ -429,7 +458,7 @@ public abstract class NullAwayOptions {
 
   Iterable<String> asArguments() {
     List<String> args = new ArrayList<>();
-    args.add("-Xep:NullAway" + severityToArg(getSeverity().getOrElse(CheckSeverity.DEFAULT)));
+    args.add("-Xep:NullAway" + severityToArg(getSeverity().get()));
     maybeAddListOption(args, "AnnotatedPackages", getAnnotatedPackages());
     maybeAddBooleanOption(args, "OnlyNullMarked", getOnlyNullMarked());
     maybeAddListOption(args, "UnannotatedSubPackages", getUnannotatedSubPackages());

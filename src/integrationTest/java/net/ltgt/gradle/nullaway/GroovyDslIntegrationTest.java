@@ -45,11 +45,8 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
             compileOnlyApi("org.jspecify:jspecify:1.0.1")
         }
 
-        tasks.withType(JavaCompile).configureEach {
-            options.errorprone.nullaway.error()
-        }
-
         nullaway {
+            error()
             annotatedPackages.add("test")
         }
         """
@@ -64,8 +61,8 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
         // language=groovy
         """
 
-        tasks.withType(JavaCompile).configureEach {
-            options.errorprone.nullaway.disable()
+        nullaway {
+            disable()
         }
         """,
         StandardOpenOption.APPEND);

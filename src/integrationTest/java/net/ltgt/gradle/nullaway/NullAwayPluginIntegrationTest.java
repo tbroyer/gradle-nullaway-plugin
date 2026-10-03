@@ -41,11 +41,8 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
             compileOnlyApi("org.jspecify:jspecify:1.0.1")
         }
 
-        tasks.withType<JavaCompile>().configureEach {
-            options.errorprone.nullaway.error()
-        }
-
         nullaway {
+            error()
             annotatedPackages.add("test")
         }
         """
@@ -178,10 +175,8 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
         // language=kts
         """
 
-        tasks.withType<JavaCompile>().configureEach {
-            options.errorprone.nullaway {
-                requireExplicitNullMarking { error() }
-            }
+        nullaway {
+            requireExplicitNullMarking { error() }
         }
         """,
         StandardOpenOption.APPEND);
@@ -206,10 +201,8 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
         // language=kts
         """
 
-        tasks.withType<JavaCompile>().configureEach {
-            options.errorprone.nullaway {
-                jspecifyUnrecognizedAnnotationLocation { error() }
-            }
+        nullaway {
+            jspecifyUnrecognizedAnnotationLocation { error() }
         }
         """,
         StandardOpenOption.APPEND);
@@ -242,8 +235,8 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
         // language=kts
         """
 
-        tasks.withType<JavaCompile>().configureEach {
-            options.errorprone.nullaway.disable()
+        nullaway {
+            disable()
         }
         """,
         StandardOpenOption.APPEND);

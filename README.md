@@ -73,7 +73,18 @@ tasks.withType(JavaCompile).configureEach {
 
 ## Configuration
 
-Other [NullAway flags], as well as the checks severity (including for the two `RequireExplicitNullMarking` and `JSpecifyUnrecognizedAnnotationLocation` additional checks), can be configured on the `JavaCompile` tasks:
+The checks severity (including for the two `RequireExplicitNullMarking` and `JSpecifyUnrecognizedAnnotationLocation` additional checks) can also be configured on the project-level extension with the same properties and methods as on the task-level extension (see below for details).
+Those only set the tasks' defaults, that can be overridden separately on each task.
+
+```kotlin
+nullaway {
+    error()
+    requireExplicitNullMarking { error() }
+    jspecifyUnrecognizedAnnotationLocation { error() }
+}
+```
+
+Other [NullAway flags] can only be configured on the `JavaCompile` tasks:
 
 [NullAway flags]: https://github.com/uber/NullAway/wiki/Configuration
 
@@ -83,10 +94,7 @@ import net.ltgt.gradle.nullaway.nullaway
 
 tasks.withType<JavaCompile>().configureEach {
     options.errorprone.nullaway {
-        error()
         unannotatedSubPackages.add("com.foo.baz")
-        requireExplicitNullMarking { error() }
-        jspecifyUnrecognizedAnnotationLocation { error() }
     }
 }
 ```
@@ -96,10 +104,7 @@ or with the Groovy DSL:
 ```gradle
 tasks.withType(JavaCompile).configureEach {
     options.errorprone.nullaway {
-        error()
         unannotatedSubPackages.add("com.foo.baz")
-        requireExplicitNullMarking { error() }
-        jspecifyUnrecognizedAnnotationLocation { error() }
     }
 }
 ```
@@ -161,7 +166,7 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 
 ### Additional checks
 
-For configuring additional checks (alongside the `NullAway` check), the extension has those additional properties (which are **not** _lazy_):
+For configuring additional checks (alongside the `NullAway` check), the project-level and task-level extensions have those additional properties (which are **not** _lazy_):
 
 | `requireExplicitNullMarking`              | An object for configuring the `RequireExplicitNullMarking` check's severity.
 | `jspecifyUnrecongnizedAnnotationLocation` | An object for configuring the `JSpecifyUnrecongnizedAnnotationLocation` check's severity.
