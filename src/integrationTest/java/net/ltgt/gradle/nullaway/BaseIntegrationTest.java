@@ -85,7 +85,7 @@ public abstract class BaseIntegrationTest {
   }
 
   protected static final String FAILURE_SOURCE_COMPILATION_ERROR =
-      "Failure.java:8: warning: [NullAway]";
+      "Failure.java:8: error: [NullAway]";
 
   protected final void writeSuccessSource() throws IOException {
     Files.writeString(

@@ -23,6 +23,9 @@ public class BinaryCompatibilityIntegrationTest extends BaseIntegrationTest {
         getBuildFile(),
         // language=kts
         """
+        import net.ltgt.gradle.errorprone.*
+        import net.ltgt.gradle.nullaway.*
+
         plugins {
             `java-library`
             id("net.ltgt.errorprone")
@@ -42,7 +45,7 @@ public class BinaryCompatibilityIntegrationTest extends BaseIntegrationTest {
         }
 
         tasks.withType<JavaCompile>().configureEach {
-            options.compilerArgs.add("-Werror")
+            options.errorprone.nullaway.error()
         }
         """
             .formatted(errorproneVersion, nullawayVersion));

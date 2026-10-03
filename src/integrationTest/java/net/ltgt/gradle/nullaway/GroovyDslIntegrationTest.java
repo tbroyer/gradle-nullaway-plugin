@@ -46,7 +46,7 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
         }
 
         tasks.withType(JavaCompile).configureEach {
-            options.compilerArgs.add("-Werror")
+            options.errorprone.nullaway.error()
         }
 
         nullaway {
