@@ -85,43 +85,45 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
         """
 
         tasks.withType(JavaCompile).configureEach {
-            options.errorprone.nullaway {
-                severity = CheckSeverity.DEFAULT
-                onlyNullMarked = false
-                annotatedPackages = project.nullaway.annotatedPackages
-                unannotatedSubPackages = ["test.dummy"]
-                unannotatedClasses = ["test.Unannotated"]
-                knownInitializers = ["com.foo.Bar.method"]
-                excludedClassAnnotations = ["com.example.NullAwayExcluded"]
-                excludedClasses = ["test.Excluded"]
-                excludedFieldAnnotations = ["javax.ws.rs.core.Context"]
-                customInitializerAnnotations = ["com.foo.Initializer"]
-                externalInitAnnotations = ["com.example.ExternalInit"]
-                treatGeneratedAsUnannotated = true
-                acknowledgeRestrictiveAnnotations = true
-                checkOptionalEmptiness = true
-                suggestSuppressions = true
-                assertsEnabled = true
-                exhaustiveOverride = true
-                castToNonNullMethod = "com.foo.Bar.castToNonNull"
-                checkOptionalEmptinessCustomClasses = ["com.foo.Optional"]
-                autoFixSuppressionComment = "Auto-fix\\\\u0020suppression"
-                handleTestAssertionLibraries = true
-                acknowledgeAndroidRecent = true
-                checkContracts = true
-                customContractAnnotations = ["com.example.Contract"]
-                customNullableAnnotations = ["com.example.CouldBeNull"]
-                customNonnullAnnotations = ["com.example.MustNotBeNull"]
-                customGeneratedCodeAnnotations = ["com.example.Generated"]
-                jspecifyMode = true
-                extraFuturesClasses = ["com.example.Future"]
-                suppressionNameAliases = ["NullIssue"]
-                warnOnGenericInferenceFailure = true
-                handleWildcardGenerics = true
-                jspecifyExperimental = true
-                jspecifyJdkModels = true
-                requireExplicitNullMarking { severity = null }
-                jspecifyUnrecognizedAnnotationLocation { severity = null }
+            options.errorprone {
+                nullaway {
+                    severity = compilingTestOnlyCode.map { it ? CheckSeverity.OFF : CheckSeverity.DEFAULT }
+                    onlyNullMarked = false
+                    annotatedPackages = project.nullaway.annotatedPackages
+                    unannotatedSubPackages = ["test.dummy"]
+                    unannotatedClasses = ["test.Unannotated"]
+                    knownInitializers = ["com.foo.Bar.method"]
+                    excludedClassAnnotations = ["com.example.NullAwayExcluded"]
+                    excludedClasses = ["test.Excluded"]
+                    excludedFieldAnnotations = ["javax.ws.rs.core.Context"]
+                    customInitializerAnnotations = ["com.foo.Initializer"]
+                    externalInitAnnotations = ["com.example.ExternalInit"]
+                    treatGeneratedAsUnannotated = true
+                    acknowledgeRestrictiveAnnotations = true
+                    checkOptionalEmptiness = true
+                    suggestSuppressions = true
+                    assertsEnabled = true
+                    exhaustiveOverride = true
+                    castToNonNullMethod = "com.foo.Bar.castToNonNull"
+                    checkOptionalEmptinessCustomClasses = ["com.foo.Optional"]
+                    autoFixSuppressionComment = "Auto-fix\\\\u0020suppression"
+                    handleTestAssertionLibraries = true
+                    acknowledgeAndroidRecent = true
+                    checkContracts = true
+                    customContractAnnotations = ["com.example.Contract"]
+                    customNullableAnnotations = ["com.example.CouldBeNull"]
+                    customNonnullAnnotations = ["com.example.MustNotBeNull"]
+                    customGeneratedCodeAnnotations = ["com.example.Generated"]
+                    jspecifyMode = true
+                    extraFuturesClasses = ["com.example.Future"]
+                    suppressionNameAliases = ["NullIssue"]
+                    warnOnGenericInferenceFailure = true
+                    handleWildcardGenerics = true
+                    jspecifyExperimental = true
+                    jspecifyJdkModels = true
+                    requireExplicitNullMarking { severity = null }
+                    jspecifyUnrecognizedAnnotationLocation { severity = null }
+                }
             }
         }
         """,

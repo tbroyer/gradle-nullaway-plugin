@@ -259,41 +259,43 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
         """
 
         tasks.withType<JavaCompile>().configureEach {
-            options.errorprone.nullaway {
-                severity.set(CheckSeverity.DEFAULT)
-                onlyNullMarked.set(false)
-                unannotatedSubPackages.add("test.dummy")
-                unannotatedClasses.add("test.Unannotated")
-                knownInitializers.add("com.foo.Bar.method")
-                excludedClassAnnotations.add("com.example.NullAwayExcluded")
-                excludedClasses.add("test.Excluded")
-                excludedFieldAnnotations.add("javax.ws.rs.core.Context")
-                customInitializerAnnotations.add("com.foo.Initializer")
-                externalInitAnnotations.add("com.example.ExternalInit")
-                treatGeneratedAsUnannotated.set(true)
-                acknowledgeRestrictiveAnnotations.set(true)
-                checkOptionalEmptiness.set(true)
-                suggestSuppressions.set(true)
-                assertsEnabled.set(true)
-                exhaustiveOverride.set(true)
-                castToNonNullMethod.set("com.foo.Bar.castToNonNull")
-                checkOptionalEmptinessCustomClasses.add("com.foo.Optional")
-                autoFixSuppressionComment.set("Auto-fix\\\\u0020suppression")
-                handleTestAssertionLibraries.set(true)
-                acknowledgeAndroidRecent.set(true)
-                checkContracts.set(true)
-                customContractAnnotations.add("com.example.Contract")
-                customNullableAnnotations.add("com.example.CouldBeNull")
-                customNonnullAnnotations.add("com.example.MustNotBeNull")
-                jspecifyMode.set(true)
-                extraFuturesClasses.add("com.example.Future")
-                suppressionNameAliases.add("NullIssue")
-                warnOnGenericInferenceFailure.set(true)
-                handleWildcardGenerics.set(true)
-                jspecifyExperimental.set(true)
-                jspecifyJdkModels.set(true)
-                requireExplicitNullMarking { severity.unset() }
-                jspecifyUnrecognizedAnnotationLocation { severity.unset() }
+            options.errorprone {
+                nullaway {
+                    severity = compilingTestOnlyCode.map { if (it) CheckSeverity.OFF else CheckSeverity.DEFAULT }
+                    onlyNullMarked.set(false)
+                    unannotatedSubPackages.add("test.dummy")
+                    unannotatedClasses.add("test.Unannotated")
+                    knownInitializers.add("com.foo.Bar.method")
+                    excludedClassAnnotations.add("com.example.NullAwayExcluded")
+                    excludedClasses.add("test.Excluded")
+                    excludedFieldAnnotations.add("javax.ws.rs.core.Context")
+                    customInitializerAnnotations.add("com.foo.Initializer")
+                    externalInitAnnotations.add("com.example.ExternalInit")
+                    treatGeneratedAsUnannotated.set(true)
+                    acknowledgeRestrictiveAnnotations.set(true)
+                    checkOptionalEmptiness.set(true)
+                    suggestSuppressions.set(true)
+                    assertsEnabled.set(true)
+                    exhaustiveOverride.set(true)
+                    castToNonNullMethod.set("com.foo.Bar.castToNonNull")
+                    checkOptionalEmptinessCustomClasses.add("com.foo.Optional")
+                    autoFixSuppressionComment.set("Auto-fix\\\\u0020suppression")
+                    handleTestAssertionLibraries.set(true)
+                    acknowledgeAndroidRecent.set(true)
+                    checkContracts.set(true)
+                    customContractAnnotations.add("com.example.Contract")
+                    customNullableAnnotations.add("com.example.CouldBeNull")
+                    customNonnullAnnotations.add("com.example.MustNotBeNull")
+                    jspecifyMode.set(true)
+                    extraFuturesClasses.add("com.example.Future")
+                    suppressionNameAliases.add("NullIssue")
+                    warnOnGenericInferenceFailure.set(true)
+                    handleWildcardGenerics.set(true)
+                    jspecifyExperimental.set(true)
+                    jspecifyJdkModels.set(true)
+                    requireExplicitNullMarking { severity.unset() }
+                    jspecifyUnrecognizedAnnotationLocation { severity.unset() }
+                }
             }
         }
         """,

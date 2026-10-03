@@ -89,12 +89,15 @@ Other [NullAway flags] can only be configured on the `JavaCompile` tasks:
 [NullAway flags]: https://github.com/uber/NullAway/wiki/Configuration
 
 ```kotlin
-import net.ltgt.gradle.errorprone.errorprone
+import net.ltgt.gradle.errorprone.*
 import net.ltgt.gradle.nullaway.nullaway
 
 tasks.withType<JavaCompile>().configureEach {
-    options.errorprone.nullaway {
-        unannotatedSubPackages.add("com.foo.baz")
+    options.errorprone {
+        nullaway {
+            severity = compilingTestOnlyCode.map { if (it) CheckSeverity.WARN else CheckSeverity.ERROR }
+            unannotatedSubPackages.add("com.foo.baz")
+        }
     }
 }
 ```
@@ -102,9 +105,14 @@ tasks.withType<JavaCompile>().configureEach {
 or with the Groovy DSL:
 
 ```gradle
+import net.ltgt.gradle.errorprone.CheckSeverity
+
 tasks.withType(JavaCompile).configureEach {
-    options.errorprone.nullaway {
-        unannotatedSubPackages.add("com.foo.baz")
+    options.errorprone {
+        nullaway {
+            severity = compilingTestOnlyCode.map { it ? CheckSeverity.WARN : CheckSeverity.ERROR }
+            unannotatedSubPackages.add("com.foo.baz")
+        }
     }
 }
 ```
