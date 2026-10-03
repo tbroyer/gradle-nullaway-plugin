@@ -53,7 +53,7 @@ public abstract class NullAwayOptions {
    * annotatedPackages} is non-empty), any {@code @NullMarked} code will still be treated as
    * annotated.
    *
-   * <p>Defaults to the {@link NullAwayExtension#getOnlyNullMarked() value configured at the
+   * <p>Defaults to the {@linkplain NullAwayExtension#getOnlyNullMarked() value configured at the
    * project-level}.
    */
   @Input
@@ -67,7 +67,7 @@ public abstract class NullAwayOptions {
    * <p>This can be used to add to or override the {@link NullAwayExtension#getAnnotatedPackages()
    * annotatedPackages} at the project level.
    *
-   * <p>Defaults to the {@link NullAwayExtension#getAnnotatedPackages() list configured at the
+   * <p>Defaults to the {@linkplain NullAwayExtension#getAnnotatedPackages() list configured at the
    * project-level}.
    */
   @Input
@@ -323,8 +323,9 @@ public abstract class NullAwayOptions {
    * {@code @SuppressWarnings("NullAway")}; maps to {@code -XepOpt:NullAway:SuppressionNameAliases}.
    *
    * <p>This is useful when other warnings are already suppressed in the codebase and NullAway
-   * should be suppressed as well, such as with JetBrains' [{@code
-   * DataFlowIssue}](https://www.jetbrains.com/help/inspectopedia/DataFlowIssue.html) inspection.
+   * should be suppressed as well, such as with JetBrains' <a
+   * href="https://www.jetbrains.com/help/inspectopedia/DataFlowIssue.html">{@code
+   * DataFlowIssue}</a> inspection.
    */
   @Input
   @Optional
