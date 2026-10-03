@@ -7,10 +7,12 @@ import java.util.List;
 import javax.inject.Inject;
 import net.ltgt.gradle.errorprone.CheckSeverity;
 import net.ltgt.gradle.errorprone.ErrorProneOptions;
+import org.gradle.api.Action;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.Optional;
 
 public abstract class NullAwayOptions {
@@ -370,6 +372,25 @@ public abstract class NullAwayOptions {
   @Optional
   public abstract Property<Boolean> getJspecifyJdkModels();
 
+  /** Configures the RequireExplicitNullMarking check's severity. */
+  @Nested
+  public abstract ConfigurableSeverity getRequireExplicitNullMarking();
+
+  /** Configures the RequireExplicitNullMarking check's severity. */
+  public void requireExplicitNullMarking(Action<? super ConfigurableSeverity> configure) {
+    configure.execute(getRequireExplicitNullMarking());
+  }
+
+  /** Configures the JSpecifyUnrecognizedAnnotationLocation check's severity. */
+  @Nested
+  public abstract ConfigurableSeverity getJspecifyUnrecognizedAnnotationLocation();
+
+  /** Configures the RequireExplicitNullMarking check's severity. */
+  public void jspecifyUnrecognizedAnnotationLocation(
+      Action<? super ConfigurableSeverity> configure) {
+    configure.execute(getJspecifyUnrecognizedAnnotationLocation());
+  }
+
   /**
    * Enable NullAway.
    *
@@ -445,6 +466,12 @@ public abstract class NullAwayOptions {
     maybeAddBooleanOption(args, "HandleWildcardGenerics", getHandleWildcardGenerics());
     maybeAddBooleanOption(args, "JSpecifyExperimental", getJspecifyExperimental());
     maybeAddBooleanOption(args, "JSpecifyJDKModels", getJspecifyJdkModels());
+    maybeAddCheck(
+        args, "RequireExplicitNullMarking", getRequireExplicitNullMarking().getSeverity());
+    maybeAddCheck(
+        args,
+        "JSpecifyUnrecognizedAnnotationLocation",
+        getJspecifyUnrecognizedAnnotationLocation().getSeverity());
     return args;
   }
 
@@ -474,5 +501,12 @@ public abstract class NullAwayOptions {
 
   private void addStringOption(List<String> args, String name, String value) {
     args.add("-XepOpt:NullAway:" + name + "=" + value);
+  }
+
+  private void maybeAddCheck(List<String> args, String name, Provider<CheckSeverity> severity) {
+    CheckSeverity value = severity.getOrNull();
+    if (value != null) {
+      args.add("-Xep:" + name + severityToArg(value));
+    }
   }
 }

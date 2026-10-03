@@ -85,6 +85,18 @@ public class NullAwayPlugin implements Plugin<Project> {
           : nullawayOptions;
     }
 
+    @SuppressWarnings("unused")
+    @Nested
+    ConfigurableSeverity getRequireExplicitNullMarking() {
+      return nullawayOptions.getRequireExplicitNullMarking();
+    }
+
+    @SuppressWarnings("unused")
+    @Nested
+    ConfigurableSeverity getJspecifyUnrecognizedAnnotationLocation() {
+      return nullawayOptions.getJspecifyUnrecognizedAnnotationLocation();
+    }
+
     @Override
     public Iterable<String> asArguments() {
       return nullawayOptions.asArguments();

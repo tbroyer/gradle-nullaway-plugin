@@ -169,6 +169,72 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
   }
 
   @Test
+  void requireExplicitNullMarkingOption() throws Exception {
+    assume().that(nullawaySupportsRequiresExplicitNullMarking).isTrue();
+
+    // given
+    Files.writeString(
+        getBuildFile(),
+        // language=kts
+        """
+
+        tasks.withType<JavaCompile>().configureEach {
+            options.errorprone.nullaway {
+                requireExplicitNullMarking { error() }
+            }
+        }
+        """,
+        StandardOpenOption.APPEND);
+    writeSuccessSource();
+
+    // when
+    var result = buildWithArgsAndFail("compileJava");
+
+    // then
+    assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
+        .isEqualTo(TaskOutcome.FAILED);
+    assertThat(result.getOutput()).contains(FAILURE_REQUIRE_EXPLICIT_NULL_MARKING_ERROR);
+  }
+
+  @Test
+  void jspecifyUnrecognizedAnnotationLocation() throws Exception {
+    assume().that(nullawaySupportsJSpecifyUnrecognizedAnnotationLocation).isTrue();
+
+    // given
+    Files.writeString(
+        getBuildFile(),
+        // language=kts
+        """
+
+        tasks.withType<JavaCompile>().configureEach {
+            options.errorprone.nullaway {
+                jspecifyUnrecognizedAnnotationLocation { error() }
+            }
+        }
+        """,
+        StandardOpenOption.APPEND);
+    Files.writeString(
+        Files.createDirectories(projectDir.resolve("src/main/java/test")).resolve("Failure.java"),
+        // language=java
+        """
+        package test;
+
+        import org.jspecify.annotations.Nullable;
+
+        public class Failure<@Nullable T> {}
+        """);
+
+    // when
+    var result = buildWithArgsAndFail("compileJava");
+
+    // then
+    assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
+        .isEqualTo(TaskOutcome.FAILED);
+    assertThat(result.getOutput())
+        .contains("Failure.java:5: error: [JSpecifyUnrecognizedAnnotationLocation]");
+  }
+
+  @Test
   void canDisableNullAway() throws Exception {
     // given
     Files.writeString(
@@ -233,6 +299,8 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
                 handleWildcardGenerics.set(true)
                 jspecifyExperimental.set(true)
                 jspecifyJdkModels.set(true)
+                requireExplicitNullMarking { severity.unset() }
+                jspecifyUnrecognizedAnnotationLocation { severity.unset() }
             }
         }
         """,
@@ -256,11 +324,21 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
         """
 
         tasks.withType<JavaCompile>().configureEach {
-            options.errorprone.nullaway {
-                if (project.hasProperty("disable-nullaway")) {
-                    disable()
+            options.errorprone {
+                // Make it work even in NullAway versions without the additional checks
+                ignoreUnknownCheckNames = true
+                nullaway {
+                    if (project.hasProperty("disable-nullaway")) {
+                        disable()
+                    }
+                    if (project.hasProperty("require-explicit-null-marking")) {
+                        requireExplicitNullMarking.warn()
+                    }
+                    if (project.hasProperty("jspecify-unrecognized-annotation-location")) {
+                        jspecifyUnrecognizedAnnotationLocation.warn()
+                    }
+                    autoFixSuppressionComment.set(project.property("autofix-comment") as String)
                 }
-                autoFixSuppressionComment.set(project.property("autofix-comment") as String)
             }
         }
         """,
@@ -293,6 +371,31 @@ public class NullAwayPluginIntegrationTest extends BaseIntegrationTest {
     // Changing a property while the check is disabled has no impact on up-to-date checks
     assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
         .isEqualTo(TaskOutcome.UP_TO_DATE);
+
+    // when
+    result =
+        buildWithArgs(
+            "compileJava",
+            "-Pdisable-nullaway",
+            "-Pautofix-comment=baz",
+            "-Prequire-explicit-null-marking");
+    // then
+    // (specifically, we don't want UP_TO_DATE)
+    assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
+        .isEqualTo(TaskOutcome.SUCCESS);
+
+    // when
+    result =
+        buildWithArgs(
+            "compileJava",
+            "-Pdisable-nullaway",
+            "-Pautofix-comment=baz",
+            "-Prequire-explicit-null-marking",
+            "-Pjspecify-unrecognized-annotation-location");
+    // then
+    // (specifically, we don't want UP_TO_DATE)
+    assertThat(requireNonNull(result.task(":compileJava")).getOutcome())
+        .isEqualTo(TaskOutcome.SUCCESS);
   }
 
   @Test

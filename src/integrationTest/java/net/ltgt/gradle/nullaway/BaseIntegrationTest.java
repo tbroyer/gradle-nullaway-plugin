@@ -59,6 +59,12 @@ public abstract class BaseIntegrationTest {
   // XXX: same test (reversed) as in nullawayVersion above
   public static final boolean nullawaySupportsOnlyNullMarked =
       testJavaVersion.isCompatibleWith(JavaVersion.VERSION_11);
+  // XXX: same test (reversed) as in nullawayVersion above
+  public static final boolean nullawaySupportsRequiresExplicitNullMarking =
+      testJavaVersion.isCompatibleWith(JavaVersion.VERSION_11);
+  // XXX: same test (reversed) as in nullawayVersion above
+  public static final boolean nullawaySupportsJSpecifyUnrecognizedAnnotationLocation =
+      testJavaVersion.isCompatibleWith(JavaVersion.VERSION_17);
 
   @TempDir protected Path projectDir;
 
@@ -86,6 +92,9 @@ public abstract class BaseIntegrationTest {
 
   protected static final String FAILURE_SOURCE_COMPILATION_ERROR =
       "Failure.java:8: error: [NullAway]";
+
+  protected static final String FAILURE_REQUIRE_EXPLICIT_NULL_MARKING_ERROR =
+      "Success.java:5: error: [RequireExplicitNullMarking]";
 
   protected final void writeSuccessSource() throws IOException {
     Files.writeString(

@@ -6,7 +6,9 @@ import com.google.common.collect.Sets;
 import com.google.errorprone.ErrorProneOptions;
 import com.google.errorprone.ErrorProneOptions.Severity;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -113,6 +115,23 @@ public class NullAwayOptionsTest {
     doTestOptions(options -> options.getHandleWildcardGenerics().set(true));
     doTestOptions(options -> options.getJspecifyExperimental().set(true));
     doTestOptions(options -> options.getJspecifyJdkModels().set(true));
+    doTestOptions(
+        options ->
+            options.getRequireExplicitNullMarking().getSeverity().set(CheckSeverity.DEFAULT));
+    doTestOptions(options -> options.getRequireExplicitNullMarking().enable());
+    doTestOptions(options -> options.getRequireExplicitNullMarking().disable());
+    doTestOptions(options -> options.getRequireExplicitNullMarking().warn());
+    doTestOptions(options -> options.getRequireExplicitNullMarking().error());
+    doTestOptions(
+        options ->
+            options
+                .getJspecifyUnrecognizedAnnotationLocation()
+                .getSeverity()
+                .set(CheckSeverity.DEFAULT));
+    doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().enable());
+    doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().disable());
+    doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().warn());
+    doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().error());
 
     doTestOptions(
         options -> {
@@ -149,6 +168,8 @@ public class NullAwayOptionsTest {
           options.getHandleWildcardGenerics().set(true);
           options.getJspecifyExperimental().set(true);
           options.getJspecifyJdkModels().set(true);
+          options.getRequireExplicitNullMarking().error();
+          options.getJspecifyUnrecognizedAnnotationLocation().warn();
         });
   }
 
@@ -211,8 +232,20 @@ public class NullAwayOptionsTest {
     assertDefault(parsedOptions, ErrorProneOptions::isPubliclyVisibleTarget);
     assertDefault(parsedOptions, ErrorProneOptions::isSuggestionsAsWarnings);
 
-    assertThat(parsedOptions.getSeverityMap())
-        .containsExactly("NullAway", toSeverity(options.getSeverity().get()));
+    Map<String, Severity> expectedSeverityMap = new HashMap<>();
+    expectedSeverityMap.put("NullAway", toSeverity(options.getSeverity().get()));
+    if (options.getRequireExplicitNullMarking().getSeverity().isPresent()) {
+      expectedSeverityMap.put(
+          "RequireExplicitNullMarking",
+          toSeverity(options.getRequireExplicitNullMarking().getSeverity().get()));
+    }
+    if (options.getJspecifyUnrecognizedAnnotationLocation().getSeverity().isPresent()) {
+      expectedSeverityMap.put(
+          "JSpecifyUnrecognizedAnnotationLocation",
+          toSeverity(options.getJspecifyUnrecognizedAnnotationLocation().getSeverity().get()));
+    }
+    assertThat(parsedOptions.getSeverityMap()).containsExactlyEntriesIn(expectedSeverityMap);
+
     assertBooleanOptionEqual(parsedOptions, "NullAway:OnlyNullMarked", options.getOnlyNullMarked());
     assertListOptionEqual(
         parsedOptions, "NullAway:AnnotatedPackages", options.getAnnotatedPackages());

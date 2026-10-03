@@ -123,6 +123,8 @@ public class GroovyDslIntegrationTest extends BaseIntegrationTest {
                 handleWildcardGenerics = true
                 jspecifyExperimental = true
                 jspecifyJdkModels = true
+                requireExplicitNullMarking { severity = null }
+                jspecifyUnrecognizedAnnotationLocation { severity = null }
             }
         }
         """,

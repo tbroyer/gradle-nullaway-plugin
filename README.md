@@ -73,7 +73,7 @@ tasks.withType(JavaCompile).configureEach {
 
 ## Configuration
 
-Other [NullAway flags], as well as the check severity, can be configured on the `JavaCompile` tasks:
+Other [NullAway flags], as well as the checks severity (including for the two `RequireExplicitNullMarking` and `JSpecifyUnrecognizedAnnotationLocation` additional checks), can be configured on the `JavaCompile` tasks:
 
 [NullAway flags]: https://github.com/uber/NullAway/wiki/Configuration
 
@@ -85,6 +85,8 @@ tasks.withType<JavaCompile>().configureEach {
     options.errorprone.nullaway {
         error()
         unannotatedSubPackages.add("com.foo.baz")
+        requireExplicitNullMarking { error() }
+        jspecifyUnrecognizedAnnotationLocation { error() }
     }
 }
 ```
@@ -96,6 +98,8 @@ tasks.withType(JavaCompile).configureEach {
     options.errorprone.nullaway {
         error()
         unannotatedSubPackages.add("com.foo.baz")
+        requireExplicitNullMarking { error() }
+        jspecifyUnrecognizedAnnotationLocation { error() }
     }
 }
 ```
@@ -154,3 +158,15 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 | `disable()` | Disable NullAway. Equivalent to `severity.set(CheckSeverity.OFF)`.
 | `warn()`    | Enable NullAway as a warning. Equivalent to `severity.set(CheckSeverity.WARN)`.
 | `error()`   | Enable NullAway as an error. Equivalent to `severity.set(CheckSeverity.ERROR)`.
+
+### Additional checks
+
+For configuring additional checks (alongside the `NullAway` check), the extension has those additional properties (which are **not** _lazy_):
+
+| `requireExplicitNullMarking`              | An object for configuring the `RequireExplicitNullMarking` check's severity.
+| `jspecifyUnrecongnizedAnnotationLocation` | An object for configuring the `JSpecifyUnrecongnizedAnnotationLocation` check's severity.
+
+The objects for configuring additional checks' severity have a `severity` property and `enable()`, `disable()`, `warn()`, and `error()` methods similar to those mentioned above for configuring the `NullAway` check.
+The difference is that the `severity` property defaults to being unset, meaning the checks aren't enabled at all (with no generated command-line flag so it works even with NullAway versions where those checks don't exist).
+
+Those objects can also be configured with lambdas, such that `requireExplicitNullMarking.error()` and `requireExplicitNullMarking { error() }` are equivalent.
