@@ -21,17 +21,16 @@ dependencies {
 }
 
 nullaway {
+    error()
     onlyNullMarked = true
     jspecifyMode = true
+    requireExplicitNullMarking { error() }
+    jspecifyUnrecognizedAnnotationLocation { error() }
 }
 tasks {
     withType<JavaCompile>().configureEach {
         options.release = 21
         options.compilerArgs.addAll(listOf("-Werror", "-Xlint:all"))
-        options.errorprone {
-            error("RequireExplicitNullMarking")
-            error("JSpecifyUnrecognizedAnnotationLocation")
-        }
     }
     javadoc {
         (options as StandardJavadocDocletOptions).apply {
