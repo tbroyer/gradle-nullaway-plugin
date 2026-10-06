@@ -176,6 +176,8 @@ Each property (except for `severity`) maps to an `-XepOpt:NullAway:[propertyName
 
 For configuring additional checks (alongside the `NullAway` check), the project-level and task-level extensions have those additional properties (which are **not** _lazy_):
 
+| Property | Description
+| :------- | :----------
 | `requireExplicitNullMarking`              | An object for configuring the `RequireExplicitNullMarking` check's severity.
 | `jspecifyUnrecongnizedAnnotationLocation` | An object for configuring the `JSpecifyUnrecongnizedAnnotationLocation` check's severity.
 
