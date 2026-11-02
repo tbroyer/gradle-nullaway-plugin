@@ -115,62 +115,59 @@ public class NullAwayOptionsTest {
     doTestOptions(options -> options.getHandleWildcardGenerics().set(true));
     doTestOptions(options -> options.getJspecifyExperimental().set(true));
     doTestOptions(options -> options.getJspecifyJdkModels().set(true));
-    doTestOptions(
-        options ->
-            options.getRequireExplicitNullMarking().getSeverity().set(CheckSeverity.DEFAULT));
+    doTestOptions(options ->
+        options.getRequireExplicitNullMarking().getSeverity().set(CheckSeverity.DEFAULT));
     doTestOptions(options -> options.getRequireExplicitNullMarking().enable());
     doTestOptions(options -> options.getRequireExplicitNullMarking().disable());
     doTestOptions(options -> options.getRequireExplicitNullMarking().warn());
     doTestOptions(options -> options.getRequireExplicitNullMarking().error());
-    doTestOptions(
-        options ->
-            options
-                .getJspecifyUnrecognizedAnnotationLocation()
-                .getSeverity()
-                .set(CheckSeverity.DEFAULT));
+    doTestOptions(options ->
+        options
+            .getJspecifyUnrecognizedAnnotationLocation()
+            .getSeverity()
+            .set(CheckSeverity.DEFAULT));
     doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().enable());
     doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().disable());
     doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().warn());
     doTestOptions(options -> options.getJspecifyUnrecognizedAnnotationLocation().error());
 
-    doTestOptions(
-        options -> {
-          options.enable();
-          options.getAnnotatedPackages().add("test");
-          options.getUnannotatedSubPackages().add("test.dummy");
-          options.getUnannotatedClasses().add("test.Unannotated");
-          options.getKnownInitializers().add("com.foo.Bar.method");
-          options.getExcludedClassAnnotations().add("com.example.NullAwayExcluded");
-          options.getExcludedClasses().add("test.Excluded");
-          options.getExcludedFieldAnnotations().add("javax.ws.rs.core.Context");
-          options.getCustomInitializerAnnotations().add("com.foo.Initializer");
-          options.getExternalInitAnnotations().add("com.example.ExternalInit");
-          options.getTreatGeneratedAsUnannotated().set(true);
-          options.getAcknowledgeRestrictiveAnnotations().set(true);
-          options.getCheckOptionalEmptiness().set(true);
-          options.getSuggestSuppressions().set(true);
-          options.getAssertsEnabled().set(true);
-          options.getExhaustiveOverride().set(true);
-          options.getCastToNonNullMethod().set("com.foo.Bar.castToNonNull");
-          options.getCheckOptionalEmptinessCustomClasses().add("com.foo.Optional");
-          options.getAutoFixSuppressionComment().set("Auto-fix\\u0020suppression");
-          options.getHandleTestAssertionLibraries().set(true);
-          options.getAcknowledgeAndroidRecent().set(true);
-          options.getCheckContracts().set(true);
-          options.getCustomContractAnnotations().add("com.example.Contract");
-          options.getCustomNullableAnnotations().add("com.example.CouldBeNull");
-          options.getCustomNonnullAnnotations().add("com.example.MustNotBeNull");
-          options.getCustomGeneratedCodeAnnotations().add("com.example.Generated");
-          options.getJspecifyMode().set(true);
-          options.getExtraFuturesClasses().add("com.example.Future");
-          options.getSuppressionNameAliases().add("NullIssue");
-          options.getWarnOnGenericInferenceFailure().set(true);
-          options.getHandleWildcardGenerics().set(true);
-          options.getJspecifyExperimental().set(true);
-          options.getJspecifyJdkModels().set(true);
-          options.getRequireExplicitNullMarking().error();
-          options.getJspecifyUnrecognizedAnnotationLocation().warn();
-        });
+    doTestOptions(options -> {
+      options.enable();
+      options.getAnnotatedPackages().add("test");
+      options.getUnannotatedSubPackages().add("test.dummy");
+      options.getUnannotatedClasses().add("test.Unannotated");
+      options.getKnownInitializers().add("com.foo.Bar.method");
+      options.getExcludedClassAnnotations().add("com.example.NullAwayExcluded");
+      options.getExcludedClasses().add("test.Excluded");
+      options.getExcludedFieldAnnotations().add("javax.ws.rs.core.Context");
+      options.getCustomInitializerAnnotations().add("com.foo.Initializer");
+      options.getExternalInitAnnotations().add("com.example.ExternalInit");
+      options.getTreatGeneratedAsUnannotated().set(true);
+      options.getAcknowledgeRestrictiveAnnotations().set(true);
+      options.getCheckOptionalEmptiness().set(true);
+      options.getSuggestSuppressions().set(true);
+      options.getAssertsEnabled().set(true);
+      options.getExhaustiveOverride().set(true);
+      options.getCastToNonNullMethod().set("com.foo.Bar.castToNonNull");
+      options.getCheckOptionalEmptinessCustomClasses().add("com.foo.Optional");
+      options.getAutoFixSuppressionComment().set("Auto-fix\\u0020suppression");
+      options.getHandleTestAssertionLibraries().set(true);
+      options.getAcknowledgeAndroidRecent().set(true);
+      options.getCheckContracts().set(true);
+      options.getCustomContractAnnotations().add("com.example.Contract");
+      options.getCustomNullableAnnotations().add("com.example.CouldBeNull");
+      options.getCustomNonnullAnnotations().add("com.example.MustNotBeNull");
+      options.getCustomGeneratedCodeAnnotations().add("com.example.Generated");
+      options.getJspecifyMode().set(true);
+      options.getExtraFuturesClasses().add("com.example.Future");
+      options.getSuppressionNameAliases().add("NullIssue");
+      options.getWarnOnGenericInferenceFailure().set(true);
+      options.getHandleWildcardGenerics().set(true);
+      options.getJspecifyExperimental().set(true);
+      options.getJspecifyJdkModels().set(true);
+      options.getRequireExplicitNullMarking().error();
+      options.getJspecifyUnrecognizedAnnotationLocation().warn();
+    });
   }
 
   private void doTestOptions(Consumer<NullAwayOptions> configure) {

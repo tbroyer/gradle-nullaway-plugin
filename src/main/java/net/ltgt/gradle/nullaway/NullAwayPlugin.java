@@ -45,21 +45,20 @@ public class NullAwayPlugin implements Plugin<Project> {
               project
                   .getTasks()
                   .withType(JavaCompile.class)
-                  .configureEach(
-                      task -> {
-                        ErrorProneOptions errorproneOptions =
-                            ((ExtensionAware) task.getOptions())
-                                .getExtensions()
-                                .getByType(ErrorProneOptions.class);
-                        NullAwayOptions nullawayOptions =
-                            ((ExtensionAware) errorproneOptions)
-                                .getExtensions()
-                                .create(EXTENSION_NAME, NullAwayOptions.class, extension);
+                  .configureEach(task -> {
+                    ErrorProneOptions errorproneOptions =
+                        ((ExtensionAware) task.getOptions())
+                            .getExtensions()
+                            .getByType(ErrorProneOptions.class);
+                    NullAwayOptions nullawayOptions =
+                        ((ExtensionAware) errorproneOptions)
+                            .getExtensions()
+                            .create(EXTENSION_NAME, NullAwayOptions.class, extension);
 
-                        errorproneOptions
-                            .getErrorproneArgumentProviders()
-                            .add(new NullAwayArgumentProvider(nullawayOptions));
-                      });
+                    errorproneOptions
+                        .getErrorproneArgumentProviders()
+                        .add(new NullAwayArgumentProvider(nullawayOptions));
+                  });
             });
   }
 
